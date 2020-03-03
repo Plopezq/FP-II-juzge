@@ -26,11 +26,28 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="mina.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="juego.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="mina.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\2.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\3.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\4.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\movimientos.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
