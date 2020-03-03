@@ -32,3 +32,5 @@ void dibuja3x3(tCasilla casilla, tPlanoCaracteres caracteres, tPlanoColores colo
 	// coordenadas	i, j.
 
 
+
+
