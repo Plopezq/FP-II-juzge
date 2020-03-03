@@ -9,6 +9,9 @@ typedef struct {
 
 
 
-//Prototipos usados en el main, relacionados con el juego
+//PROTOTIPOS
 void colorFondo(int color);
+bool cargar_juego( tJuego& juego, int nivel);
+bool hacerMovimiento(tJuego& juego, tTecla tecla);
+void dibujar(const tJuego& juego);
 
