@@ -13,3 +13,8 @@ typedef struct {
 typedef struct {
 	int planoColores[3*MAX][3*MAX]; //Esta matriz guarda el color de cada casilla
 }tPlanoColores;
+
+
+//Prototipos usados en el main, relacionados con el juego
+void colorFondo(int color);
+
