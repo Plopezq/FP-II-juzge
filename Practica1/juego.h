@@ -1,12 +1,12 @@
-#include "mina.h"
-typedef enum tTecla {ARRIBA, ABAJO, DCHA, IZDA, SALIR, NADA, TNT};
+
+typedef enum tTecla {ARRIBA, ABAJO, DCHA, IZDA, SALIR, NADA, TNT}tTecla;
+
 typedef struct {
 	tMina mina;
 	int contGemas;
 	int contMov;
 	int contTNT;
 }tJuego;
-
 
 
 //PROTOTIPOS

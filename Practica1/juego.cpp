@@ -1,9 +1,10 @@
 #include<Windows.h>
 #include<stdio.h>
 #include<iostream>
-#include "juego.h"
 #include <conio.h>
 
+#include "mina.cpp"
+#include "juego.h"
 using namespace std;
 
 
@@ -25,6 +26,7 @@ void dibujar(const tJuego& juego) {
 }
 
 tTecla leerTecla() {
+	tTecla tecla = ARRIBA;
 	int dir;
 	cin.sync();
 	dir = _getch(); // dir: tipo int
@@ -41,4 +43,5 @@ tTecla leerTecla() {
 			   izquierda 75
 		   */
 	}
+	return tecla;
 }

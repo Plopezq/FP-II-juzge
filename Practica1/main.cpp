@@ -1,5 +1,4 @@
 #include "juego.cpp"
-#include "mina.cpp"
 #include<conio.h>
 #include<stdio.h>
 using namespace std;

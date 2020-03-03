@@ -2,7 +2,6 @@
 #include<iostream>
 #include <fstream>
 using namespace std;
-
 void cargar_Mina(ifstream& fichero, tMina& mina) {
 }
 void dibujar1_1(const tMina& mina){ 
