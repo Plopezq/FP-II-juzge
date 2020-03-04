@@ -1,7 +1,9 @@
-#include "juego.cpp"
 
 #include<conio.h>
 #include<stdio.h>
+#include <stdlib.h>
+
+#include "juego.h"
 using namespace std;
 
 int main() {
@@ -9,6 +11,12 @@ int main() {
 	//Hola a todos de nuevo
 	
 	return 0;
+}
+
+void mostrarMenu() {
+
+
+
 }
 
 

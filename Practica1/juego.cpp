@@ -3,7 +3,7 @@
 #include<iostream>
 #include <conio.h>
 
-#include "mina.cpp"
+//#include "mina.h"
 #include "juego.h"
 using namespace std;
 
@@ -24,6 +24,7 @@ bool hacerMovimiento(tJuego& juego, tTecla tecla) {
 void dibujar(const tJuego& juego) {
 
 }
+
 
 tTecla leerTecla() {
 	tTecla tecla = ARRIBA;

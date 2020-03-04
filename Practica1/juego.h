@@ -1,4 +1,4 @@
-
+#include "mina.h"
 
 typedef enum tTecla {ARRIBA, ABAJO, DCHA, IZDA, SALIR, NADA, TNT}tTecla;
 typedef struct {
