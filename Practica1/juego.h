@@ -1,6 +1,6 @@
 
-typedef enum tTecla {ARRIBA, ABAJO, DCHA, IZDA, SALIR, NADA, TNT}tTecla;
 
+typedef enum tTecla {ARRIBA, ABAJO, DCHA, IZDA, SALIR, NADA, TNT}tTecla;
 typedef struct {
 	tMina mina;
 	int contGemas;
