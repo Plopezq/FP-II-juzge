@@ -8,8 +8,11 @@ using namespace std;
 
 int main() {
 	system("cls");
-	tJuego juego;
-	cargar_juego(juego, 1);
+	tJuego juego; //Un juego para toda la ejecucion
+	cargar_juego(juego, 1); //FUNCIONA
+
+
+
 	return 0;
 }
 

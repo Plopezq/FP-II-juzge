@@ -30,7 +30,6 @@ bool cargar_juego(tJuego& juego, int nivel) {
 		cargado = true;
 		archivo.close();
 	}
-
 	return cargado;
 }
 bool hacerMovimiento(tJuego& juego, tTecla tecla) {
