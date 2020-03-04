@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include<iostream>
 #include <conio.h>
+#include <string>
 
 //#include "mina.h"
 #include "juego.h"
@@ -14,8 +15,23 @@ void colorFondo(int color) {
 		SetConsoleTextAttribute(handle, 15 | (color << 4));
 }
 bool cargar_juego(tJuego& juego, int nivel) {
-	
-	return false;
+	bool cargado = false;
+	//Inicializo el juego
+	juego.contGemas = 0;
+	juego.contMov = 0;
+	juego.contTNT = 0;
+	//Leo la mina
+	string aux = to_string(nivel);
+	aux += ".txt";
+	ifstream archivo;
+	archivo.open(aux);
+	if (archivo.is_open()) {
+		cargar_Mina(archivo, juego.mina);
+		cargado = true;
+		archivo.close();
+	}
+
+	return cargado;
 }
 bool hacerMovimiento(tJuego& juego, tTecla tecla) {
 	

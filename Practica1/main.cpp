@@ -8,8 +8,8 @@ using namespace std;
 
 int main() {
 	system("cls");
-	//Hola a todos de nuevo
-	
+	tJuego juego;
+	cargar_juego(juego, 1);
 	return 0;
 }
 
