@@ -1,16 +1,14 @@
 
 #include<conio.h>
 #include<stdio.h>
-#include <stdlib.h>
 
 #include "juego.h"
 using namespace std;
 
 int main() {
-	system("cls");
 	tJuego juego; //Un juego para toda la ejecucion
 	cargar_juego(juego, 1); //FUNCIONA
-
+	dibujar1_1(juego.mina);
 
 
 	return 0;
@@ -18,6 +16,9 @@ int main() {
 
 void mostrarMenu() {
 
+	cout << "1. Jugar partida a escala 1:1. " << endl;
+	cout << "2. Jugar partida a escala 1:3. " << endl;
+	cout << "0. Salir " << endl;
 
 
 }

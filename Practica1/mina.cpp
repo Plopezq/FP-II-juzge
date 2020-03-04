@@ -39,7 +39,39 @@ void cargar_Mina(ifstream& fichero, tMina& mina){
 		}
 }
 void dibujar1_1(const tMina& mina){
-
+	system("cls");
+	for (int i = 0; i < mina.nFilas; i++ ) {
+		for (int j = 0; j < mina.nColumnas; j++) {
+			switch (mina.planoMina[i][j])
+			{
+			case PIEDRA:
+				cout << "@";
+				break;
+			case MURO:
+				cout << "X";
+				break;
+			case MINERO:
+				cout << "M";
+				break;
+			case TIERRA:
+				cout << ".";
+				break;
+			case DINAMITA:
+				cout << "D";
+				break;
+			case GEMA:
+				cout << "G";
+				break;
+			case SALIDA:
+				cout << "S";
+				break;
+			case LIBRE:
+				cout << " ";
+				break;
+			}
+		}
+		cout << endl;
+	}
 }
 void dibujar1_3(const tMina& mina) {
 
