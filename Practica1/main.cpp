@@ -12,7 +12,7 @@ int main() {
 	dibujar1_1(juego.mina);
 	//dibujar1_3(juego.mina);
 
-
+   
 
 	return 0;
 }
