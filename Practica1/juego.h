@@ -7,7 +7,7 @@ typedef struct {
 	int contMov;
 	int contTNT;
 }tJuego;
-
+   
 
 //PROTOTIPOS
 void colorFondo(int color);
