@@ -2,10 +2,12 @@
 
 typedef enum {ARRIBA, ABAJO, DCHA, IZDA, SALIR, NADA, TNT} tTecla;
 typedef struct {
+
 	tMina mina;
 	int contGemas;
 	int contMov;
 	int contTNT;
+
 }tJuego;
    
 

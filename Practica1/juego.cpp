@@ -4,7 +4,7 @@
 #include <conio.h>
 #include <string>
 
-//#include "mina.h"
+
 #include "juego.h"
 using namespace std;
 
