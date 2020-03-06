@@ -29,6 +29,7 @@ void dibuja3x3(tCasilla casilla, tPlanoCaracteres caracteres, tPlanoColores colo
 	// Dibuja las casillas aumentadas tres veces. 
 	// En concreto, la	casilla	sirve para actualizar el plano de caracteres y colores en las
 	// coordenadas	i, j.
+void colorFondo(int color);
 
 
 

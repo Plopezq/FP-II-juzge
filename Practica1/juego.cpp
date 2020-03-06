@@ -10,10 +10,7 @@ using namespace std;
 
 
 //FUNCIONES
-void colorFondo(int color) {
-		HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-		SetConsoleTextAttribute(handle, 15 | (color << 4));
-}
+
 bool cargar_juego(tJuego& juego, int nivel) {
 	bool cargado = false;
 	//Inicializo el juego

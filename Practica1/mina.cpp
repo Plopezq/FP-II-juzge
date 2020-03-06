@@ -1,3 +1,4 @@
+#include<Windows.h>
 #include "mina.h"
 using namespace std;
 
@@ -45,28 +46,44 @@ void dibujar1_1(const tMina& mina){
 			switch (mina.planoMina[i][j])
 			{
 			case PIEDRA:
+				//colorFondo(15);
 				cout << "@";
+				//colorFondo(0);
 				break;
 			case MURO:
+				//colorFondo(0);
 				cout << "X";
+				//colorFondo(15);
 				break;
 			case MINERO:
+				//colorFondo(15)
 				cout << "M";
+				//colorFondo(15)
 				break;
 			case TIERRA:
+				//colorFondo(15);
 				cout << ".";
+				//colorFondo(15);
 				break;
 			case DINAMITA:
+				//colorFondo(15);
 				cout << "D";
+				//colorFondo(15);
 				break;
 			case GEMA:
+				//colorFondo(15);
 				cout << "G";
+				//colorFondo(15)
 				break;
 			case SALIDA:
+				//colorFondo(15);
 				cout << "S";
+				//colorFondo(15);
 				break;
 			case LIBRE:
+				//colorFondo(15);
 				cout << " ";
+				//colorFondo(15);
 				break;
 			}
 		}
@@ -74,56 +91,56 @@ void dibujar1_1(const tMina& mina){
 	}
 }
 void dibujar1_3(const tMina& mina) {
+	//Declarar aqui el array de chars y el de colores
+	tPlanoCaracteres caracteres;
+	tPlanoColores colores;
+	for (int i = 0; i < MAX * 3; i++) {
+		for (int j = 0; j < MAX * 3; j++) {
+			dibuja3x3(mina.planoMina[i][j], caracteres, colores, i, j);
+		}
+	}
+	tPlanoColores colores;
 	for (int i = 0; i < mina.nFilas; i++) {
 		for (int j = 0; j < mina.nColumnas; j++) {
-			switch (mina.planoMina[i][j])
-			{
-			case PIEDRA:
-				cout << "@@@";
-				cout << "@@@";
-				cout << "@@@";
-				break;
-			case MURO:
-				cout << "XXX";
-				cout << "XXX";
-				cout << "XXX";
-
-				break;
-			case MINERO:
-				cout << "MMM";
-				cout << "MMM";
-				cout << "MMM";
-				break;
-			case TIERRA:
-				cout << ". . .\n";
-				cout << ". . .";
-				cout << ". . .";
-				break;
-			case DINAMITA:
-				cout << "DDD";
-				cout << "DDD";
-				cout << "DDD";
-				break;
-			case GEMA:
-				cout << "GGG";
-				cout << "GGG";
-				cout << "GGG";
-				break;
-			case SALIDA:
-				cout << "SSS";
-				cout << "SSS";
-				cout << "SSS";
-				break;
-			case LIBRE:
-				cout << "N-A";
-				cout << "- -";
-				cout << "D-A";
-				break;
-			}
+			dibuja3x3(mina.planoMina[i][j],);
 		}
 		cout << endl;
 	}
 }
 void dibuja3x3(tCasilla casilla, tPlanoCaracteres caracteres, tPlanoColores colores, int i, int j) {
+	for (int w = 0; w < 3; w++) {
+		for (int s = 0; s < 3; s++) {
+			switch (casilla)
+			{
+			case PIEDRA:
+				caracteres[i + w][j + s];
+				break;
+			case MURO:
 
+				break;
+			case MINERO:
+
+				break;
+			case TIERRA:
+
+				break;
+			case DINAMITA:
+
+				break;
+			case GEMA:
+
+				break;
+			case SALIDA:
+
+				break;
+			case LIBRE:
+
+				break;
+			}
+		}
+	}
+}
+void colorFondo(int color) {
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(handle, 15 | (color << 4));
 }
