@@ -69,61 +69,57 @@ void dibujar1_1(const tMina& mina){
 				cout << " ";
 				break;
 			}
+
 		}
 		cout << endl;
 	}
 }
 void dibujar1_3(const tMina& mina) {
 	for (int i = 0; i < mina.nFilas; i++) {
-		for (int j = 0; j < mina.nColumnas; j++) {
-			switch (mina.planoMina[i][j])
-			{
-			case PIEDRA:
-				cout << "@@@";
-				cout << "@@@";
-				cout << "@@@";
-				break;
-			case MURO:
-				cout << "XXX";
-				cout << "XXX";
-				cout << "XXX";
+		for (int k = 0; k < 3; k++)
+		{
+			for (int j = 0; j < mina.nColumnas; j++) {
+				switch (mina.planoMina[i][j])
+				{
+				case PIEDRA:
 
-				break;
-			case MINERO:
-				cout << "MMM";
-				cout << "MMM";
-				cout << "MMM";
-				break;
-			case TIERRA:
-				cout << ". . .\n";
-				cout << ". . .";
-				cout << ". . .";
-				break;
-			case DINAMITA:
-				cout << "DDD";
-				cout << "DDD";
-				cout << "DDD";
-				break;
-			case GEMA:
-				cout << "GGG";
-				cout << "GGG";
-				cout << "GGG";
-				break;
-			case SALIDA:
-				cout << "SSS";
-				cout << "SSS";
-				cout << "SSS";
-				break;
-			case LIBRE:
-				cout << "N-A";
-				cout << "- -";
-				cout << "D-A";
-				break;
+					cout << "@@@";
+					break;
+				case MURO:
+					cout << "XXX";
+					break;
+				case MINERO:
+					cout << "MMM";
+					break;
+				case TIERRA:
+					cout << "...";
+					break;
+				case DINAMITA:
+					cout << "DDD";
+					break;
+				case GEMA:
+					cout << "GGG";
+					break;
+				case SALIDA:
+					cout << "SSS";
+					break;
+				case LIBRE:
+					cout << "   ";
+					break;
+				}
+				
 			}
+			cout << endl;
 		}
-		cout << endl;
+			
 	}
 }
 void dibuja3x3(tCasilla casilla, tPlanoCaracteres caracteres, tPlanoColores colores, int i, int j) {
+	for (int w = 0; w < MAX*3; w++)
+	{
+		for (int k = 0; k < MAX*3; k++)
+		{
 
+		}
+	}
 }
