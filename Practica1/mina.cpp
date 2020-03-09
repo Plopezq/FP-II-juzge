@@ -75,51 +75,34 @@ void dibujar1_1(const tMina& mina){
 	}
 }
 void dibujar1_3(const tMina& mina) {
+	tPlanoCaracteres elementosMatriz3x3;
+	tPlanoColores coloresMatriz3x3;
 	for (int i = 0; i < mina.nFilas; i++) {
-		for (int k = 0; k < 3; k++)
-		{
 			for (int j = 0; j < mina.nColumnas; j++) {
-				switch (mina.planoMina[i][j])
-				{
-				case PIEDRA:
-
-					cout << "@@@";
-					break;
-				case MURO:
-					cout << "XXX";
-					break;
-				case MINERO:
-					cout << "MMM";
-					break;
-				case TIERRA:
-					cout << "...";
-					break;
-				case DINAMITA:
-					cout << "DDD";
-					break;
-				case GEMA:
-					cout << "GGG";
-					break;
-				case SALIDA:
-					cout << "SSS";
-					break;
-				case LIBRE:
-					cout << "   ";
-					break;
-				}
-				
-			}
-			cout << endl;
-		}
-			
+					dibuja3x3(mina.planoMina[i][j], elementosMatriz3x3, coloresMatriz3x3,  i,  j);
+			}		
 	}
 }
 void dibuja3x3(tCasilla casilla, tPlanoCaracteres caracteres, tPlanoColores colores, int i, int j) {
-	for (int w = 0; w < MAX*3; w++)
-	{
-		for (int k = 0; k < MAX*3; k++)
-		{
 
-		}
-	}
+	switch (mina.planoMina[i][j])
+	{
+	case PIEDRA:
+		break;
+	case MURO:
+		break;
+	case MINERO:
+		break;
+	case TIERRA:
+		break;
+	case DINAMITA:
+		break;
+	case GEMA:
+		break;
+	case SALIDA:
+		cout << "SSS";
+		break;
+	case LIBRE:
+		cout << "   ";
+		break;
 }

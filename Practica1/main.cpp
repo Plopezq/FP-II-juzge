@@ -10,7 +10,7 @@ void mostrarMenu();
 
 int main() {
 
-	mostrarMenu();
+	//mostrarMenu();
 	tJuego juego; //Un juego para toda la ejecucion
 	
 	cargar_juego(juego, 1); //FUNCIONA
