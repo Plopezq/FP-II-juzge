@@ -40,32 +40,41 @@ void cargar_Mina(ifstream& fichero, tMina& mina){
 }
 void dibujar1_1(const tMina& mina){
 	system("cls");
+	
 	for (int i = 0; i < mina.nFilas; i++ ) {
 		for (int j = 0; j < mina.nColumnas; j++) {
 			switch (mina.planoMina[i][j])
 			{
 			case PIEDRA:
+				//PONER COLOR
 				cout << "@";
 				break;
 			case MURO:
+				//PONER COLOR
 				cout << "X";
 				break;
 			case MINERO:
+				//PONER COLOR
 				cout << "M";
 				break;
 			case TIERRA:
+				//PONER COLOR
 				cout << ".";
 				break;
 			case DINAMITA:
+				//PONER COLOR
 				cout << "D";
 				break;
 			case GEMA:
+				//PONER COLOR
 				cout << "G";
 				break;
 			case SALIDA:
+				//PONER COLOR
 				cout << "S";
 				break;
 			case LIBRE:
+				//PONER COLOR
 				cout << " ";
 				break;
 			}
@@ -75,34 +84,89 @@ void dibujar1_1(const tMina& mina){
 	}
 }
 void dibujar1_3(const tMina& mina) {
-	tPlanoCaracteres elementosMatriz3x3;
+	tPlanoCaracteres caracteres;
 	tPlanoColores coloresMatriz3x3;
+	//Inicializamos las dos matrices auxiliares;
 	for (int i = 0; i < mina.nFilas; i++) {
-			for (int j = 0; j < mina.nColumnas; j++) {
-					dibuja3x3(mina.planoMina[i][j], elementosMatriz3x3, coloresMatriz3x3,  i,  j);
-			}		
+		for (int j = 0; j < mina.nColumnas; j++) {
+			dibuja3x3(mina.planoMina[i][j], caracteres, coloresMatriz3x3, i, j);
+		}
+	}
+	for (int i = 0; i < MAX * 3; i++) {
+		for (int j = 0; j < MAX * 3; j++) {
+			cout << caracteres.planoCaracteres[i][j];
+		}
 	}
 }
-void dibuja3x3(tCasilla casilla, tPlanoCaracteres caracteres, tPlanoColores colores, int i, int j) {
-
-	switch (mina.planoMina[i][j])
+void dibuja3x3(tCasilla casilla, tPlanoCaracteres& caracteres, tPlanoColores& colores, int& i, int& j) {
+	int auxI = i * 3;
+	int auxJ = j * 3;
+	switch (casilla)
 	{
 	case PIEDRA:
+		for (int x = i * 3;  x < x+3; x++) {
+			for (int w = j * 3; w < w+3 ; w++) {
+				caracteres.planoCaracteres[x][w] = 'P';
+				//colores.planoColores[w][k] = 13;
+			}
+		}
 		break;
 	case MURO:
+		for (int x = i; x < auxI; x++) {
+			for (int w = j; w < auxJ; w++) {
+				caracteres.planoCaracteres[x][w] = 'P';
+				//colores.planoColores[w][k] = 13;
+			}
+		}
 		break;
 	case MINERO:
+		for (int x = i; x < auxI; x++) {
+			for (int w = j; w < auxJ; w++) {
+				caracteres.planoCaracteres[x][w] = 'P';
+				//colores.planoColores[w][k] = 13;
+			}
+		}
 		break;
 	case TIERRA:
+		for (int x = i; x < auxI; x++) {
+			for (int w = j; w < auxJ; w++) {
+				caracteres.planoCaracteres[x][w] = 'P';
+				//colores.planoColores[w][k] = 13;
+			}
+		}
 		break;
 	case DINAMITA:
+		for (int x = i; x < auxI; x++) {
+			for (int w = j; w < auxJ; w++) {
+				caracteres.planoCaracteres[x][w] = 'P';
+				//colores.planoColores[w][k] = 13;
+			}
+		}
 		break;
 	case GEMA:
+		for (int x = i; x < auxI; x++) {
+			for (int w = j; w < auxJ; w++) {
+				caracteres.planoCaracteres[x][w] = 'P';
+				//colores.planoColores[w][k] = 13;
+			}
+		}
 		break;
 	case SALIDA:
-		cout << "SSS";
+		for (int x = i; x < auxI; x++) {
+			for (int w = j; w < auxJ; w++) {
+				caracteres.planoCaracteres[x][w] = 'P';
+				//colores.planoColores[w][k] = 13;
+			}
+		}
 		break;
 	case LIBRE:
-		cout << "   ";
+		for (int x = i; x < auxI; x++) {
+			for (int w = j; w < auxJ; w++) {
+				caracteres.planoCaracteres[i][j] = 'P';
+				//colores.planoColores[w][k] = 13;
+			}
+		}
 		break;
+	}
+
 }

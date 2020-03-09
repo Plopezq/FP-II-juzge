@@ -34,7 +34,7 @@ bool hacerMovimiento(tJuego& juego, tTecla tecla) {
 	return false;
 }
 void dibujar(const tJuego& juego) {
-
+	//Visualiza los contadores y tambien llama al dibujar mina
 }
 
 
