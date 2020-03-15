@@ -1,4 +1,6 @@
 #include "mina.h"
+#include <iomanip>
+#include <Windows.h>
 using namespace std;
 
 void cargar_Mina(ifstream& fichero, tMina& mina){
@@ -45,36 +47,44 @@ void dibujar1_1(const tMina& mina){
 			switch (mina.planoMina[i][j])
 			{
 			case PIEDRA:
-				//PONER COLOR
+				colorFondo(4);
 				cout << "@";
+				colorFondo(0);
 				break;
 			case MURO:
-				//PONER COLOR
+				colorFondo(4);
 				cout << "X";
+				colorFondo(0);
 				break;
 			case MINERO:
-				//PONER COLOR
+				colorFondo(8);
 				cout << "M";
+				colorFondo(0);
 				break;
 			case TIERRA:
-				//PONER COLOR
+				colorFondo(4);
 				cout << ".";
+				colorFondo(0);
 				break;
 			case DINAMITA:
-				//PONER COLOR
+				colorFondo(4);
 				cout << "D";
+				colorFondo(0);
 				break;
 			case GEMA:
-				//PONER COLOR
+				colorFondo(10);
 				cout << "G";
+				colorFondo(0);
 				break;
 			case SALIDA:
-				//PONER COLOR
+				colorFondo(4);
 				cout << "S";
+				colorFondo(0);
 				break;
 			case LIBRE:
-				//PONER COLOR
+				colorFondo(4);
 				cout << " ";
+				colorFondo(0);
 				break;
 			}
 
@@ -87,64 +97,69 @@ void dibujar1_3(const tMina& mina) {
 	tPlanoCaracteres caracteres; //Guardamos los caracteres en tamaño 3x3
 	tPlanoColores coloresMatriz3x3; //Guardamos los colores en tamaño 3x3
 
-	//Inicializamos las dos matrices auxiliares;
+	//Inicializamos las dos matrices auxiliares, la de caracteres y la de colores
 	for (int i = 0; i < mina.nFilas; i++) {
 		for (int j = 0; j < mina.nColumnas; j++) {
 			dibuja3x3(mina.planoMina[i][j], caracteres, coloresMatriz3x3, i, j);
 		}
 	}
+
 	//Pintamos, utilzando las 2 matrices auxiliares
-	for (int i = 0; i < 15; i++) {
-		for (int j = 0; j < 15; j++) {
-			cout << caracteres.planoCaracteres[i][j];
+	for (int i = 0; i < mina.nFilas * 3; i++) {
+		for (int j = 0; j < mina.nColumnas * 3; j++) {
+			colorFondo(coloresMatriz3x3.planoColores[i][j]);
+			cout << setw(2) << caracteres.planoCaracteres[i][j];
+			colorFondo(0);
 		}
 		cout << endl;
 	}
 }
 void dibuja3x3(tCasilla casilla, tPlanoCaracteres& caracteres, tPlanoColores& colores, int i, int j) {
 	
-	//AQUI NO DEBO MODIFICAR i y j
+	//AQUI NO DEBO MODIFICAR i y j, porque sino altero la lectura en la función anterior.
 	for (int s = i * 3; s < (i * 3) + 3; s++) {
 		for (int w = j * 3; w < (j * 3) + 3; w++) {
 			switch (casilla)
 			{
 			case PIEDRA:
-				//PONER COLOR
-				caracteres.planoCaracteres[s][w] = 'P';
+				colores.planoColores[s][w] = 4;
+				caracteres.planoCaracteres[s][w] = '@';
 				break;
 			case MURO:
-				//PONER COLOR
-				caracteres.planoCaracteres[s][w] = 'M';
+				colores.planoColores[s][w] = 4;
+				caracteres.planoCaracteres[s][w] = 'X';
 				break;
 			case MINERO:
-				//PONER COLOR
-				caracteres.planoCaracteres[s][w] = 'Y';
+				colores.planoColores[s][w] = 8;
+				caracteres.planoCaracteres[s][w] = 'M';
 				break;
 			case TIERRA:
-				//PONER COLOR
-				caracteres.planoCaracteres[s][w] = 'T';
+				colores.planoColores[s][w] = 4;
+				caracteres.planoCaracteres[s][w] = '.';
 				break;
 			case DINAMITA:
-				//PONER COLOR
+				colores.planoColores[s][w] = 4;
 				caracteres.planoCaracteres[s][w] = 'D';
 				break;
 			case GEMA:
-				//PONER COLOR
+				colores.planoColores[s][w] = 10;
 				caracteres.planoCaracteres[s][w] = 'G';
 				break;
 			case SALIDA:
-				//PONER COLOR
-				caracteres.planoCaracteres[s][w] = 'X';
+				colores.planoColores[s][w] = 4;
+				caracteres.planoCaracteres[s][w] = 'S';
 				break;
 			case LIBRE:
-				//PONER COLOR
-				caracteres.planoCaracteres[s][w] = 'L';
+				colores.planoColores[s][w] = 4;
+				caracteres.planoCaracteres[s][w] = ' ';
 				break;
 			}
 		}
 	}
 }
-
-
-
+void colorFondo(int color)
+{
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);     
+	SetConsoleTextAttribute(handle, 15 | (color << 4));
+}
 
