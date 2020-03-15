@@ -9,7 +9,6 @@ typedef struct {
 	int contTNT;
 
 }tJuego;
-   
 
 //PROTOTIPOS
 void colorFondo(int color);

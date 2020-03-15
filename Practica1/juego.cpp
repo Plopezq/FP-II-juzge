@@ -10,7 +10,6 @@ using namespace std;
 
 
 //FUNCIONES
-
 bool cargar_juego(tJuego& juego, int nivel) {
 	bool cargado = false;
 	//Inicializo el juego
