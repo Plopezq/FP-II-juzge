@@ -4,6 +4,7 @@
 using namespace std;
 
 void cargar_Mina(ifstream& fichero, tMina& mina){
+	//Lee el plano de la mina y lo guarda en memoria, ADEMÁS actualiza la posicion del minero en la mina
 	//Existe la opcion de crear una funcion que transforme un caracter en un tipo
 	//enumerado y lo devuelva
 	//Supongo que el ifstream ya está abierto y cargado el nivel correcto
