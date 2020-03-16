@@ -1,0 +1,6 @@
+
+
+
+COSAS A HACER A LARGO PLAZO
+
+1- Crear una funcion que contenga el switch de los enumerados, no es bueno reptir codigo tantas veces.

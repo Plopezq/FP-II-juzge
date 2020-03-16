@@ -152,6 +152,7 @@
     <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\3.txt" />
     <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\4.txt" />
     <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\movimientos.txt" />
+    <Text Include="Comentarios.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

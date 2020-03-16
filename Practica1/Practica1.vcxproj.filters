@@ -49,5 +49,8 @@
     <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\movimientos.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="Comentarios.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
