@@ -4,6 +4,8 @@
 using namespace std;
 
 void cargar_Mina(ifstream& fichero, tMina& mina){
+	//Existe la opcion de crear una funcion que transforme un caracter en un tipo
+	//enumerado y lo devuelva
 	//Supongo que el ifstream ya está abierto y cargado el nivel correcto
 	char c;
 		fichero >> mina.nFilas >> mina.nColumnas; //Guardo las filas y columnas de la mina
