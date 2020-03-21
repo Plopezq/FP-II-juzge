@@ -13,7 +13,7 @@ void cargar_Mina(ifstream& fichero, tMina& mina){
 		fichero.get(c); // Para leer el \n 
 		for (int i = 0; i < mina.nFilas; i++) { //Leo las filas
 			for (int j = 0; j < mina.nColumnas; j++) { //Leo las columnas
-				fichero.get(c);
+				fichero.get(c); 
 				switch (c) {
 				case 'T':
 					mina.planoMina[i][j] = TIERRA;
