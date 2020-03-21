@@ -1,0 +1,62 @@
+3
+1 2
+5 6
+MMMMMM
+MJTMSM
+MTTMTM
+MTGTTM
+MMMMMM
+ZZMMMAA
+1 2
+5 6
+TTTTTT
+TJ--SM
+GP--TT
+MMTMGM
+TTTTTT
+NZMMZZMMAAA
+1 2
+4 3
+JTT
+TPT
+MMS
+MMM
+ZMMMMS
+
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include "juego.h"
+
+
+// Resuelve un caso de prueba, leyendo de la entrada la
+// configuración, y escribiendo la respuesta
+void resuelveCaso() {
+    int escala; std::cin >> escala;
+    int teclado; std::cin >> teclado;
+    tJuego juego(escala,0, teclado);
+    jugar(juego, std::cin, std::cin);
+    dibujar(juego);
+}
+
+int main() {
+    
+#ifndef DOMJUDGE
+    std::ifstream in("datos.txt");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
+#endif
+    
+    int numCasos; std::cin >> numCasos; std::cin.ignore();
+    for (int i = 0; i < numCasos; ++i) {resuelveCaso();}
+    
+#ifndef DOMJUDGE // para dejar todo como estaba al principio
+    std::cin.rdbuf(cinbuf);
+#endif
+    
+    return 0;
+}
+
+
+
+

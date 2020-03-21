@@ -18,6 +18,22 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="1.in" />
+    <None Include="1.out" />
+    <None Include="2.in" />
+    <None Include="2.out" />
+    <None Include="prob-DG_Practica02_Realizar movimiento.pdf" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="juego.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="mina.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="juego.h" />
+    <ClInclude Include="mina.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{852CE359-0956-403E-A0C1-B00F327B5B61}</ProjectGuid>
@@ -137,21 +153,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <None Include="D:\FP II\Laboratorio\Juez\pr_02\pr_02\1.in" />
-    <None Include="D:\FP II\Laboratorio\Juez\pr_02\pr_02\1.out" />
-    <None Include="D:\FP II\Laboratorio\Juez\pr_02\pr_02\2.in" />
-    <None Include="D:\FP II\Laboratorio\Juez\pr_02\pr_02\2.out" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="D:\FP II\Laboratorio\Juez\pr_02\pr_02\juego.cpp" />
-    <ClCompile Include="D:\FP II\Laboratorio\Juez\pr_02\pr_02\main.cpp" />
-    <ClCompile Include="D:\FP II\Laboratorio\Juez\pr_02\pr_02\mina.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="D:\FP II\Laboratorio\Juez\pr_02\pr_02\juego.h" />
-    <ClInclude Include="D:\FP II\Laboratorio\Juez\pr_02\pr_02\mina.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

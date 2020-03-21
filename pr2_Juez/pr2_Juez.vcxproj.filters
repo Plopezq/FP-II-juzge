@@ -15,35 +15,38 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="D:\FP II\Laboratorio\Juez\pr_02\pr_02\1.in">
+    <None Include="1.in">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="D:\FP II\Laboratorio\Juez\pr_02\pr_02\1.out">
+    <None Include="1.out">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="D:\FP II\Laboratorio\Juez\pr_02\pr_02\2.in">
+    <None Include="2.in">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="D:\FP II\Laboratorio\Juez\pr_02\pr_02\2.out">
+    <None Include="2.out">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="prob-DG_Practica02_Realizar movimiento.pdf">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="D:\FP II\Laboratorio\Juez\pr_02\pr_02\juego.cpp">
+    <ClCompile Include="juego.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\FP II\Laboratorio\Juez\pr_02\pr_02\main.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\FP II\Laboratorio\Juez\pr_02\pr_02\mina.cpp">
+    <ClCompile Include="mina.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="D:\FP II\Laboratorio\Juez\pr_02\pr_02\juego.h">
+    <ClInclude Include="juego.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="D:\FP II\Laboratorio\Juez\pr_02\pr_02\mina.h">
+    <ClInclude Include="mina.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
