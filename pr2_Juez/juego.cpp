@@ -28,10 +28,11 @@ void cargar_juego(tJuego& juego, std::istream& input) {
 void dibujar(const tJuego& juego) {
 	//Visualiza los contadores y tambien llama al dibujar mina
 	// Manda dibujar el plano de la mina a la escala que tiene guardada en las opciones del juego
-	for (int i = 0; i < juego.mina.posFila; i++) {
-		for (int j = 0; j < juego.mina.posColumna; j++) {
-			cout << juego.mina.planoMina[i][j];
+	for (int i = 0; i < juego.mina.nFilas; i++) {
+		for (int j = 0; j < juego.mina.nColumnas; j++) {
+			cout << getChar(juego.mina.planoMina[i][j]);
 		}
+		cout << endl;
 	}
 }
 /*
@@ -67,7 +68,7 @@ istream& operator<<(std::istream& movimientos, tTecla& tecla)
 { /******LECTURA DE LA TECLA DE FICHERO, NO DE USUARIO******/
 	//lee del ﬂujo de entrada movimientos un movimiento y devuelve el valor del tipo enumerado correspondiente
 	char dir;
-	movimientos >> dir;
+	movimientos.get(dir);
 	//cin.sync();
 	//dir = _getch(); // dir: tipo int
 	//if (dir == 0xe0) { //TECLA ESPECIAL
@@ -88,6 +89,8 @@ istream& operator<<(std::istream& movimientos, tTecla& tecla)
 	case 'S': //FIN DE MOVIMIENTOS, EL MINERO SE SIENTA
 		tecla = SALIR;
 		break;
+	default:
+		tecla = SALIR;
 	}
 	return movimientos;
 }
@@ -131,13 +134,18 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 			break;
 		case TIERRA:
 			juego.mina.planoMina[x][y] = MINERO; //Movemos el minero
-			juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = TIERRA; //Ponemos tierra donde estaba antes el miner
+			juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = LIBRE; //Ponemos tierra donde estaba antes el miner
 			//Actualizamos la posicion del minero
 			juego.mina.posFila = x;
 			juego.mina.posColumna = y;
 			break;
 		case GEMA:
-			//TODO
+			juego.mina.planoMina[x][y] = MINERO; //Movemos el minero
+			juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = LIBRE; //Ponemos tierra donde estaba antes el miner
+			//Actualizamos la posicion del minero
+			juego.mina.posFila = x;
+			juego.mina.posColumna = y;		
+			//Actualizar el contador de gemas
 			break;
 		case PIEDRA:
 			//TODO
@@ -146,7 +154,12 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 			//TODO
 			break;
 		case SALIDA:
-			//TODO
+			juego.mina.planoMina[x][y] = MINERO; //Movemos el minero
+			juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = LIBRE; //Ponemos tierra donde estaba antes el miner
+			//Actualizamos la posicion del minero
+			juego.mina.posFila = x;
+			juego.mina.posColumna = y;
+			//Actualizar el contador de gemas
 			break;
 		case MINERO:
 			//TODO
@@ -169,7 +182,7 @@ void jugar(tJuego& juego, std::istream& entrada, std::istream& movimientos) {
 	
 	tTecla tecla = ARRIBA;
 
-	while (tecla == ARRIBA || tecla == ABAJO || tecla == DCHA || tecla == IZDA || tecla == SALIR) {
+	while (tecla != SALIR) {
 		leerMovimiento(juego, tecla, movimientos); //Modifica el valor de tecla
 		realizarMovimiento(juego, tecla);
 	}
