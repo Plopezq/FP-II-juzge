@@ -166,9 +166,10 @@ void jugar(tJuego& juego, std::istream& entrada, std::istream& movimientos) {
 		del desarrollo de la practica sera necesario tenerlos diferenciados.
 	*/
 	cargar_juego(juego, entrada); //Carga la mina e inicializa TODO el juego con sus contadores, etc...
-	tTecla tecla;
-	leerMovimiento(juego, tecla, movimientos); //Modifica el valor de tecla
-	while (tecla != 1) {
+	
+	tTecla tecla = ARRIBA;
+
+	while (tecla == ARRIBA || tecla == ABAJO || tecla == DCHA || tecla == IZDA || tecla == SALIR) {
 		leerMovimiento(juego, tecla, movimientos); //Modifica el valor de tecla
 		realizarMovimiento(juego, tecla);
 	}
