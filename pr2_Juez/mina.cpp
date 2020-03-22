@@ -42,7 +42,7 @@ void cargar_mina(istream& fichero, tMina& mina) {
 	}
 }
 char getChar(tElemento ele) { //tElemento = tCasilla
-	char aux;
+	char aux = ' ';
 	switch (ele)
 	{
 	case PIEDRA:

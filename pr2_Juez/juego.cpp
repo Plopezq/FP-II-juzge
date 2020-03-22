@@ -1,6 +1,5 @@
 ﻿#include<stdio.h>
 #include<iostream>
-#include <conio.h>
 #include <string>
 
 #include "juego.h"

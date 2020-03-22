@@ -16,7 +16,6 @@ void resuelveCaso() {
     tJuego juego;
     juego.escalaJuego = escala;
     juego.opcionMov = teclado;
-    tTecla tecla;
     jugar(juego, std::cin, std::cin);
     //Aqui ya ha realizado el minero todos los movimientos
     //Mostrar movimiento
