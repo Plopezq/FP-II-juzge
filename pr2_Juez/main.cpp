@@ -4,6 +4,8 @@
 #include <vector>
 #include "juego.h"
 
+//Pablo Lopez y Sergio Sanchez
+// pablop14@ucm.es
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
@@ -17,7 +19,20 @@ void resuelveCaso() {
     tTecla tecla;
     jugar(juego, std::cin, std::cin);
     //Aqui ya ha realizado el minero todos los movimientos
+    //Mostrar movimiento
+    cout << "Movimientos: " << juego.contMov << endl;
+    //Mostrar Gemas
+    cout << "Gemas: " << juego.contGemas << endl;
+
     dibujar(juego);
+
+    //Mina recorrida o pide rescate
+    if (juego.estadoMinero == ABANDONO) {
+        cout << "Pide rescate" << endl;
+    }
+    else {
+        cout << "Mina recorrida" << endl;
+    }
     /*La funcion resuelveCaso lee los parametros del juego:
      escala del dibujo y entrada de movimientos por teclado; 
      y llama a la funcion jugar. Al llamar a la funcion se 
@@ -32,7 +47,7 @@ void resuelveCaso() {
 int main() {
 
 #ifndef DOMJUDGE
-    std::ifstream in("1.in");
+    std::ifstream in("2.in");
     auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
 #endif
 

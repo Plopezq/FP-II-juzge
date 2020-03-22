@@ -17,13 +17,8 @@ void cargar_juego(tJuego& juego, std::istream& input) {
 	//Inicializo el juego
 	juego.contGemas = 0;
 	juego.contMov = 0;
-	//juego.contTNT = 0;
-	/**************Leo la mina***************/
-	//string aux = to_string(nivel);
-	//aux += ".in";
-	//ifstream archivo;
-	//input.open(aux);
-		cargar_mina(input, juego.mina);
+	juego.estadoMinero = EXPLORANDO;
+	cargar_mina(input, juego.mina);
 }
 void dibujar(const tJuego& juego) {
 	//Visualiza los contadores y tambien llama al dibujar mina
@@ -66,13 +61,9 @@ tTecla leerTecla() {
 }*/
 istream& operator<<(std::istream& movimientos, tTecla& tecla)
 { /******LECTURA DE LA TECLA DE FICHERO, NO DE USUARIO******/
-	//lee del ﬂujo de entrada movimientos un movimiento y devuelve el valor del tipo enumerado correspondiente
 	char dir;
 	movimientos.get(dir);
-	//cin.sync();
-	//dir = _getch(); // dir: tipo int
-	//if (dir == 0xe0) { //TECLA ESPECIAL
-		//dir = _getch();
+
 	switch (dir) {
 	case 'A': //ARRIBA
 		tecla = ARRIBA;
@@ -89,8 +80,9 @@ istream& operator<<(std::istream& movimientos, tTecla& tecla)
 	case 'S': //FIN DE MOVIMIENTOS, EL MINERO SE SIENTA
 		tecla = SALIR;
 		break;
-	default:
-		tecla = SALIR;
+	case '\n':
+		tecla = NADA;
+		break;
 	}
 	return movimientos;
 }
@@ -121,6 +113,7 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 	int x = juego.mina.posFila + tdirs4[aux][0];
 	int y = juego.mina.posColumna + tdirs4[aux][1];
 
+	juego.contMov++;
 	//HASTA AQUI FUNCIONA BIEN, depurando
 	if (dentroPlano(juego.mina, x, y) )  { //Si el minero se quiere mover dentro del pano.
 		//typedef enum { LIBRE, TIERRA, GEMA, PIEDRA, MURO, SALIDA, MINERO, DINAMITA } tElemento;
@@ -146,12 +139,54 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 			juego.mina.posFila = x;
 			juego.mina.posColumna = y;		
 			//Actualizar el contador de gemas
+			juego.contGemas++;
 			break;
-		case PIEDRA:
-			//TODO
+		case PIEDRA: //La piedra esta en x, y (Donde se quiere mover el minero)
+			//Si el minero viene por la derecha
+			if (juego.mina.planoMina[x][y-1] == LIBRE && aux == 3) {
+				//Movemos la piedra
+				juego.mina.planoMina[x][y - 1] = PIEDRA;
+				//Movemos el minero
+				juego.mina.planoMina[x][y] = MINERO;
+				//Ponemos libre donde estaba antes el miner0
+				juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = LIBRE; 
+				//Actualizamos la posicion del minero
+				juego.mina.posFila = x;
+				juego.mina.posColumna = y;
+			}
+
+			//Si el minero viene por la izquierda
+			if (juego.mina.planoMina[x][y + 1] == LIBRE && aux == 2) {
+				//Movemos la piedra
+				juego.mina.planoMina[x][y + 1] = PIEDRA;
+				//Movemos el minero
+				juego.mina.planoMina[x][y] = MINERO;
+				//Ponemos libre donde estaba antes el minero
+				juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = LIBRE;
+				//Actualizamos la posicion del minero
+				juego.mina.posFila = x;
+				juego.mina.posColumna = y;
+			}
+			//Si el minero viene por abajo
+			if (juego.mina.planoMina[x - 1][y] == LIBRE && aux == 0) {
+				//Movemos la piedra
+				juego.mina.planoMina[x - 1][y] = PIEDRA;
+				//Movemos el minero
+				juego.mina.planoMina[x][y] = MINERO;
+				//Ponemos libre donde estaba antes el minero
+				juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = LIBRE;
+				//Actualizamos la posicion del minero
+				juego.mina.posFila = x;
+				juego.mina.posColumna = y;
+			}
+
+			//Si el minero viene por arriba: NO SE MUEVE
+				//La piedra esta siempre apoyada
+
+					
 			break;
 		case MURO:
-			//TODO
+			//NO HACE NADA
 			break;
 		case SALIDA:
 			juego.mina.planoMina[x][y] = MINERO; //Movemos el minero
@@ -159,13 +194,7 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 			//Actualizamos la posicion del minero
 			juego.mina.posFila = x;
 			juego.mina.posColumna = y;
-			//Actualizar el contador de gemas
-			break;
-		case MINERO:
-			//TODO
-			break;
-		case DINAMITA:
-			//TODO
+			juego.estadoMinero = EXITO;
 			break;
 		}
 	}
@@ -180,11 +209,12 @@ void jugar(tJuego& juego, std::istream& entrada, std::istream& movimientos) {
 	*/
 	cargar_juego(juego, entrada); //Carga la mina e inicializa TODO el juego con sus contadores, etc...
 	
-	tTecla tecla = ARRIBA;
+	tTecla tecla = NADA;
 
-	while (tecla != SALIR) {
 		leerMovimiento(juego, tecla, movimientos); //Modifica el valor de tecla
+	while (tecla != SALIR && tecla != NADA ) {
 		realizarMovimiento(juego, tecla);
+		leerMovimiento(juego, tecla, movimientos); //Modifica el valor de tecla
 	}
 
 }

@@ -1,5 +1,4 @@
 #include <iomanip>
-#include <Windows.h>
 #include <iostream>
 
 using namespace std;
