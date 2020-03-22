@@ -57,9 +57,6 @@ char getChar(tElemento ele) { //tElemento = tCasilla
 	case TIERRA:
 		aux = '.';
 		break;
-	case DINAMITA:
-		aux = 'D';
-		break;
 	case GEMA:
 		aux = 'G';
 		break;

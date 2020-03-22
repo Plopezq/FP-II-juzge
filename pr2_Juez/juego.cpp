@@ -181,8 +181,7 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 
 			//Si el minero viene por arriba: NO SE MUEVE
 				//La piedra esta siempre apoyada
-
-					
+	
 			break;
 		case MURO:
 			//NO HACE NADA
@@ -194,6 +193,9 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 			juego.mina.posFila = x;
 			juego.mina.posColumna = y;
 			juego.estadoMinero = EXITO;
+			break;
+		case MINERO:
+			//NO HACE NADA
 			break;
 		}
 	}
