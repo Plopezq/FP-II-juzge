@@ -15,8 +15,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp">
+    <None Include="1.in">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="1.out">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="2.in">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="2.out">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="juego.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mina.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="juego.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mina.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

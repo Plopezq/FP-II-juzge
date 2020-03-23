@@ -18,6 +18,21 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="1.in" />
+    <None Include="1.out" />
+    <None Include="2.in" />
+    <None Include="2.out" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="juego.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="mina.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="juego.h" />
+    <ClInclude Include="mina.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{4BD6F816-0E5F-4EE6-9EF7-95B9100F9FED}</ProjectGuid>
@@ -137,9 +152,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Source.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
