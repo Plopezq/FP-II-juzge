@@ -27,3 +27,5 @@ istream& operator<< (std::istream& movimientos, tTecla& tecla);
 void leerMovimiento(tJuego& juego, tTecla& tecla, std::istream& movimientos);
 void realizarMovimiento(tJuego& juego, tTecla& mov);
 void jugar(tJuego& juego, std::istream& entrada, std::istream& movimientos);
+void comprobarCaidaIndividual(tJuego& juego, int i, int j);
+void caidaCascada(tJuego & juego);

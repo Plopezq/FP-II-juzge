@@ -114,7 +114,7 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 
 	juego.contMov++;
 	//HASTA AQUI FUNCIONA BIEN, depurando
-	if (dentroPlano(juego.mina, x, y) )  { //Si el minero se quiere mover dentro del pano.
+	if (dentroPlano(juego.mina, x, y)) { //Si el minero se quiere mover dentro del pano.
 		//typedef enum { LIBRE, TIERRA, GEMA, PIEDRA, MURO, SALIDA, MINERO, DINAMITA } tElemento;
 		switch (juego.mina.planoMina[x][y]) {
 		case LIBRE:
@@ -136,19 +136,19 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 			juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = LIBRE; //Ponemos tierra donde estaba antes el miner
 			//Actualizamos la posicion del minero
 			juego.mina.posFila = x;
-			juego.mina.posColumna = y;		
+			juego.mina.posColumna = y;
 			//Actualizar el contador de gemas
 			juego.contGemas++;
 			break;
 		case PIEDRA: //La piedra esta en x, y (Donde se quiere mover el minero)
 			//Si el minero viene por la derecha
-			if (juego.mina.planoMina[x][y-1] == LIBRE && aux == 3) {
+			if (juego.mina.planoMina[x][y - 1] == LIBRE && aux == 3) {
 				//Movemos la piedra
 				juego.mina.planoMina[x][y - 1] = PIEDRA;
 				//Movemos el minero
 				juego.mina.planoMina[x][y] = MINERO;
 				//Ponemos libre donde estaba antes el miner0
-				juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = LIBRE; 
+				juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = LIBRE;
 				//Actualizamos la posicion del minero
 				juego.mina.posFila = x;
 				juego.mina.posColumna = y;
@@ -178,10 +178,8 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 				juego.mina.posFila = x;
 				juego.mina.posColumna = y;
 			}
-
 			//Si el minero viene por arriba: NO SE MUEVE
 				//La piedra esta siempre apoyada
-	
 			break;
 		case MURO:
 			//NO HACE NADA
@@ -199,7 +197,7 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 			break;
 		}
 	}
-
+	caidaCascada(juego);
 }
 void jugar(tJuego& juego, std::istream& entrada, std::istream& movimientos) {
 	/* comienza cargando los datos de la mina, a continuacion va leyendo los movimientos 
@@ -216,6 +214,26 @@ void jugar(tJuego& juego, std::istream& entrada, std::istream& movimientos) {
 	while (tecla != SALIR && tecla != NADA ) {
 		realizarMovimiento(juego, tecla);
 		leerMovimiento(juego, tecla, movimientos); //Modifica el valor de tecla
+	}
+
+}
+
+void comprobarCaidaIndividual(tJuego& juego, int i, int j){
+	for (i; i < 0; i--) {
+		juego.mina.planoMina[i + 1][j] = PIEDRA;
+		juego.mina.planoMina[i][j] = LIBRE;
+	}
+
+}
+
+void caidaCascada(tJuego& juego){
+
+	for (int i = 0; i < juego.mina.nFilas; i++) {
+		for (int j = 0; j < juego.mina.nColumnas; j++) {
+			if (juego.mina.planoMina[i][j] == PIEDRA || juego.mina.planoMina[i][j] == GEMA) {
+				comprobarCaidaIndividual(juego, i, j);
+			}
+		}
 	}
 
 }
