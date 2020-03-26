@@ -43,6 +43,35 @@ void cargar_Mina(ifstream& fichero, tMina& mina){
 			fichero.get(c); // Para leer el \n 
 		}
 }
+char getChar(tElemento ele) { //tElemento = tCasilla
+	char aux = ' ';
+	switch (ele)
+	{
+	case PIEDRA:
+		aux = '@';
+		break;
+	case MURO:
+		aux = 'X';
+		break;
+	case MINERO:
+		aux = 'M';
+		break;
+	case TIERRA:
+		aux = '.';
+		break;
+	case GEMA:
+		aux = 'G';
+		break;
+	case SALIDA:
+		aux = 'S';
+		break;
+	case LIBRE:
+		aux = ' ';
+		break;
+	}
+	return aux;
+}
+
 void dibujar1_1(const tMina& mina){
 	system("cls");
 	for (int i = 0; i < mina.nFilas; i++ ) {
@@ -51,42 +80,42 @@ void dibujar1_1(const tMina& mina){
 			{
 			case PIEDRA:
 				colorFondo(4);
-				cout << "@";
+				cout << getChar(mina.planoMina[i][j]);
 				colorFondo(0);
 				break;
 			case MURO:
 				colorFondo(4);
-				cout << "X";
+				cout << getChar(mina.planoMina[i][j]);
 				colorFondo(0);
 				break;
 			case MINERO:
 				colorFondo(8);
-				cout << "M";
+				cout << getChar(mina.planoMina[i][j]);
 				colorFondo(0);
 				break;
 			case TIERRA:
 				colorFondo(4);
-				cout << ".";
+				cout << getChar(mina.planoMina[i][j]);
 				colorFondo(0);
 				break;
 			case DINAMITA:
 				colorFondo(4);
-				cout << "D";
+				cout << getChar(mina.planoMina[i][j]);				
 				colorFondo(0);
 				break;
 			case GEMA:
 				colorFondo(10);
-				cout << "G";
+				cout << getChar(mina.planoMina[i][j]);
 				colorFondo(0);
 				break;
 			case SALIDA:
 				colorFondo(4);
-				cout << "S";
+				cout << getChar(mina.planoMina[i][j]);
 				colorFondo(0);
 				break;
 			case LIBRE:
 				colorFondo(4);
-				cout << " ";
+				cout << getChar(mina.planoMina[i][j]);
 				colorFondo(0);
 				break;
 			}
@@ -95,7 +124,7 @@ void dibujar1_1(const tMina& mina){
 		cout << endl;
 	}
 }
-void dibujar1_3(const tMina& mina) {
+void dibujar3_1(const tMina& mina) {
 	//MATRICES AUXILIARESs
 	tPlanoCaracteres caracteres; //Guardamos los caracteres en tamaño 3x3
 	tPlanoColores coloresMatriz3x3; //Guardamos los colores en tamaño 3x3
@@ -116,8 +145,9 @@ void dibujar1_3(const tMina& mina) {
 		}
 		cout << endl;
 	}
+	cout << endl;
 }
-void dibuja3x3(tCasilla casilla, tPlanoCaracteres& caracteres, tPlanoColores& colores, int i, int j) {
+void dibuja3x3(tElemento casilla, tPlanoCaracteres& caracteres, tPlanoColores& colores, int i, int j) {
 	
 	//AQUI NO DEBO MODIFICAR i y j, porque sino altero la lectura en la función anterior.
 	for (int s = i * 3; s < (i * 3) + 3; s++) {
@@ -126,40 +156,49 @@ void dibuja3x3(tCasilla casilla, tPlanoCaracteres& caracteres, tPlanoColores& co
 			{
 			case PIEDRA:
 				colores.planoColores[s][w] = 4;
-				caracteres.planoCaracteres[s][w] = '@';
+				caracteres.planoCaracteres[s][w] = getChar(casilla);
 				break;
 			case MURO:
 				colores.planoColores[s][w] = 4;
-				caracteres.planoCaracteres[s][w] = 'X';
+				caracteres.planoCaracteres[s][w] = getChar(casilla);
 				break;
 			case MINERO:
 				colores.planoColores[s][w] = 8;
-				caracteres.planoCaracteres[s][w] = 'M';
+				caracteres.planoCaracteres[s][w] = getChar(casilla);
 				break;
 			case TIERRA:
 				colores.planoColores[s][w] = 4;
-				caracteres.planoCaracteres[s][w] = '.';
+				caracteres.planoCaracteres[s][w] = getChar(casilla);
 				break;
 			case DINAMITA:
 				colores.planoColores[s][w] = 4;
-				caracteres.planoCaracteres[s][w] = 'D';
+				caracteres.planoCaracteres[s][w] = getChar(casilla);
 				break;
 			case GEMA:
 				colores.planoColores[s][w] = 10;
-				caracteres.planoCaracteres[s][w] = 'G';
+				caracteres.planoCaracteres[s][w] = getChar(casilla);
 				break;
 			case SALIDA:
 				colores.planoColores[s][w] = 4;
-				caracteres.planoCaracteres[s][w] = 'S';
+				caracteres.planoCaracteres[s][w] = getChar(casilla);
 				break;
 			case LIBRE:
 				colores.planoColores[s][w] = 4;
-				caracteres.planoCaracteres[s][w] = ' ';
+				caracteres.planoCaracteres[s][w] = getChar(casilla);
 				break;
 			}
 		}
 	}
 }
+ostream& operator<<(ostream& out, tElemento const& e)
+{
+	/* Para escribir los valores del tipo enumerado.
+	El operador se sobrecarga para el tipo enumerado, no para la matriz.
+	La matriz se muestra con las funciones siguientes. */
+	out << getChar(e);
+	return out;
+}
+
 void colorFondo(int color)
 {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);     

@@ -34,22 +34,22 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\1.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\2.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\3.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\4.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\movimientos.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="Comentarios.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="2.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="3.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="4.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="movimientos.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

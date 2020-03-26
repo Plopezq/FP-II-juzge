@@ -147,12 +147,12 @@
     <ClInclude Include="mina.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\1.txt" />
-    <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\2.txt" />
-    <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\3.txt" />
-    <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\4.txt" />
-    <Text Include="..\..\..\..\Documents\FP II\Laboratorio\Practica 1\movimientos.txt" />
+    <Text Include="1.txt" />
+    <Text Include="2.txt" />
+    <Text Include="3.txt" />
+    <Text Include="4.txt" />
     <Text Include="Comentarios.txt" />
+    <Text Include="movimientos.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

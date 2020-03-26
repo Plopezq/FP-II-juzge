@@ -21,7 +21,6 @@ typedef struct {
 //PROTOTIPOS
 void colorFondo(int color);
 void cargar_juego(tJuego& juego, std::istream& input);
-bool hacerMovimiento(tJuego& juego, tTecla tecla);
 void dibujar(const tJuego& juego);
 istream& operator<< (std::istream& movimientos, tTecla& tecla);
 void leerMovimiento(tJuego& juego, tTecla& tecla, std::istream& movimientos);

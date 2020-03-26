@@ -18,10 +18,6 @@ void resuelveCaso() {
     juego.opcionMov = teclado;
     jugar(juego, std::cin, std::cin);
     //Aqui ya ha realizado el minero todos los movimientos
-    //Mostrar movimiento
-    cout << "Movimientos: " << juego.contMov << endl;
-    //Mostrar Gemas
-    cout << "Gemas: " << juego.contGemas << endl;
 
     dibujar(juego);
 

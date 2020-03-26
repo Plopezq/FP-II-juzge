@@ -1,6 +1,6 @@
 #include "mina.h"
 
-typedef enum {ARRIBA, ABAJO, DCHA, IZDA, SALIR, NADA, TNT} tTecla;
+typedef enum { ARRIBA, ABAJO, DCHA, IZDA, SALIR, NADA, TNT} tTecla; 
 typedef enum {
 	EXPLORANDO, //El minero continua buscando diamantes por la mina
 	EXITO, //El minero consigue llegar a la salida
@@ -15,12 +15,15 @@ typedef struct {
 	tEstado estadoMinero;
 	int escalaJuego; //La opcion seleccionada para dibujar el juego 1: escala 1:1 y 2 escala 1:3
 	int opcionMov; //Opcion elegida para introducir movimientos: por teclado (1) o por fichero (2)
-	//int contTNT; 
+	int contTNT; 
 }tJuego;
 
 //PROTOTIPOS
 void colorFondo(int color);
 bool cargar_juego( tJuego& juego, int nivel);
-bool hacerMovimiento(tJuego& juego, tTecla tecla);
+void realizarMovimiento(tJuego& juego, tTecla& mov);
 void dibujar(const tJuego& juego);
-
+void jugar(tJuego& juego, std::istream& entrada, std::istream& movimientos); //TODO modificar parametros de entrada
+istream& operator<< (std::istream& movimientos, tTecla& tecla);
+void leerMovimiento(tJuego& juego, tTecla& tecla, std::istream& movimientos);
+void comprobarCaida(tJuego& juego, bool& seguirCayendo);

@@ -21,6 +21,11 @@ void cargar_juego(tJuego& juego, std::istream& input) {
 }
 void dibujar(const tJuego& juego) {
 	//Visualiza los contadores y tambien llama al dibujar mina
+		//Mostrar movimiento
+	cout << "Movimientos: " << juego.contMov << endl;
+		//Mostrar Gemas
+	cout << "Gemas: " << juego.contGemas << endl;
+
 	// Manda dibujar el plano de la mina a la escala que tiene guardada en las opciones del juego
 	for (int i = 0; i < juego.mina.nFilas; i++) {
 		for (int j = 0; j < juego.mina.nColumnas; j++) {
