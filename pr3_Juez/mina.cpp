@@ -119,7 +119,7 @@ ostream& operator<<(ostream& out, tElemento const& e)
 bool dentroPlano(tMina const& mina, int x, int y) {
 	//Comprueba si una posicion esta dentro del plano
 	bool dentro = false;
-	if (x < mina.nFilas && y < mina.nColumnas) {
+	if (x >= 0 && x < mina.nFilas && y >= 0 && y < mina.nColumnas) {
 		dentro = true;
 	}
 	return dentro;

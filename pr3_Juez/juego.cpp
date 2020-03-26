@@ -166,6 +166,7 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 				juego.mina.posFila = x;
 				juego.mina.posColumna = y;
 			}
+			/*
 			//Si el minero viene por abajo
 			if (juego.mina.planoMina[x - 1][y] == LIBRE && aux == 0) {
 				//Movemos la piedra
@@ -177,7 +178,7 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 				//Actualizamos la posicion del minero
 				juego.mina.posFila = x;
 				juego.mina.posColumna = y;
-			}
+			}*/
 			//Si el minero viene por arriba: NO SE MUEVE
 				//La piedra esta siempre apoyada
 			break;
@@ -197,7 +198,13 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 			break;
 		}
 	}
-	caidaCascada(juego);
+
+	bool seguirCayendo = true;
+	while (seguirCayendo) {
+		comprobarCaida(juego, seguirCayendo);
+	}
+
+
 }
 void jugar(tJuego& juego, std::istream& entrada, std::istream& movimientos) {
 	/* comienza cargando los datos de la mina, a continuacion va leyendo los movimientos 
@@ -218,14 +225,24 @@ void jugar(tJuego& juego, std::istream& entrada, std::istream& movimientos) {
 
 }
 
-void comprobarCaidaIndividual(tJuego& juego, int i, int j){
-	for (i; i < 0; i--) {
-		juego.mina.planoMina[i + 1][j] = PIEDRA;
-		juego.mina.planoMina[i][j] = LIBRE;
+void comprobarCaida(tJuego& juego, bool &seguirCayendo){
+	 seguirCayendo = false;
+	for (int i = 0; i < juego.mina.nFilas; i++) {
+		for (int j = 0; j < juego.mina.nColumnas; j++) {
+			if (juego.mina.planoMina[i][j] == PIEDRA && juego.mina.planoMina[i + 1][j] == LIBRE) {
+				juego.mina.planoMina[i + 1][j] = PIEDRA;
+				juego.mina.planoMina[i][j] = LIBRE;
+				seguirCayendo = true;
+			}
+			if (juego.mina.planoMina[i][j] == GEMA && juego.mina.planoMina[i + 1][j] == LIBRE) {
+				juego.mina.planoMina[i + 1][j] = GEMA;
+				juego.mina.planoMina[i][j] = LIBRE;
+				seguirCayendo = true;
+			}
+		}
 	}
-
 }
-
+/*
 void caidaCascada(tJuego& juego){
 
 	for (int i = 0; i < juego.mina.nFilas; i++) {
@@ -236,5 +253,5 @@ void caidaCascada(tJuego& juego){
 		}
 	}
 
-}
+}*/
 
