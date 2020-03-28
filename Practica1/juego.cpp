@@ -16,7 +16,7 @@ bool cargar_juego(tJuego& juego, int nivel) {
 	juego.contGemas = 0;
 	juego.contMov = 0;
 	juego.contTNT = 0;
-	juego.escalaJuego = 3; //Este valor se lo asignara la interfaz, el menu
+	juego.estadoMinero = EXPLORANDO;
 	//Leo la mina
 	string aux = to_string(nivel);
 	aux += ".txt";
@@ -30,17 +30,14 @@ bool cargar_juego(tJuego& juego, int nivel) {
 	return cargado;
 }
 
-void jugar(tJuego & juego, std::istream & entrada, std::istream & movimientos) {
+void jugarFichero(tJuego & juego, std::istream & movimientos) {
 	/* comienza cargando los datos de la mina, a continuacion va leyendo los movimientos
 		y para cada uno modiﬁca la mina de acuerdo con el movimiento.
 		Los movimientos no los almacena, los trata segun los va leyendo.
 		La funcion debe recibir los dos ﬂujos de entrada, porque en fases posteriores
 		del desarrollo de la practica sera necesario tenerlos diferenciados.
 	*/
-	cargar_juego(juego, entrada); //Carga la mina e inicializa TODO el juego con sus contadores, etc...
-
 	tTecla tecla = NADA;
-
 	leerMovimiento(juego, tecla, movimientos); //Modifica el valor de tecla
 	while (tecla != SALIR && tecla != NADA) {
 		realizarMovimiento(juego, tecla);
@@ -49,6 +46,24 @@ void jugar(tJuego & juego, std::istream & entrada, std::istream & movimientos) {
 
 }
 
+void jugarTeclado(tJuego& juego) {
+	/* comienza cargando los datos de la mina, a continuacion va leyendo los movimientos
+		y para cada uno modiﬁca la mina de acuerdo con el movimiento.
+		Los movimientos no los almacena, los trata segun los va leyendo.
+		La funcion debe recibir los dos ﬂujos de entrada, porque en fases posteriores
+		del desarrollo de la practica sera necesario tenerlos diferenciados.
+	*/
+	//cargar_juego(juego, entrada); //Carga la mina e inicializa TODO el juego con sus contadores, etc...
+
+	tTecla tecla = NADA;
+
+	tecla = leerTecla();
+	//if (tecla != SALIR && tecla != NADA) {
+		realizarMovimiento(juego, tecla);
+		//tecla = leerTecla();
+	//}
+
+}
 
 void realizarMovimiento(tJuego& juego, tTecla& mov) {
 	/*se encarga de realizar el movimiento indicado en el parametro mov modiﬁcando
@@ -202,7 +217,6 @@ tTecla leerTecla() {
 	}
 	else if (dir == 27) {// Tecla ESC
 		tecla = SALIR;
-
 	}
 	return tecla;
 }

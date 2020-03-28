@@ -124,7 +124,7 @@ void dibujar1_1(const tMina& mina){
 		cout << endl;
 	}
 }
-void dibujar3_1(const tMina& mina) {
+void dibujar1_3(const tMina& mina) {
 	//MATRICES AUXILIARESs
 	tPlanoCaracteres caracteres; //Guardamos los caracteres en tamaño 3x3
 	tPlanoColores coloresMatriz3x3; //Guardamos los colores en tamaño 3x3
@@ -203,5 +203,15 @@ void colorFondo(int color)
 {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);     
 	SetConsoleTextAttribute(handle, 15 | (color << 4));
+}
+
+
+bool dentroPlano(tMina const& mina, int x, int y) {
+	//Comprueba si una posicion esta dentro del plano
+	bool dentro = false;
+	if (x >= 0 && x < mina.nFilas && y >= 0 && y < mina.nColumnas) {
+		dentro = true;
+	}
+	return dentro;
 }
 

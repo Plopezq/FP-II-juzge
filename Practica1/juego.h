@@ -23,7 +23,9 @@ void colorFondo(int color);
 bool cargar_juego( tJuego& juego, int nivel);
 void realizarMovimiento(tJuego& juego, tTecla& mov);
 void dibujar(const tJuego& juego);
-void jugar(tJuego& juego, std::istream& entrada, std::istream& movimientos); //TODO modificar parametros de entrada
+void jugarFichero(tJuego& juego, std::istream& movimientos);
+void jugarTeclado(tJuego& juego);
 istream& operator<< (std::istream& movimientos, tTecla& tecla);
 void leerMovimiento(tJuego& juego, tTecla& tecla, std::istream& movimientos);
 void comprobarCaida(tJuego& juego, bool& seguirCayendo);
+tTecla leerTecla();

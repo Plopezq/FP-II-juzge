@@ -46,7 +46,7 @@ void resuelveCaso() {
 int main() {
 
 #ifndef DOMJUDGE
-    std::ifstream in("1.in");
+    std::ifstream in("2.in");
     auto cinbuf = std::cin.rdbuf(in.rdbuf()); //save old buf and redirect std::cin to casos.txt
 #endif
 
