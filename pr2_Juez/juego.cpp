@@ -29,35 +29,7 @@ void dibujar(const tJuego& juego) {
 		cout << endl;
 	}
 }
-/*
-tTecla leerTecla() {
-	tTecla tecla = ARRIBA;
-	int dir;
-	cin.sync();
-	dir = _getch(); // dir: tipo int
-	if (dir == 0xe0) { //TECLA ESPECIAL
-		dir = _getch();
-		switch (dir) {
-		case 72: //ARRIBA
-			tecla = ARRIBA;
-			break;
-		case 80: //ABAJO
-			tecla = ABAJO;
-			break;
-		case 77: //DERECHA 
-			tecla = DCHA;
-			break;
-		case 75: //IZQUIERDA
-			tecla = IZDA;
-			break;
-		}
-	}
-	else if (dir == 27){// Tecla ESC
-		tecla = SALIR;
 
-	}
-	return tecla;
-}*/
 istream& operator<<(std::istream& movimientos, tTecla& tecla)
 { /******LECTURA DE LA TECLA DE FICHERO, NO DE USUARIO******/
 	char dir;

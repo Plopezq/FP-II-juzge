@@ -80,13 +80,12 @@ void dibujar1_1(const tMina& mina) {
 }
 void dibujar3_1(const tMina& mina) {
 	//MATRICES AUXILIARESs
-	tPlanoCaracteres caracteres; //Guardamos los caracteres en tamaño 3x3
-	tPlanoColores coloresMatriz3x3; //Guardamos los colores en tamaño 3x3
+	tPlanoCaracteres caracteres = {0}; //Guardamos los caracteres en tamaño 3x3
 
 	//Inicializamos las dos matrices auxiliares, la de caracteres y la de colores
 	for (int i = 0; i < mina.nFilas; i++) {
 		for (int j = 0; j < mina.nColumnas; j++) {
-			dibuja3x3(mina.planoMina[i][j], caracteres, coloresMatriz3x3, i, j);
+			dibuja3x3(mina.planoMina[i][j], caracteres, i, j);
 		}
 	}
 
@@ -99,7 +98,7 @@ void dibujar3_1(const tMina& mina) {
 	}
 	cout << endl;
 }
-void dibuja3x3(tElemento casilla, tPlanoCaracteres& caracteres, tPlanoColores& colores, int i, int j) {
+void dibuja3x3(tElemento casilla, tPlanoCaracteres& caracteres, int i, int j) {
 	//AQUI NO DEBO MODIFICAR i y j, porque sino altero la lectura en la función anterior.
 	for (int s = i * 3; s < (i * 3) + 3; s++) {
 		for (int w = j * 3; w < (j * 3) + 3; w++) {
