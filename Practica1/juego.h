@@ -10,12 +10,12 @@ typedef enum {
 
 typedef struct {
 	tMina mina;
-	int contGemas;
-	int contMov;
-	tEstado estadoMinero;
-	int escalaJuego; //La opcion seleccionada para dibujar el juego 1: escala 1:1 y 2 escala 1:3
-	int opcionMov; //Opcion elegida para introducir movimientos: por teclado (1) o por fichero (2)
-	int contTNT; 
+	int contGemas = 0;
+	int contMov = 0;
+	tEstado estadoMinero = EXPLORANDO;
+	int escalaJuego = 0; //La opcion seleccionada para dibujar el juego 1: escala 1:1 y 2 escala 1:3
+	int opcionMov = 0; //Opcion elegida para introducir movimientos: por teclado (1) o por fichero (2)
+	int contTNT = 0;
 }tJuego;
 
 //PROTOTIPOS

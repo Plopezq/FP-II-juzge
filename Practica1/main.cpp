@@ -10,8 +10,12 @@ void mostrarMenu2(tJuego& juego);
 
 int main() {
 
-	tJuego juego{};
-
+	tJuego juego;
+	for (int i = 0; i < 50; i++) {
+		for (int j = 0; j < 50; j++) {
+			juego.mina.planoMina[i][j] = VACIO;
+		}
+	}
 	mostrarMenu(juego);
 	mostrarMenu2(juego);        
 	cargar_juego(juego, 1);
