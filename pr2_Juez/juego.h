@@ -1,7 +1,7 @@
 #include "mina.h"
 #include <fstream>
 
-typedef enum { ARRIBA, ABAJO, DCHA, IZDA, SALIR, NADA } tTecla;
+typedef enum { ARRIBA, ABAJO, DCHA, IZDA, SALIR, NADA} tTecla;
 typedef enum {
 	EXPLORANDO, //El minero continua buscando diamantes por la mina
 	EXITO, //El minero consigue llegar a la salida

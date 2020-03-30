@@ -8,6 +8,7 @@ void cargar_mina(istream& fichero, tMina& mina) {
 	//Supongo que el ifstream ya está abierto y cargado el nivel correcto
 	char c;
 	fichero >> mina.nFilas >> mina.nColumnas; //Guardo las filas y columnas de la mina
+
 	fichero.get(c); // Para leer el \n 
 	for (int i = 0; i < mina.nFilas; i++) { //Leo las filas
 		for (int j = 0; j < mina.nColumnas; j++) { //Leo las columnas
