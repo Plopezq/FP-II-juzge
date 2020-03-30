@@ -9,14 +9,14 @@ const int MAX = 50;
 typedef enum { LIBRE, TIERRA, GEMA, PIEDRA, MURO, SALIDA, MINERO } tElemento;
 typedef tElemento tPlano[MAX][MAX];
 typedef struct {
-	tPlano planoMina = {};
+	tPlano planoMina;
 	int nFilas = 0;
 	int nColumnas = 0; //Numero de filas y columnas del array bidimensional (de la mina)
 	int posFila = 0;
 	int posColumna = 0; //Posicion donde se encuentra el minero.
 }tMina;
 typedef struct {
-	char planoCaracteres[3 * MAX][3 * MAX] = {}; // esta matriz guarda los caracteres por cada casilla.
+	char planoCaracteres[3 * MAX][3 * MAX];// esta matriz guarda los caracteres por cada casilla.
 }tPlanoCaracteres;
 
 

@@ -80,7 +80,7 @@ void dibujar1_1(const tMina& mina) {
 }
 void dibujar3_1(const tMina& mina) {
 	//MATRICES AUXILIARESs
-	tPlanoCaracteres caracteres = {0}; //Guardamos los caracteres en tamaño 3x3
+	tPlanoCaracteres caracteres;//Guardamos los caracteres en tamaño 3x3
 
 	//Inicializamos las dos matrices auxiliares, la de caracteres y la de colores
 	for (int i = 0; i < mina.nFilas; i++) {

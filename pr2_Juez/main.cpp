@@ -14,6 +14,11 @@ void resuelveCaso() {
     int teclado; std::cin >> teclado;
     //tJuego juego(escala, 0, teclado);
     tJuego juego;
+    for (int i = 0; i < juego.mina.nFilas; i ++) {
+        for (int j = 0; j < juego.mina.nColumnas; j++) {
+            juego.mina.planoMina[i][j] = LIBRE;
+        }
+    }
     juego.escalaJuego = escala;
     juego.opcionMov = teclado;
     jugar(juego, std::cin, std::cin);
