@@ -42,7 +42,24 @@ bool resolver(const tSudoku& sudoku) {
         }
     }
 
-
+    //Compruebo cuadrantes
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            if ( (i == 0 && j == 0)||(i == 0 && j == 3)||(i == 0 && j == 6)||
+                (i == 3 && j == 0 )||(i == 3 && j == 3)||(i == 3 && j == 6)||
+                (i == 6 && j == 0 )||(i == 6 && j == 3)||(i == 6 && j == 6) ) {
+                int aux = 0;
+                for (int w = i; w < i + 3; w++) {
+                    for (int s = j; s < j + 3; s++) {
+                        aux += sudoku.sudoku[w][s];
+                    }
+                }
+                if (aux != 45) {
+                    correcto = false;
+                }
+            }
+        }
+    }
 
 
 
@@ -62,6 +79,12 @@ void resuelveCaso() {
     bool sol = resolver(sudoku);
 
     // escribir solución
+    if (sol) {
+        cout << "SI" << endl;
+    }
+    else {
+        cout << "NO" << endl;
+    }
 
 }
 
