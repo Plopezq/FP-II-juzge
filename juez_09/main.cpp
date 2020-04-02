@@ -29,7 +29,6 @@ typedef struct {
 // función que resuelve el problema
 // comentario sobre el coste, O(f(N)), donde N es ...
 tPosicion resolver( tImagen imagen, tPatron patron) {
-    bool aux = false;
     tPosicion pos;
     int sum = 0;
 
@@ -64,8 +63,8 @@ bool resuelveCaso() {
     //Inicializo las matrices a - 1
     for (int r = 0; r < 40; r++) {
         for (int z = 0; z < 40; z++) {
-            imagen.imagen[r][z] = -1;
-            patron.patron[r][z] = -1;
+            imagen.imagen[r][z] = 0;
+            patron.patron[r][z] = 0;
         }
     }
     // leer los datos de la entrada
@@ -76,7 +75,6 @@ bool resuelveCaso() {
             cin >> imagen.imagen[i][j];
         }
     }
-
     cin >> patron.numFilasPatron;
     cin >> patron.numColumnasPatron;
     for (int s = 0; s < patron.numFilasPatron; s++) {
@@ -84,11 +82,8 @@ bool resuelveCaso() {
             cin >> patron.patron[s][w];
         }
     }
-
-
     if (!std::cin)  // fin de la entrada
         return false;
-
     tPosicion sol = resolver(imagen, patron);
 
     // escribir sol
@@ -98,8 +93,6 @@ bool resuelveCaso() {
     else {
         cout << "NO" << endl;
     }
-
-
     return true;
 }
 
