@@ -50,7 +50,6 @@ bool resolver(tCaso caso) {
         }
     }
 
-
     //Aqui buscamos el mayor de la fila y el menor de la columna
     for (int i = 0; i < caso.numFilas; i++) {
         for (int j = 0; j < caso.numColumnas; j++) {
