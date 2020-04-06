@@ -11,7 +11,7 @@
 using namespace std;
 
 const int NUM_DIRECCIONES = 4;                  //IZQ       DRCHA   ARRIBA  ABAJO
-const pair <int, int > dirs4[NUM_DIRECCIONES] = { { -1 ,0} ,{1 ,0} ,{0 ,1} ,{0 , -1} };
+const pair <int, int > dirs4[NUM_DIRECCIONES] = { { 0 ,-1} ,{0 ,1} ,{-1 ,0} ,{1 , 0} };
 
 typedef struct {
     int matriz[50][50];
@@ -28,9 +28,25 @@ typedef struct {
 // comentario sobre el coste, O(f(N)), donde N es ...
 tResultado resolver(tMatriz caso) {
     tResultado resul;
+    int suma = 0;
+    for (int i = 0; i < caso.numColumnas; i++) {
+         suma = caso.matriz[i][i];
+        for (int d = 0; d < 4; d++) {
 
+            //Compruebo que a donde se quiere mover está dentro del array
+            if ( ( (i + dirs4[d].first >= 0) && (i + dirs4[d].first < caso.numFilas) )
+                && ( (i + dirs4[d].second >= 0) && (i + dirs4[d].second < caso.numColumnas)) ) {
 
+                suma += caso.matriz[i + dirs4[d].first][i + dirs4[d].second];
+            }
 
+        }
+
+        if (suma > resul.suma) {
+            resul.fila = i;
+            resul.suma = suma;
+        }
+    }
 
 
     return resul;
@@ -74,7 +90,7 @@ bool resuelveCaso() {
     tResultado sol = resolver(caso);
 
     // escribir sol
-
+    cout << sol.fila << " " << sol.suma << endl;
     return true;
 }
 
