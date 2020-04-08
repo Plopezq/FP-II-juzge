@@ -47,7 +47,7 @@ int main() {
 		cout << endl;
 	}
 	cout << endl << endl;
-	
+	/*
 	// Exploramos las casillas adyacentes a todas las casillas de la matriz--DINAMITA
 	for (int i = 0; i < m.nfila; i++) {
 		for (int j = 0; j < m.ncolumna; j++) {
@@ -78,7 +78,7 @@ int main() {
 			}
 			cout << endl;
 		}
-	}
+	}*/
 
 	// Vamos a explorar tres elementos por cada radial
 	cout << "   Exploramos tres coronas " << endl;
