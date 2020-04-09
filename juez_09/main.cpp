@@ -34,7 +34,7 @@ tPosicion resolver( tImagen imagen, tPatron patron) {
 
         for (int i = 0; i < imagen.numFilasImagen; i++) {
             for (int j = 0; j < imagen.numColumnasImagen; j++) {
-
+                sum = 0;
                 for (int s = 0; s < patron.numFilasPatron; s++) {
                     for (int w = 0; w < patron.numColumnasPatron; w++) {
                         if (imagen.imagen[i + s][j + w] == patron.patron[s][w]) {
@@ -63,8 +63,8 @@ bool resuelveCaso() {
     //Inicializo las matrices a - 1
     for (int r = 0; r < 40; r++) {
         for (int z = 0; z < 40; z++) {
-            imagen.imagen[r][z] = 0;
-            patron.patron[r][z] = 0;
+            imagen.imagen[r][z] = -1;
+            patron.patron[r][z] = -1;
         }
     }
     // leer los datos de la entrada
