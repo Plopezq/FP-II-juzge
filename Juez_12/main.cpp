@@ -68,15 +68,14 @@ int resolver(tCaso &caso) {
     for (int q = 0; q < caso.numFichas; q++) {
 
         //Jugadoor pone ficha
-        if(turno % 2 == 0){  //Jugador A - 1 - Par
+        if(turno == 0){  //Jugador A - 1 - Par
             caso.tablero.tablero[0][caso.colocaciones[q]] = 1;
             contA++;
             turno++;
-        }
-        else { //Jugador B - 2 - Impar
+        }else if(turno == 1){ //Jugador B - 2 - Impar
             caso.tablero.tablero[0][caso.colocaciones[q]] = 2;
             contB++;
-            turno++;
+            turno--;
         }
 
         //Caen fichas
@@ -97,22 +96,22 @@ int resolver(tCaso &caso) {
             for (int j = 0; j < caso.tablero.columnas; j++) {
                 //cout << "Exploramos casillas adyacentes a la casilla [" << i << "][" << j << "]: ";
                 for (int dir = 0; dir < 8; dir++) {
-                    int cont = 1;
-                    while (dentro_matriz(caso.tablero, i + (incF[dir] * cont), j + (incC[dir] * cont)) && cont < 4) {
+                    int cont2 = 1;
+                    while (dentro_matriz(caso.tablero, i + (incF[dir] * cont2), j + (incC[dir] * cont2)) && cont2 < 4) {
                         
-                        if (caso.tablero.tablero[i + (incF[dir] * cont)][j + (incC[dir] * cont)] == 1) {
+                        if (caso.tablero.tablero[i + (incF[dir] * cont2)][j + (incC[dir] * cont2)] == 1) {
                             aux1++;
-                            if (aux1 == 3) {
+                            if (aux1 == 3 && caso.tablero.tablero[i][j] == 1) {
                                 return 1;
                             }
                         }
-                        if (caso.tablero.tablero[i + (incF[dir] * cont)][j + (incC[dir] * cont)] == 2) {
+                        if (caso.tablero.tablero[i + (incF[dir] * cont2)][j + (incC[dir] * cont2)] == 2) {
                             aux2++;
-                            if (aux2 == 3) {
+                            if (aux2 == 3 && caso.tablero.tablero[i][j] == 2) {
                                 return 2;
                             }
                         }
-                        cont++;
+                        cont2++;
                     }
                     aux1 = 0;
                     aux2 = 0;
@@ -149,13 +148,13 @@ bool resuelveCaso() {
 
     int sol = resolver(caso);
 
-    
+    /*
     for (int i = 0; i < caso.tablero.filas; i++) {
         for (int j = 0; j < caso.tablero.columnas; j++) {
             cout << setw(2) << caso.tablero.tablero[i][j] << " ";
         }
         cout << endl;
-    }
+    }*/
     // escribir sol
     if (sol == 1) {
         cout << "Gana A" << endl;
@@ -166,7 +165,7 @@ bool resuelveCaso() {
 
     } 
     if (sol == 3) {
-        cout << "EMPATE" << endl;
+        cout << "Empate" << endl;
 
     }
     return true;
