@@ -24,6 +24,15 @@ typedef struct {
     int numPalabras = 0;
 }tPalabras;
 
+bool dentro_matriz(tMatriz t, int x, int y) {
+    if (x >= 0 && x < t.numFilas && y >= 0 && y < t.numColumnas) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 istream& operator>> (istream& in, tMatriz& m) { //LECTURA y GUARDADO
 
     for (int i = 0; i < m.numFilas; i++) {
@@ -37,7 +46,7 @@ istream& operator>> (istream& in, tMatriz& m) { //LECTURA y GUARDADO
 ostream& operator<< (ostream& out, tMatriz const& m) { //ESCRITURA
     for (int i = 0; i < m.numFilas; i++) {
         for (int j = 0; j < m.numColumnas; j++) {
-            out << m.matriz[i][j];
+            out << " " << m.matriz[i][j];
         }
         out << endl;
     }
@@ -45,64 +54,47 @@ ostream& operator<< (ostream& out, tMatriz const& m) { //ESCRITURA
 }
 // función que resuelve el problema
 // comentario sobre el coste, O(f(N)), donde N es ...
-tMatriz resolver(tMatriz sopa, tPalabras palabras, tMatriz resultado) {
+tMatriz resolver(tMatriz sopa, tPalabras palabras, tMatriz& solucion) {
+    bool encontrada = false;
 
- 
-    //1 - Recorrer la matriz 
-    for (int z = 0; z < palabras.numPalabras; z++) {//Palabras a buscar
-        bool encontrado = false;
+    for (int z = 0; z < palabras.numPalabras; z++) {
         for (int i = 0; i < sopa.numFilas; i++) {
             for (int j = 0; j < sopa.numColumnas; j++) {
-                int aux1 = 0; //Sentido natural
-                int aux2 = 0; //Sentido contrario
-                //Buscar en horizontal, mover la fila
-                for (int f = 0; f < palabras.palabras[z].size(); f++) {
-                    if (sopa.matriz[i][j + f] == palabras.palabras[z][f]) {
-                        aux1++;
+                //cout << "Exploramos casillas adyacentes a la casilla [" << i << "][" << j << "]: ";
+                for (int dir = 0; dir < 8; dir++) { //Cambio de direccion
+                    int cont = 0;
+                    int aux = 0;
+                   
+                    while (dentro_matriz(sopa, i + (incF[dir] * cont), j + (incC[dir] * cont)) && cont < palabras.palabras[z].size() ) {
+
+                       // cout << sopa.matriz[i + (incF[dir] * cont)][j + (incC[dir] * cont)];
+                       
+                        if (palabras.palabras[z][cont] == sopa.matriz[i + (incF[dir] * cont)][j + (incC[dir] * cont)]) {
+                            aux++;
+                        }
+                        
+                        if (aux == palabras.palabras[z].size()) {
+                            encontrada = true;
+                               
+                            for (int aux = 0; aux < palabras.palabras[z].size(); aux++) {
+                                solucion.matriz[i + (incF[dir] * aux)][j + (incC[dir] * aux)] = sopa.matriz[i + (incF[dir] * aux)][j + (incC[dir] * aux)];
+                            }
+                        }
+                        cont++;
                     }
+                   // cout << "- "; //Cambia de dirección 
                 }
-                int g = 0;
-                for (int f = palabras.palabras[z].size(); f >= 0; f--) {
-              
-                    if (sopa.matriz[i][j + g] == palabras.palabras[z][f]) {
-                        aux2++;
-                        g++;
-                    }
-                }
-                if (aux1 == palabras.palabras[z].size()) {
-                    encontrado = true; //Encontrado en el sentido natural
-                    //Escribimos el resultado
-
-                }
-                if (aux2 == palabras.palabras[z].size()) {
-                    encontrado = true; //Encontrado en el sentido contrario
-                    //Escribimos el resultado
-
-                }
-
-                aux1 = 0;
-                aux2 = 0;
-                //Buscar en vertical
-
-
-                aux1 = 0;
-                aux2 = 0;
-                //Buscar en diagonal -- Codigo sonia
-
-
-
-
-
+              //  cout << endl;
             }
         }
+       // cout << endl;
+       // cout << endl;
+    }
+
+    bool encontrado = false;
         if (encontrado) {
 
         }
-
-    }
-
-
-
 
     return sopa;
 }
@@ -145,9 +137,16 @@ void resuelveCaso() {
     tMatriz sol = resolver(sopa, palabras, solucion);
 
     // escribir solución -- TODO
-
-
-
+    for (int i = 0; i < sopa.numColumnas; i++) {
+        cout << " -";
+    }
+    cout << endl;
+    cout << solucion;
+    for (int i = 0; i < sopa.numColumnas; i++) {
+        cout << " -";
+    }
+    cout << endl;
+    cout << endl;
 }
 
 int main() {
