@@ -39,6 +39,9 @@ void jugarFichero(tJuego & juego, std::istream & movimientos) {
 	*/
 	tTecla tecla = NADA;
 	leerMovimiento(juego, tecla, movimientos); //Modifica el valor de tecla
+	if (tecla == TNT) {
+		ponerTNT(juego); //TODO, jugar con le boolean que devuelve
+	}
 	while (tecla != SALIR && tecla != NADA) {
 		realizarMovimiento(juego, tecla);
 		leerMovimiento(juego, tecla, movimientos); //Modifica el valor de tecla
@@ -55,13 +58,17 @@ void jugarTeclado(tJuego& juego) {
 	*/
 	//cargar_juego(juego, entrada); //Carga la mina e inicializa TODO el juego con sus contadores, etc...
 
-	tTecla tecla = NADA;
+	tTecla tecla;
 
-	tecla = leerTecla();
-	//if (tecla != SALIR && tecla != NADA) {
+	tecla = leerTecla(juego);
+	if (tecla == TNT && juego.contTNT == 0) {
+		ponerTNT(juego); //TODO, jugar con le boolean que devuelve
+		//juego.contTNT
+	}
+	if (tecla != SALIR) {
 		realizarMovimiento(juego, tecla);
 		//tecla = leerTecla();
-	//}
+	}
 
 }
 
@@ -193,7 +200,7 @@ void dibujar(const tJuego& juego) {
 
 
 
-tTecla leerTecla() {
+tTecla leerTecla(tJuego& juego) {
 	tTecla tecla = ARRIBA;
 	int dir;
 	cin.sync();
@@ -217,6 +224,10 @@ tTecla leerTecla() {
 	}
 	else if (dir == 27) {// Tecla ESC
 		tecla = SALIR;
+		juego.estadoMinero = ABANDONO;
+	}
+	else if (dir == 68 || dir == 100) {
+		tecla = TNT;
 	}
 	return tecla;
 }
@@ -251,6 +262,9 @@ istream& operator<<(std::istream & movimientos, tTecla & tecla){ /******LECTURA 
 		case 'S': //FIN DE MOVIMIENTOS, EL MINERO SE SIENTA
 			tecla = SALIR;
 			break;
+		case 'D': //FIN DE MOVIMIENTOS, EL MINERO SE SIENTA
+			tecla = TNT;
+			break;
 		case '\n':
 			tecla = NADA;
 			break;
@@ -272,6 +286,30 @@ void comprobarCaida(tJuego& juego, bool& seguirCayendo) {
 				juego.mina.planoMina[i][j] = LIBRE;
 				seguirCayendo = true;
 			}
+			if (juego.mina.planoMina[i][j] == DINAMITA && juego.mina.planoMina[i + 1][j] == LIBRE) {
+				juego.mina.planoMina[i + 1][j] = DINAMITA;
+				juego.mina.planoMina[i][j] = LIBRE;
+				seguirCayendo = true;
+			}
 		}
 	}
+}
+
+
+bool ponerTNT(tJuego& juego) {
+	
+	if (juego.mina.planoMina[juego.mina.posFila + 1][juego.mina.posColumna] == LIBRE) {
+		juego.mina.planoMina[juego.mina.posFila + 1][juego.mina.posColumna] = DINAMITA;
+		juego.contTNT = 1;
+	}
+
+	bool seguirCayendo = true;
+	while (seguirCayendo) {
+		comprobarCaida(juego, seguirCayendo);
+	}
+
+	//Aqui ya reventamos la Dinamita y el juego.contTNT vuelve a ser 0
+
+
+	return true; //Devuelve si se puede poner la dinamita o no 
 }

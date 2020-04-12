@@ -21,7 +21,7 @@ typedef struct {
 
 typedef struct {
     int fila = 0;
-    int suma = 0;
+    int suma = -999999999;
 }tResultado;
 
 // función que resuelve el problema
@@ -38,6 +38,7 @@ tResultado resolver(tMatriz caso) {
                 && ( (i + dirs4[d].second >= 0) && (i + dirs4[d].second < caso.numColumnas)) ) {
 
                 suma += caso.matriz[i + dirs4[d].first][i + dirs4[d].second];
+
             }
 
         }

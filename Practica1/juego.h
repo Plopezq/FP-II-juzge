@@ -5,7 +5,7 @@ typedef enum {
 	EXPLORANDO, //El minero continua buscando diamantes por la mina
 	EXITO, //El minero consigue llegar a la salida
 	ABANDONO, //Si el minero decide sentarse a esperar a que le vengan a rescatar 
-	FRACASO //Si el minero muero durante la exploración de la mina
+	FRACASO //Si el minero muere durante la exploración de la mina
 }tEstado;
 
 typedef struct {
@@ -28,4 +28,5 @@ void jugarTeclado(tJuego& juego);
 istream& operator<< (std::istream& movimientos, tTecla& tecla);
 void leerMovimiento(tJuego& juego, tTecla& tecla, std::istream& movimientos);
 void comprobarCaida(tJuego& juego, bool& seguirCayendo);
-tTecla leerTecla();
+tTecla leerTecla(tJuego& juego);
+bool ponerTNT(tJuego& juego);

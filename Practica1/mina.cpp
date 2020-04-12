@@ -99,7 +99,7 @@ void dibujar1_1(const tMina& mina){
 				colorFondo(0);
 				break;
 			case DINAMITA:
-				colorFondo(4);
+				colorFondo(6);
 				cout << getChar(mina.planoMina[i][j]);				
 				colorFondo(0);
 				break;
@@ -109,7 +109,7 @@ void dibujar1_1(const tMina& mina){
 				colorFondo(0);
 				break;
 			case SALIDA:
-				colorFondo(4);
+				colorFondo(1);
 				cout << getChar(mina.planoMina[i][j]);
 				colorFondo(0);
 				break;
@@ -171,7 +171,7 @@ void dibuja3x3(tElemento casilla, tPlanoCaracteres& caracteres, tPlanoColores& c
 				caracteres.planoCaracteres[s][w] = getChar(casilla);
 				break;
 			case DINAMITA:
-				colores.planoColores[s][w] = 4;
+				colores.planoColores[s][w] = 6;
 				caracteres.planoCaracteres[s][w] = getChar(casilla);
 				break;
 			case GEMA:
@@ -179,7 +179,7 @@ void dibuja3x3(tElemento casilla, tPlanoCaracteres& caracteres, tPlanoColores& c
 				caracteres.planoCaracteres[s][w] = getChar(casilla);
 				break;
 			case SALIDA:
-				colores.planoColores[s][w] = 4;
+				colores.planoColores[s][w] = 1;
 				caracteres.planoCaracteres[s][w] = getChar(casilla);
 				break;
 			case LIBRE:

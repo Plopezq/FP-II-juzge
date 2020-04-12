@@ -18,7 +18,7 @@ int main() {
 	}
 	mostrarMenu(juego);
 	mostrarMenu2(juego);        
-	cargar_juego(juego, 1);
+	cargar_juego(juego, 2);
 
 	while (juego.estadoMinero == EXPLORANDO ) {
 		system("cls");
