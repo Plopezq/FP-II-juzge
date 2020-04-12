@@ -297,19 +297,53 @@ void comprobarCaida(tJuego& juego, bool& seguirCayendo) {
 
 
 bool ponerTNT(tJuego& juego) {
-	
-	if (juego.mina.planoMina[juego.mina.posFila + 1][juego.mina.posColumna] == LIBRE) {
-		juego.mina.planoMina[juego.mina.posFila + 1][juego.mina.posColumna] = DINAMITA;
+	bool puede = false;
+	//Posiciones de la dinamita
+	int fila = juego.mina.posFila + 1;
+	int columna = juego.mina.posColumna;
+
+	//Comprobamos si se puede poner la dinamita
+	if (juego.mina.planoMina[juego.mina.posFila + 1 ][juego.mina.posColumna] == LIBRE) {
+		juego.mina.planoMina[juego.mina.posFila + 1 ][juego.mina.posColumna] = DINAMITA;
 		juego.contTNT = 1;
+		puede = true; //Puede poner la dinamita
 	}
 
-	bool seguirCayendo = true;
-	while (seguirCayendo) {
-		comprobarCaida(juego, seguirCayendo);
+	if (puede) {
+		
+		bool seguirCayendo = true;
+		while (seguirCayendo) {
+			comprobarCaida(juego, seguirCayendo);
+		}
+
+		for (int i = 0; i < juego.mina.nFilas; i++) {
+			for (int j = 0; j < juego.mina.nColumnas; j++) {
+				if (juego.mina.planoMina[i][j] == DINAMITA) {
+					fila = i;
+					columna = j;
+				}
+			}
+		}
+
+
+		//Aqui ya reventamos la Dinamita y el juego.contTNT vuelve a ser 0
+		for (int dir = 0; dir < 8; dir++) {
+			if (dentroPlano(juego.mina, fila + incF[dir], columna + incC[dir])) {
+				juego.mina.planoMina[fila  + incF[dir]][columna + incC[dir]] = LIBRE;
+			}
+		}
+
+		juego.contTNT = 0;
+
+		//Quito la dinamita del pano
+		juego.mina.planoMina[fila][columna] = LIBRE;
 	}
 
-	//Aqui ya reventamos la Dinamita y el juego.contTNT vuelve a ser 0
 
 
-	return true; //Devuelve si se puede poner la dinamita o no 
+
+	
+	
+
+	return puede; //Devuelve si se puede poner la dinamita o no 
 }

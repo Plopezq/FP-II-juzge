@@ -1,4 +1,6 @@
 #include "mina.h"
+const int incF[8] = { 1, 1, 0, -1, -1, -1, 0, 1 };
+const int incC[8] = { 0, 1, 1, 1, 0, -1, -1, -1 };
 
 typedef enum { ARRIBA, ABAJO, DCHA, IZDA, SALIR, NADA, TNT} tTecla; 
 typedef enum {
