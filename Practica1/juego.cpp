@@ -61,7 +61,7 @@ void jugarTeclado(tJuego& juego) {
 	tTecla tecla;
 
 	tecla = leerTecla(juego);
-	if (tecla == TNT && juego.contTNT == 0) {
+	if (tecla == TNT ) {
 		ponerTNT(juego); //TODO, jugar con le boolean que devuelve
 		//juego.contTNT
 	}
@@ -87,7 +87,9 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 	int x = juego.mina.posFila + tdirs4[aux][0];
 	int y = juego.mina.posColumna + tdirs4[aux][1];
 
-	juego.contMov++;
+	juego.contMov++; //Incrementa los movimientos
+	//Segun el guión, siempre que lea una tecla, cuenta como movimiento
+
 	//HASTA AQUI FUNCIONA BIEN, depurando
 	if (dentroPlano(juego.mina, x, y)) { //Si el minero se quiere mover dentro del pano.
 		//typedef enum { LIBRE, TIERRA, GEMA, PIEDRA, MURO, SALIDA, MINERO, DINAMITA } tElemento;
@@ -201,6 +203,7 @@ void dibujar(const tJuego& juego) {
 
 
 tTecla leerTecla(tJuego& juego) {
+
 	tTecla tecla = ARRIBA;
 	int dir;
 	cin.sync();
@@ -221,6 +224,7 @@ tTecla leerTecla(tJuego& juego) {
 			tecla = IZDA;
 			break;
 		}
+		
 	}
 	else if (dir == 27) {// Tecla ESC
 		tecla = SALIR;
@@ -228,6 +232,7 @@ tTecla leerTecla(tJuego& juego) {
 	}
 	else if (dir == 68 || dir == 100) {
 		tecla = TNT;
+		//juego.contTNT++;
 	}
 	return tecla;
 }
@@ -305,7 +310,7 @@ bool ponerTNT(tJuego& juego) {
 	//Comprobamos si se puede poner la dinamita
 	if (juego.mina.planoMina[juego.mina.posFila + 1 ][juego.mina.posColumna] == LIBRE) {
 		juego.mina.planoMina[juego.mina.posFila + 1 ][juego.mina.posColumna] = DINAMITA;
-		juego.contTNT = 1;
+		juego.contTNT++;
 		puede = true; //Puede poner la dinamita
 	}
 
@@ -329,21 +334,21 @@ bool ponerTNT(tJuego& juego) {
 		//Aqui ya reventamos la Dinamita y el juego.contTNT vuelve a ser 0
 		for (int dir = 0; dir < 8; dir++) {
 			if (dentroPlano(juego.mina, fila + incF[dir], columna + incC[dir])) {
+				if( juego.mina.planoMina[fila + incF[dir]][columna + incC[dir]] == MINERO) {
+					juego.estadoMinero = FRACASO;
+				}
 				juego.mina.planoMina[fila  + incF[dir]][columna + incC[dir]] = LIBRE;
 			}
+			
+
 		}
 
-		juego.contTNT = 0;
+		
 
 		//Quito la dinamita del pano
 		juego.mina.planoMina[fila][columna] = LIBRE;
 	}
 
-
-
-
-	
-	
 
 	return puede; //Devuelve si se puede poner la dinamita o no 
 }

@@ -18,6 +18,7 @@ typedef struct {
 	int escalaJuego = 0; //La opcion seleccionada para dibujar el juego 1: escala 1:1 y 2 escala 1:3
 	int opcionMov = 0; //Opcion elegida para introducir movimientos: por teclado (1) o por fichero (2)
 	int contTNT = 0;
+	int nivel = 1;
 }tJuego;
 
 //PROTOTIPOS
