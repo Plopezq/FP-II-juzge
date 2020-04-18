@@ -80,42 +80,42 @@ void dibujar1_1(const tMina& mina){
 			{
 			case PIEDRA:
 				colorFondo(4);
-				cout << getChar(mina.planoMina[i][j]);
+				cout << setw(2) << getChar(mina.planoMina[i][j]);
 				colorFondo(0);
 				break;
 			case MURO:
 				colorFondo(4);
-				cout << getChar(mina.planoMina[i][j]);
+				cout << setw(2) << getChar(mina.planoMina[i][j]);
 				colorFondo(0);
 				break;
 			case MINERO:
 				colorFondo(8);
-				cout << getChar(mina.planoMina[i][j]);
+				cout << setw(2) << getChar(mina.planoMina[i][j]);
 				colorFondo(0);
 				break;
 			case TIERRA:
 				colorFondo(4);
-				cout << getChar(mina.planoMina[i][j]);
+				cout << setw(2) << getChar(mina.planoMina[i][j]);
 				colorFondo(0);
 				break;
 			case DINAMITA:
 				colorFondo(6);
-				cout << getChar(mina.planoMina[i][j]);				
+				cout << setw(2) << getChar(mina.planoMina[i][j]);
 				colorFondo(0);
 				break;
 			case GEMA:
 				colorFondo(10);
-				cout << getChar(mina.planoMina[i][j]);
+				cout << setw(2) << getChar(mina.planoMina[i][j]);
 				colorFondo(0);
 				break;
 			case SALIDA:
 				colorFondo(1);
-				cout << getChar(mina.planoMina[i][j]);
+				cout << setw(2) << getChar(mina.planoMina[i][j]);
 				colorFondo(0);
 				break;
 			case LIBRE:
 				colorFondo(4);
-				cout << getChar(mina.planoMina[i][j]);
+				cout << setw(2) << getChar(mina.planoMina[i][j]);
 				colorFondo(0);
 				break;
 			}

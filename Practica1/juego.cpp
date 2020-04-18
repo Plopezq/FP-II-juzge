@@ -42,11 +42,11 @@ void jugarFichero(tJuego & juego, std::istream & movimientos) {
 	if (tecla == TNT) {
 		ponerTNT(juego); //TODO, jugar con le boolean que devuelve
 	}
-	while (tecla != SALIR && tecla != NADA) {
+	if(tecla != SALIR && tecla != NADA) {
 		realizarMovimiento(juego, tecla);
-		leerMovimiento(juego, tecla, movimientos); //Modifica el valor de tecla
+		//leerMovimiento(juego, tecla, movimientos); //Modifica el valor de tecla
 	}
-
+	
 }
 
 void jugarTeclado(tJuego& juego) {
@@ -246,6 +246,7 @@ void leerMovimiento(tJuego& juego, tTecla& tecla, std::istream& movimientos)
 	if (tecla == SALIR) {
 		juego.estadoMinero = ABANDONO;
 	}
+
 }
 istream& operator<<(std::istream & movimientos, tTecla & tecla){ /******LECTURA DE LA TECLA DE FICHERO, NO DE USUARIO******/
 		char dir;

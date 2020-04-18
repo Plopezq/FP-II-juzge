@@ -5,25 +5,28 @@
 #include "juego.h"
 using namespace std;
 
-void mostrarMenu1(tJuego& juego);
-void mostrarMenu2(tJuego& juego);
-void mostrarMenu3(tJuego& juego);
-
+bool mostrarMenu(tJuego& juego);
+bool mostrarMenuNivel(tJuego& juego);
+const int NUM_NIVELES = 4;
 int main() {
 
-	//Creo el juegoy inicializo el array
-
+	//Creo el juego y inicializo el array
 	tJuego juego;
 	for (int i = 0; i < 50; i++) {
 		for (int j = 0; j < 50; j++) {
 			juego.mina.planoMina[i][j] = VACIO;
 		}
 	}
-	mostrarMenu1(juego);
-	mostrarMenu2(juego);        
-	cargar_juego(juego, juego.nivel);
 
-	while (juego.estadoMinero == EXPLORANDO ) {
+	//Si quiere jugar, cargp juego, sino salgo (ABANDONO)
+	if (mostrarMenu(juego)) {
+		cargar_juego(juego, juego.nivel);
+	}
+	else {
+		juego.estadoMinero = ABANDONO;
+	}
+
+	while (juego.estadoMinero == EXPLORANDO) {
 		system("cls");
 		if (juego.opcionMov == 1) { //Introduce por teclado
 			if (juego.escalaJuego == 1) {
@@ -32,39 +35,58 @@ int main() {
 			else if (juego.escalaJuego == 2) {
 				dibujar1_3(juego.mina);
 			}
-			cout << "Gemas: " << juego.contGemas << endl;
-			cout << "Movimientos: " << juego.contMov << endl;
-			cout << "Dinamitas: " << juego.contTNT << endl;
+			cout << "Gemas totales recogidas: " << juego.contGemas << endl;
+			cout << "Numero de movimientos: " << juego.contMov << endl;
+			cout << "Dinamitas usadas: " << juego.contTNT << endl;
 			jugarTeclado(juego);
 		}
 		else if (juego.opcionMov == 2) { //Introduce por fichero
-
-			string aux = "movimientos.txt";
-			ifstream movimientos;
-	
-			movimientos.open(aux);
-			if (movimientos.is_open()) {
-				jugarFichero(juego, movimientos);
+				ifstream movimientos;
+				string aux = "";
+				cout << "Introduce el nombre del fichero para los movimientos: " << endl;
+				cin >> aux;
+				movimientos.open(aux);
+			if (movimientos.is_open()) {//Se ha podido abrir
+				while (juego.estadoMinero == EXPLORANDO) {
+					system("cls");
+					jugarFichero(juego, movimientos);
+					if (juego.escalaJuego == 1) {
+						dibujar1_1(juego.mina);
+					}
+					else if (juego.escalaJuego == 2) {
+						dibujar1_3(juego.mina);
+					}
+					cout << "Gemas totales recogidas: " << juego.contGemas << endl;
+					cout << "Numero de movimientos: " << juego.contMov << endl;
+					cout << "Dinamitas usadas: " << juego.contTNT << endl;
+				}
+			}
+			else {
+				cout << "No se ha podido abrir el fichero " << endl;
+			}
 				movimientos.close();
-			}
-
-			if (juego.escalaJuego == 1) {
-				dibujar1_1(juego.mina);
-			}
-			else if (juego.escalaJuego == 2) {
-				dibujar1_3(juego.mina);
-			}
-			cout << "Gemas: " << juego.contGemas << endl;
-			cout << "Movimientos: " << juego.contMov << endl;
-			cout << "Dinamitas: " << juego.contTNT << endl;
-
 		}
 
-		if (juego.estadoMinero != EXPLORANDO) {
+		if (juego.estadoMinero != EXPLORANDO) { 
 			if (juego.estadoMinero == EXITO) {
+				system("cls");
 				cout << "NIVEL COMPLETADO!!" << endl;
-				mostrarMenu3(juego);
-				if (juego.estadoMinero == EXPLORANDO) {
+				cout << endl;
+				if (juego.nivel < NUM_NIVELES) {
+					if (mostrarMenuNivel(juego)) { //Si quiere pasar al nivel siguiente
+						juego.estadoMinero = EXPLORANDO;
+						//Si quiere seguir jugando, muestro el menu, sino no
+						if (!mostrarMenu(juego)) { //No quiere jugar más, pulsa salir
+							juego.estadoMinero = ABANDONO;
+						}
+					}
+					else { //No quiere nivel siguiente, pulsa salir
+						juego.estadoMinero = ABANDONO;
+					}
+
+
+				}
+				if (juego.estadoMinero == EXPLORANDO) { //Aqui solo entrara si hay más niveles disponibles
 					cargar_juego(juego, juego.nivel);
 				}
 
@@ -77,10 +99,14 @@ int main() {
 			}
 		}
 	}
+	if (juego.nivel == NUM_NIVELES) {
+		cout << endl;
+		cout << "JUEGO COMPLETADO CON EXITO !!! " << endl;
+	}
 	return 0;
 }
 
-void mostrarMenu1(tJuego& juego) {
+bool mostrarMenu(tJuego& juego) {
 	system("cls");
 	int opt;
 	cout << "1. Jugar partida a escala 1:1. " << endl;
@@ -88,56 +114,51 @@ void mostrarMenu1(tJuego& juego) {
 	cout << "3. Salir " << endl;
 	cout << "Introduce una opción:  " << endl;
 	cin >> opt;
-	if (opt == 1) //Escala 1:1
-	{
-		juego.escalaJuego = 1;
+
+	if (opt != 3){ //NO SALE
+		juego.escalaJuego = opt;
+		system("cls");
+		int opt2 = 0;
+		cout << "1. Introducir movimientos por teclado. " << endl;
+		cout << "2. Introducir movimientos por fichero. " << endl;
+		cout << "0. Salir " << endl;
+		cout << endl;
+		cout << "Introduce una opción:  " << endl;
+		cin >> opt2;
+
+		if (opt2 == 1) {
+			juego.opcionMov = 1;
+		}
+		else if (opt2 == 2) {
+			juego.opcionMov = 2;
+		}
+		else if (opt2 == 0) {
+			
+			return false;
+		}
+		return true;
 	}
-	else if (opt == 2) //Escala 1:3
-	{
-		juego.escalaJuego = 2;
+	else {
+		return false;
 	}
-	else if (opt == 3) //Salir
-	{
-		juego.estadoMinero = ABANDONO;
-	}
+
+
 }
 
-void mostrarMenu2(tJuego& juego) {
-	system("cls");
+bool mostrarMenuNivel(tJuego& juego) {
+	
 	int opt = 0;
-	cout << "1. Introducir movimientos por teclado. " << endl;
-	cout << "2. Introducir movimientos por fichero. " << endl;
+	cout << "1. Jugar siguiente nivel" << endl;
 	cout << "0. Salir " << endl;
 	cout << endl;
 	cout << "Introduce una opción:  " << endl;
 	cin >> opt;
-
-	if (opt == 1) {
-		juego.opcionMov = 1;
-	}
-	else if (opt == 2) {
-		juego.opcionMov = 2;
-	}
-	else if (opt == 0) {
-		juego.estadoMinero = ABANDONO;
-	}
-
-}
-
-void mostrarMenu3(tJuego& juego) {
-	system("cls");
-	int opt = 0;
-	cout << "1. Jugar al siguiente nivel" << endl;
-	cout << "0. Salir " << endl;
-	cout << endl;
-	cout << "Introduce una opción:  " << endl;
-	cin >> opt;
-	if (opt == 1) {
+	if (opt == 1 && opt <= NUM_NIVELES) {
 		juego.nivel++;
-		juego.estadoMinero = EXPLORANDO;
+		return true;
 	}
-	else if (opt == 0) {
-		juego.estadoMinero = ABANDONO;
+	else if (opt == 0) {		
+		return false;
 	}
 }
 
