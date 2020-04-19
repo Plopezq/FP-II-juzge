@@ -3,21 +3,17 @@
 #include<iostream>
 #include <conio.h>
 #include <string>
-
 #include "juego.h"
 using namespace std;
 
-
 //FUNCIONES
 bool cargar_juego(tJuego& juego, int nivel) {
-	bool cargado = false;
-	//Inicializo el juego
+	bool cargado = false; //Inicializo el juego
 	juego.contGemas = 0;
 	juego.contMov = 0;
 	juego.contTNT = 0;
 	juego.estadoMinero = EXPLORANDO;
-	//Leo la mina
-	string aux = to_string(nivel);
+	string aux = to_string(nivel);//Leo la mina
 	aux += ".txt";
 	ifstream archivo;
 	archivo.open(aux);
@@ -30,12 +26,6 @@ bool cargar_juego(tJuego& juego, int nivel) {
 }
 
 void jugarFichero(tJuego & juego, std::istream & movimientos) {
-	/* comienza cargando los datos de la mina, a continuacion va leyendo los movimientos
-		y para cada uno modiﬁca la mina de acuerdo con el movimiento.
-		Los movimientos no los almacena, los trata segun los va leyendo.
-		La funcion debe recibir los dos ﬂujos de entrada, porque en fases posteriores
-		del desarrollo de la practica sera necesario tenerlos diferenciados.
-	*/
 	tTecla tecla = NADA;
 	leerMovimiento(juego, tecla, movimientos); //Modifica el valor de tecla
 	if (tecla == TNT) {
@@ -43,122 +33,79 @@ void jugarFichero(tJuego & juego, std::istream & movimientos) {
 	}
 	if(tecla != SALIR && tecla != NADA) {
 		realizarMovimiento(juego, tecla);
-		//leerMovimiento(juego, tecla, movimientos); //Modifica el valor de tecla
 	}
-	
 }
-
 void jugarTeclado(tJuego& juego) {
-	/* comienza cargando los datos de la mina, a continuacion va leyendo los movimientos
-		y para cada uno modiﬁca la mina de acuerdo con el movimiento.
-		Los movimientos no los almacena, los trata segun los va leyendo.
-		La funcion debe recibir los dos ﬂujos de entrada, porque en fases posteriores
-		del desarrollo de la practica sera necesario tenerlos diferenciados.
-	*/
-	//cargar_juego(juego, entrada); //Carga la mina e inicializa TODO el juego con sus contadores, etc...
-
 	tTecla tecla;
-
 	tecla = leerTecla(juego);
 	if (tecla == TNT ) {
 		ponerTNT(juego); //TODO, jugar con le boolean que devuelve
-		//juego.contTNT
 	}
 	if (tecla != SALIR) {
 		realizarMovimiento(juego, tecla);
-		//tecla = leerTecla();
 	}
-
 }
 
 void realizarMovimiento(tJuego& juego, tTecla& mov) {
-	/*se encarga de realizar el movimiento indicado en el parametro mov modiﬁcando
-	el plano de la mina y la posicion del minero en la mina.
-	Para obtener la casilla de destino se ayudara del vector tdirs4,
-	de forma que no tiene que diferenciar el movimiento realizado.
-	*/
 	//Vector de direcciones, que coincide con las del enumerado
 	//					 ARRIBA, ABAJO, DCHA, IZDA, SALIR, NADA} tTecla;
 	int tdirs4[4][2] = { {-1,0}, {1,0}, {0,1}, {0,-1} };
 	//Posiciones siguientes donde quiere ir: X e Y
-	//int aux = 1; 
 	int aux = mov;
 	int x = juego.mina.posFila + tdirs4[aux][0];
 	int y = juego.mina.posColumna + tdirs4[aux][1];
 
-	juego.contMov++; //Incrementa los movimientos
-	//Segun el guión, siempre que lea una tecla, cuenta como movimiento
+	juego.contMov++; //Incrementa los movimientos, siempre que lea una tecla
 
-	//HASTA AQUI FUNCIONA BIEN, depurando
 	if (dentroPlano(juego.mina, x, y)) { //Si el minero se quiere mover dentro del pano.
-		//typedef enum { LIBRE, TIERRA, GEMA, PIEDRA, MURO, SALIDA, MINERO, DINAMITA } tElemento;
 		switch (juego.mina.planoMina[x][y]) {
 		case LIBRE:
 			juego.mina.planoMina[x][y] = MINERO; //Movemos el minero
 			juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = LIBRE; //Ponemos libre donde estaba antes el miner
-			//Actualizamos la posicion del minero
-			juego.mina.posFila = x;
+			juego.mina.posFila = x; //Actualizamos la posicion del minero
 			juego.mina.posColumna = y;
 			break;
 		case TIERRA:
 			juego.mina.planoMina[x][y] = MINERO; //Movemos el minero
 			juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = LIBRE; //Ponemos tierra donde estaba antes el miner
-			//Actualizamos la posicion del minero
-			juego.mina.posFila = x;
+			juego.mina.posFila = x; //Actualizamos la posicion del minero
 			juego.mina.posColumna = y;
 			break;
 		case GEMA:
 			juego.mina.planoMina[x][y] = MINERO; //Movemos el minero
 			juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = LIBRE; //Ponemos tierra donde estaba antes el miner
-			//Actualizamos la posicion del minero
-			juego.mina.posFila = x;
+			juego.mina.posFila = x; //Actualizamos la posicion del minero
 			juego.mina.posColumna = y;
-			//Actualizar el contador de gemas
-			juego.contGemas++;
+			juego.contGemas++; //Actualizar el contador de gemas
 			break;
 		case PIEDRA: //La piedra esta en x, y (Donde se quiere mover el minero)
 			//Si el minero viene por la derecha
 			if (juego.mina.planoMina[x][y - 1] == LIBRE && aux == 3) {
-				//Movemos la piedra
-				juego.mina.planoMina[x][y - 1] = PIEDRA;
-				//Movemos el minero
-				juego.mina.planoMina[x][y] = MINERO;
-				//Ponemos libre donde estaba antes el miner0
-				juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = LIBRE;
-				//Actualizamos la posicion del minero
-				juego.mina.posFila = x;
+				juego.mina.planoMina[x][y - 1] = PIEDRA; //Movemos la piedra
+				juego.mina.planoMina[x][y] = MINERO; //Movemos el minero
+				juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = LIBRE; //Ponemos libre donde antes estaba el minero
+				juego.mina.posFila = x; //Actualizamos la posicion del minero
 				juego.mina.posColumna = y;
 			}
-
 			//Si el minero viene por la izquierda
 			if (juego.mina.planoMina[x][y + 1] == LIBRE && aux == 2) {
-				//Movemos la piedra
-				juego.mina.planoMina[x][y + 1] = PIEDRA;
-				//Movemos el minero
-				juego.mina.planoMina[x][y] = MINERO;
-				//Ponemos libre donde estaba antes el minero
-				juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = LIBRE;
-				//Actualizamos la posicion del minero
-				juego.mina.posFila = x;
+				juego.mina.planoMina[x][y + 1] = PIEDRA; //Movemos la piedra
+				juego.mina.planoMina[x][y] = MINERO; //Movemos el minero
+				juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = LIBRE; //Ponemos libre donde estaba antes el minero
+				juego.mina.posFila = x; //Actualizamos la posicion del minero
 				juego.mina.posColumna = y;
 			}
-			
-			//Si el minero viene por arriba: NO SE MUEVE
-				//La piedra esta siempre apoyada
 			break;
-		case MURO:
-			//NO HACE NADA
+		case MURO: //NO HACE NADA
 			break;
 		case SALIDA:
 			juego.mina.planoMina[x][y] = MINERO; //Movemos el minero
 			juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = LIBRE; //Ponemos tierra donde estaba antes el miner
-			//Actualizamos la posicion del minero
-			juego.mina.posFila = x;
+			juego.mina.posFila = x; //Actualizamos la posicion del minero
 			juego.mina.posColumna = y;
 			juego.estadoMinero = EXITO;
 			break;
-		case MINERO:
-			//NO HACE NADA
+		case MINERO: //NO HACE NADA
 			break;
 		}
 	}
@@ -166,13 +113,12 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 	bool seguirCayendo = true;
 	while (seguirCayendo) {
 		comprobarCaida(juego, seguirCayendo);
-		system("cls");
 		dibujar(juego);
 	}
 
-
 }
 void dibujar(const tJuego& juego) {
+	system("cls");
 	if (juego.escalaJuego == 1) {
 		dibujar1_1(juego.mina);
 	}
@@ -216,12 +162,7 @@ tTecla leerTecla(tJuego& juego) {
 	}
 	return tecla;
 }
-void leerMovimiento(tJuego& juego, tTecla& tecla, std::istream& movimientos)
-{
-	/* lee un movimiento del ﬁchero con la sobrecarga del operador.
-		Si el minero selecciona el movimiento SALIR pondra
-		el estado del minero en situacion de ABANDONO.
-	*/
+void leerMovimiento(tJuego& juego, tTecla& tecla, std::istream& movimientos){
 	movimientos << tecla;
 	if (tecla == SALIR) {
 		juego.estadoMinero = ABANDONO;
@@ -230,7 +171,6 @@ void leerMovimiento(tJuego& juego, tTecla& tecla, std::istream& movimientos)
 istream& operator<<(std::istream & movimientos, tTecla & tecla){ /******LECTURA DE LA TECLA DE FICHERO, NO DE USUARIO******/
 		char dir;
 		movimientos.get(dir);
-
 		switch (dir) {
 		case 'A': //ARRIBA
 			tecla = ARRIBA;
@@ -256,7 +196,6 @@ istream& operator<<(std::istream & movimientos, tTecla & tecla){ /******LECTURA 
 		}
 		return movimientos;
 }
-
 void comprobarCaida(tJuego& juego, bool& seguirCayendo) {
 	seguirCayendo = false;
 	for (int i = 0; i < juego.mina.nFilas; i++) {
@@ -279,51 +218,41 @@ void comprobarCaida(tJuego& juego, bool& seguirCayendo) {
 		}
 	}
 }
-
-
 bool ponerTNT(tJuego& juego) {
 	bool puede = false;
 	//Posiciones de la dinamita
-	int fila = juego.mina.posFila + 1;
-	int columna = juego.mina.posColumna;
-
+	int filaTNT = juego.mina.posFila + 1;
+	int columnaTNT = juego.mina.posColumna;
 	//Comprobamos si se puede poner la dinamita
-	if (juego.mina.planoMina[juego.mina.posFila + 1 ][juego.mina.posColumna] == LIBRE) {
-		juego.mina.planoMina[juego.mina.posFila + 1 ][juego.mina.posColumna] = DINAMITA;
+	if (juego.mina.planoMina[filaTNT][columnaTNT] == LIBRE) {
+		juego.mina.planoMina[filaTNT][columnaTNT] = DINAMITA;
 		juego.contTNT++;
 		puede = true; //Puede poner la dinamita
 	}
-
-	if (puede) {
-		
+	if (puede) { //Hacemos que caiga la dinamita
 		bool seguirCayendo = true;
 		while (seguirCayendo) {
 			comprobarCaida(juego, seguirCayendo);
 		}
-
-		
-		for (int i = 0; i < juego.mina.nFilas; i++) {
-			for (int j = 0; j < juego.mina.nColumnas; j++) {
-				if (juego.mina.planoMina[i][j] == DINAMITA) {
-					fila = i;
-					columna = j;
-				}
-			}
-		}
-
-
-		//Aqui ya reventamos la Dinamita y el juego.contTNT vuelve a ser 0
-		for (int dir = 0; dir < 8; dir++) {
-			if (dentroPlano(juego.mina, fila + incF[dir], columna + incC[dir])) {
-				if( juego.mina.planoMina[fila + incF[dir]][columna + incC[dir]] == MINERO) {
-					juego.estadoMinero = FRACASO;
-				}
-				juego.mina.planoMina[fila  + incF[dir]][columna + incC[dir]] = LIBRE;
-			}
-		}
-		//Quito la dinamita del pano
-		juego.mina.planoMina[fila][columna] = LIBRE;
 	}
-
+	for (int i = 0; i < juego.mina.nFilas; i++) { //Para sacar la posicion donde ha quedado la Dinamita
+		for (int j = 0; j < juego.mina.nColumnas; j++) {
+			if (juego.mina.planoMina[i][j] == DINAMITA) {
+				filaTNT = i;
+				columnaTNT = j;
+			}
+		}
+	}
+	//Aqui ya reventamos la Dinamita y el juego.contTNT vuelve a ser 0
+	for (int dir = 0; dir < 8; dir++) {
+		if (dentroPlano(juego.mina, filaTNT + incF[dir], columnaTNT + incC[dir])) {
+			if( juego.mina.planoMina[filaTNT + incF[dir]][columnaTNT + incC[dir]] == MINERO) {
+				juego.estadoMinero = FRACASO;
+			}
+			juego.mina.planoMina[filaTNT + incF[dir]][columnaTNT + incC[dir]] = LIBRE;
+		}
+	}
+	//Quito la dinamita del pano
+	juego.mina.planoMina[filaTNT][columnaTNT] = LIBRE;
 	return puede; //Devuelve si se puede poner la dinamita o no 
 }

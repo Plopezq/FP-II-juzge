@@ -17,28 +17,29 @@ int main() {
 			juego.mina.planoMina[i][j] = VACIO;
 		}
 	}
+	bool final = mostrarMenu(juego);
 	//Si quiere jugar, cargp juego, sino salgo (ABANDONO)
-	if (mostrarMenu(juego)) {
+	if (!final) {
 		cargar_juego(juego, juego.nivel);
 	}
 	else {
 		juego.estadoMinero = ABANDONO;
 	}
-	while (juego.estadoMinero == EXPLORANDO) {
-		system("cls");
-		if (juego.opcionMov == 1) { //Introduce por teclado
+	while (juego.estadoMinero == EXPLORANDO && !final) {
+		//system("cls");
+		if (juego.opcionMov == 1) { //Introduce por TECLADO
 			dibujar(juego);
 			jugarTeclado(juego);
 		}
-		else if (juego.opcionMov == 2) { //Introduce por fichero
-				ifstream movimientos;
-				string aux = "";
-				cout << "Introduce el nombre del fichero para los movimientos: " << endl;
-				cin >> aux;
-				movimientos.open(aux);
+		else if (juego.opcionMov == 2) { //Introduce por FICHERO
+			ifstream movimientos;
+			string aux = "";
+			cout << "Introduce el nombre del fichero para los movimientos: " << endl;
+			cin >> aux;
+			movimientos.open(aux);
 			if (movimientos.is_open()) {//Se ha podido abrir
 				while (juego.estadoMinero == EXPLORANDO) {
-					system("cls");
+					//system("cls");
 					jugarFichero(juego, movimientos);
 					dibujar(juego);
 				}
@@ -46,36 +47,34 @@ int main() {
 			else {
 				cout << "No se ha podido abrir el fichero " << endl;
 			}
-				movimientos.close();
+			movimientos.close();
 		}
-		if (juego.estadoMinero != EXPLORANDO) { 
+
+		if (juego.estadoMinero != EXPLORANDO) { //Ya acabo de jugar
 			if (juego.estadoMinero == EXITO) {
-				system("cls");
-				cout << "NIVEL COMPLETADO!!" << endl;
-				cout << endl;
-				if (juego.nivel < NUM_NIVELES) {
-					if (mostrarMenuNivel(juego)) { //Si quiere pasar al nivel siguiente
-						juego.estadoMinero = EXPLORANDO;
-						//Si quiere seguir jugando, muestro el menu, sino no
-						if (!mostrarMenu(juego)) { //No quiere jugar más, pulsa salir
+				if (juego.nivel < NUM_NIVELES) { //Si todavia quedan niveles...
+					final = mostrarMenuNivel(juego);
+					if (!final) { //Si quiere pasar al nivel siguiente
+						final = mostrarMenu(juego);
+						if (!final) { //Quiere seguir jugando
+							juego.estadoMinero = EXPLORANDO;
+						}
+						else { //No quiere jugar más, pulsa salir
 							juego.estadoMinero = ABANDONO;
 						}
 					}
-					else { //No quiere nivel siguiente, pulsa salir
-						juego.estadoMinero = ABANDONO;
-					}
-				}
-				if (juego.estadoMinero == EXPLORANDO) { //Aqui solo entrara si hay más niveles disponibles
-					cargar_juego(juego, juego.nivel);
 				}
 			}
-			if (juego.estadoMinero == ABANDONO) {
-				cout << "HAS ABANDONADO, HASTA LA PROXIMA" << endl;
-			}
-			if (juego.estadoMinero == FRACASO) {
-				cout << "HAS MUERTO, GRACIAS POR JUGAR, HASTA LA PROXIMA" << endl;
+			if (juego.estadoMinero == EXPLORANDO) { //Aqui solo entrara si puede seguir jugando
+				cargar_juego(juego, juego.nivel);
 			}
 		}
+	}
+	if (juego.estadoMinero == ABANDONO) {
+		cout << "HAS ABANDONADO, HASTA LA PROXIMA" << endl;
+	}
+	if (juego.estadoMinero == FRACASO) {
+		cout << "HAS MUERTO, GRACIAS POR JUGAR, HASTA LA PROXIMA" << endl;
 	}
 	if (juego.nivel == NUM_NIVELES) {
 		cout << endl;
@@ -84,15 +83,17 @@ int main() {
 	return 0;
 }
 bool mostrarMenu(tJuego& juego) {
+	bool salir = false;
 	system("cls");
 	int opt;
 	cout << "1. Jugar partida a escala 1:1. " << endl;
 	cout << "2. Jugar partida a escala 1:3. " << endl;
 	cout << "3. Salir " << endl;
-	cout << "Introduce una opción:  " << endl;
+	cout << "Introduce una opcion:  " << endl;
 	cin >> opt;
+	if (opt == 3) { salir = true; }
 
-	if (opt != 3){ //NO SALE
+	if (!salir){ //SI NO SALE, muestro el siguiente menu
 		juego.escalaJuego = opt;
 		system("cls");
 		int opt2 = 0;
@@ -100,7 +101,7 @@ bool mostrarMenu(tJuego& juego) {
 		cout << "2. Introducir movimientos por fichero. " << endl;
 		cout << "0. Salir " << endl;
 		cout << endl;
-		cout << "Introduce una opción:  " << endl;
+		cout << "Introduce una opcion:  " << endl;
 		cin >> opt2;
 
 		if (opt2 == 1) {
@@ -110,30 +111,30 @@ bool mostrarMenu(tJuego& juego) {
 			juego.opcionMov = 2;
 		}
 		else if (opt2 == 0) {
-			return false;
+			salir = true;
 		}
-		return true;
 	}
-	else {
-		return false;
-	}
+	return salir;
 }
 bool mostrarMenuNivel(tJuego& juego) {
-	bool aux = false;
+	system("cls");
+	cout << "NIVEL COMPLETADO!!" << endl;
+	cout << endl;
+	bool salir = false;
 	int opt = 0;
 	cout << "1. Jugar siguiente nivel" << endl;
 	cout << "0. Salir " << endl;
 	cout << endl;
-	cout << "Introduce una opción:  " << endl;
+	cout << "Introduce una opcion:  " << endl;
 	cin >> opt;
 	if (opt == 1 && opt <= NUM_NIVELES) {
 		juego.nivel++;
-		aux = true;
+		salir = false;
 	}
 	else if (opt == 0) {		
-		aux = false;
+		salir = true;
 	}
-	return aux;
+	return salir;
 }
 
 
