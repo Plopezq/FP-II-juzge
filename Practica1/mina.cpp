@@ -198,14 +198,11 @@ ostream& operator<<(ostream& out, tElemento const& e)
 	out << getChar(e);
 	return out;
 }
-
 void colorFondo(int color)
 {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);     
 	SetConsoleTextAttribute(handle, 15 | (color << 4));
 }
-
-
 bool dentroPlano(tMina const& mina, int x, int y) {
 	//Comprueba si una posicion esta dentro del plano
 	bool dentro = false;

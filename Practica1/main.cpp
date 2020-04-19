@@ -8,8 +8,8 @@ using namespace std;
 bool mostrarMenu(tJuego& juego);
 bool mostrarMenuNivel(tJuego& juego);
 const int NUM_NIVELES = 4;
-int main() {
 
+int main() {
 	//Creo el juego y inicializo el array
 	tJuego juego;
 	for (int i = 0; i < 50; i++) {
@@ -17,7 +17,6 @@ int main() {
 			juego.mina.planoMina[i][j] = VACIO;
 		}
 	}
-
 	//Si quiere jugar, cargp juego, sino salgo (ABANDONO)
 	if (mostrarMenu(juego)) {
 		cargar_juego(juego, juego.nivel);
@@ -25,19 +24,10 @@ int main() {
 	else {
 		juego.estadoMinero = ABANDONO;
 	}
-
 	while (juego.estadoMinero == EXPLORANDO) {
 		system("cls");
 		if (juego.opcionMov == 1) { //Introduce por teclado
-			if (juego.escalaJuego == 1) {
-				dibujar1_1(juego.mina);
-			}
-			else if (juego.escalaJuego == 2) {
-				dibujar1_3(juego.mina);
-			}
-			cout << "Gemas totales recogidas: " << juego.contGemas << endl;
-			cout << "Numero de movimientos: " << juego.contMov << endl;
-			cout << "Dinamitas usadas: " << juego.contTNT << endl;
+			dibujar(juego);
 			jugarTeclado(juego);
 		}
 		else if (juego.opcionMov == 2) { //Introduce por fichero
@@ -50,15 +40,7 @@ int main() {
 				while (juego.estadoMinero == EXPLORANDO) {
 					system("cls");
 					jugarFichero(juego, movimientos);
-					if (juego.escalaJuego == 1) {
-						dibujar1_1(juego.mina);
-					}
-					else if (juego.escalaJuego == 2) {
-						dibujar1_3(juego.mina);
-					}
-					cout << "Gemas totales recogidas: " << juego.contGemas << endl;
-					cout << "Numero de movimientos: " << juego.contMov << endl;
-					cout << "Dinamitas usadas: " << juego.contTNT << endl;
+					dibujar(juego);
 				}
 			}
 			else {
@@ -66,7 +48,6 @@ int main() {
 			}
 				movimientos.close();
 		}
-
 		if (juego.estadoMinero != EXPLORANDO) { 
 			if (juego.estadoMinero == EXITO) {
 				system("cls");
@@ -83,13 +64,10 @@ int main() {
 					else { //No quiere nivel siguiente, pulsa salir
 						juego.estadoMinero = ABANDONO;
 					}
-
-
 				}
 				if (juego.estadoMinero == EXPLORANDO) { //Aqui solo entrara si hay más niveles disponibles
 					cargar_juego(juego, juego.nivel);
 				}
-
 			}
 			if (juego.estadoMinero == ABANDONO) {
 				cout << "HAS ABANDONADO, HASTA LA PROXIMA" << endl;
@@ -105,7 +83,6 @@ int main() {
 	}
 	return 0;
 }
-
 bool mostrarMenu(tJuego& juego) {
 	system("cls");
 	int opt;
@@ -133,7 +110,6 @@ bool mostrarMenu(tJuego& juego) {
 			juego.opcionMov = 2;
 		}
 		else if (opt2 == 0) {
-			
 			return false;
 		}
 		return true;
@@ -141,12 +117,9 @@ bool mostrarMenu(tJuego& juego) {
 	else {
 		return false;
 	}
-
-
 }
-
 bool mostrarMenuNivel(tJuego& juego) {
-	
+	bool aux = false;
 	int opt = 0;
 	cout << "1. Jugar siguiente nivel" << endl;
 	cout << "0. Salir " << endl;
@@ -155,11 +128,12 @@ bool mostrarMenuNivel(tJuego& juego) {
 	cin >> opt;
 	if (opt == 1 && opt <= NUM_NIVELES) {
 		juego.nivel++;
-		return true;
+		aux = true;
 	}
 	else if (opt == 0) {		
-		return false;
+		aux = false;
 	}
+	return aux;
 }
 
 

@@ -4,7 +4,6 @@
 #include <conio.h>
 #include <string>
 
-
 #include "juego.h"
 using namespace std;
 
@@ -143,19 +142,7 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 				juego.mina.posFila = x;
 				juego.mina.posColumna = y;
 			}
-			/*
-			//Si el minero viene por abajo
-			if (juego.mina.planoMina[x - 1][y] == LIBRE && aux == 0) {
-				//Movemos la piedra
-				juego.mina.planoMina[x - 1][y] = PIEDRA;
-				//Movemos el minero
-				juego.mina.planoMina[x][y] = MINERO;
-				//Ponemos libre donde estaba antes el minero
-				juego.mina.planoMina[juego.mina.posFila][juego.mina.posColumna] = LIBRE;
-				//Actualizamos la posicion del minero
-				juego.mina.posFila = x;
-				juego.mina.posColumna = y;
-			}*/
+			
 			//Si el minero viene por arriba: NO SE MUEVE
 				//La piedra esta siempre apoyada
 			break;
@@ -179,31 +166,25 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 	bool seguirCayendo = true;
 	while (seguirCayendo) {
 		comprobarCaida(juego, seguirCayendo);
+		system("cls");
+		dibujar(juego);
 	}
 
 
 }
 void dibujar(const tJuego& juego) {
-	//Visualiza los contadores y tambien llama al dibujar mina
-	//Mostrar movimiento
-	cout << "Movimientos: " << juego.contMov << endl;
-	//Mostrar Gemas
-	cout << "Gemas: " << juego.contGemas << endl;
-
-	// Manda dibujar el plano de la mina a la escala que tiene guardada en las opciones del juego
-	//En funcion del parametro 
 	if (juego.escalaJuego == 1) {
 		dibujar1_1(juego.mina);
 	}
-	if (juego.escalaJuego == 3) {
+	else if (juego.escalaJuego == 2) {
 		dibujar1_3(juego.mina);
 	}
+	cout << "Gemas totales recogidas: " << juego.contGemas << endl;
+	cout << "Numero de movimientos: " << juego.contMov << endl;
+	cout << "Dinamitas usadas: " << juego.contTNT << endl;
 }
 
-
-
 tTecla leerTecla(tJuego& juego) {
-
 	tTecla tecla = ARRIBA;
 	int dir;
 	cin.sync();
@@ -224,7 +205,6 @@ tTecla leerTecla(tJuego& juego) {
 			tecla = IZDA;
 			break;
 		}
-		
 	}
 	else if (dir == 27) {// Tecla ESC
 		tecla = SALIR;
@@ -246,7 +226,6 @@ void leerMovimiento(tJuego& juego, tTecla& tecla, std::istream& movimientos)
 	if (tecla == SALIR) {
 		juego.estadoMinero = ABANDONO;
 	}
-
 }
 istream& operator<<(std::istream & movimientos, tTecla & tecla){ /******LECTURA DE LA TECLA DE FICHERO, NO DE USUARIO******/
 		char dir;
@@ -322,6 +301,7 @@ bool ponerTNT(tJuego& juego) {
 			comprobarCaida(juego, seguirCayendo);
 		}
 
+		
 		for (int i = 0; i < juego.mina.nFilas; i++) {
 			for (int j = 0; j < juego.mina.nColumnas; j++) {
 				if (juego.mina.planoMina[i][j] == DINAMITA) {
@@ -340,16 +320,10 @@ bool ponerTNT(tJuego& juego) {
 				}
 				juego.mina.planoMina[fila  + incF[dir]][columna + incC[dir]] = LIBRE;
 			}
-			
-
 		}
-
-		
-
 		//Quito la dinamita del pano
 		juego.mina.planoMina[fila][columna] = LIBRE;
 	}
-
 
 	return puede; //Devuelve si se puede poner la dinamita o no 
 }
