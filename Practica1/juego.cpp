@@ -33,6 +33,7 @@ void jugarFichero(tJuego & juego, std::istream & movimientos) {
 	}
 	if(tecla != SALIR && tecla != NADA) {
 		realizarMovimiento(juego, tecla);
+		comprobarCaida(juego);
 	}
 }
 void jugarTeclado(tJuego& juego) {
@@ -43,6 +44,7 @@ void jugarTeclado(tJuego& juego) {
 	}
 	if (tecla != SALIR) {
 		realizarMovimiento(juego, tecla);
+		comprobarCaida(juego);
 	}
 }
 
@@ -109,13 +111,6 @@ void realizarMovimiento(tJuego& juego, tTecla& mov) {
 			break;
 		}
 	}
-
-	bool seguirCayendo = true;
-	while (seguirCayendo) {
-		comprobarCaida(juego, seguirCayendo);
-		dibujar(juego);
-	}
-
 }
 void dibujar(const tJuego& juego) {
 	system("cls");
@@ -196,24 +191,36 @@ istream& operator<<(std::istream & movimientos, tTecla & tecla){ /******LECTURA 
 		}
 		return movimientos;
 }
-void comprobarCaida(tJuego& juego, bool& seguirCayendo) {
-	seguirCayendo = false;
-	for (int i = 0; i < juego.mina.nFilas; i++) {
-		for (int j = 0; j < juego.mina.nColumnas; j++) {
-			if (juego.mina.planoMina[i][j] == PIEDRA && juego.mina.planoMina[i + 1][j] == LIBRE) {
-				juego.mina.planoMina[i + 1][j] = PIEDRA;
-				juego.mina.planoMina[i][j] = LIBRE;
-				seguirCayendo = true;
+void comprobarCaida(tJuego& juego) {
+	int w = 0;
+	for (int i = juego.mina.nFilas - 1; i > -1; i--) {
+		for (int j = juego.mina.nColumnas - 1; j > -1 ; j--) {
+			if (juego.mina.planoMina[i][j] == PIEDRA) {
+				w = 1;
+				while (juego.mina.planoMina[i + w][j] == LIBRE && i + w < juego.mina.nFilas) {
+					juego.mina.planoMina[i + w][j] = PIEDRA;
+					juego.mina.planoMina[i + w - 1][j] = LIBRE;
+					w++;
+					dibujar(juego);
+				}
 			}
-			if (juego.mina.planoMina[i][j] == GEMA && juego.mina.planoMina[i + 1][j] == LIBRE) {
-				juego.mina.planoMina[i + 1][j] = GEMA;
-				juego.mina.planoMina[i][j] = LIBRE;
-				seguirCayendo = true;
+			else if (juego.mina.planoMina[i][j] == GEMA) {
+				w = 1;
+				while (juego.mina.planoMina[i + w][j] == LIBRE && i + w < juego.mina.nFilas) {
+					juego.mina.planoMina[i + w][j] = GEMA;
+					juego.mina.planoMina[i + w - 1][j] = LIBRE;
+					w++;
+					dibujar(juego);
+				}
 			}
-			if (juego.mina.planoMina[i][j] == DINAMITA && juego.mina.planoMina[i + 1][j] == LIBRE) {
-				juego.mina.planoMina[i + 1][j] = DINAMITA;
-				juego.mina.planoMina[i][j] = LIBRE;
-				seguirCayendo = true;
+			else if (juego.mina.planoMina[i][j] == DINAMITA) {
+				w = 1;
+				while (juego.mina.planoMina[i + w][j] == LIBRE && i + w < juego.mina.nFilas) {
+					juego.mina.planoMina[i + w][j] = DINAMITA;
+					juego.mina.planoMina[i + w - 1][j] = LIBRE;
+					w++;
+					dibujar(juego);
+				}
 			}
 		}
 	}
@@ -230,10 +237,7 @@ bool ponerTNT(tJuego& juego) {
 		puede = true; //Puede poner la dinamita
 	}
 	if (puede) { //Hacemos que caiga la dinamita
-		bool seguirCayendo = true;
-		while (seguirCayendo) {
-			comprobarCaida(juego, seguirCayendo);
-		}
+		comprobarCaida(juego);
 	}
 	for (int i = 0; i < juego.mina.nFilas; i++) { //Para sacar la posicion donde ha quedado la Dinamita
 		for (int j = 0; j < juego.mina.nColumnas; j++) {
