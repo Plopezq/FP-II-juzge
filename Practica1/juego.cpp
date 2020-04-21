@@ -25,29 +25,49 @@ bool cargar_juego(tJuego& juego, int nivel) {
 	return cargado;
 }
 
-void jugarFichero(tJuego & juego, std::istream & movimientos) {
-	tTecla tecla = NADA;
-	leerMovimiento(juego, tecla, movimientos); //Modifica el valor de tecla
-	if (tecla == TNT) {
-		ponerTNT(juego); //TODO, jugar con le boolean que devuelve
-	}
-	if(tecla != SALIR && tecla != NADA) {
-		realizarMovimiento(juego, tecla);
-		comprobarCaida(juego);
-	}
-}
-void jugarTeclado(tJuego& juego) {
-	tTecla tecla;
-	tecla = leerTecla(juego);
-	if (tecla == TNT ) {
-		ponerTNT(juego); //TODO, jugar con le boolean que devuelve
-	}
-	if (tecla != SALIR) {
-		realizarMovimiento(juego, tecla);
-		comprobarCaida(juego);
-	}
-}
+void jugar(tJuego& juego) {
 
+	int opt = juego.opcionMov;
+	if (opt == 1) { // Introduce por TECLADO
+		tTecla tecla;
+		tecla = leerTecla(juego);
+		if (tecla == TNT) {
+			ponerTNT(juego); //TODO, jugar con le boolean que devuelve
+		}
+		if (tecla != SALIR) {
+			realizarMovimiento(juego, tecla);
+			comprobarCaida(juego);
+		}
+
+	}
+	else if (opt == 2) {// Introduce por FICHERO
+		ifstream movimientos;
+		string aux = "";
+		cout << "Introduce el nombre del fichero para los movimientos: " << endl;
+		cin >> aux;
+		movimientos.open(aux);
+		if (movimientos.is_open()) {//Se ha podido abrir
+			while (juego.estadoMinero == EXPLORANDO) {
+				//system("cls");
+				tTecla tecla = NADA;
+				leerMovimiento(juego, tecla, movimientos); //Modifica el valor de tecla
+				if (tecla == TNT) {
+					ponerTNT(juego); //TODO, jugar con le boolean que devuelve
+				}
+				if (tecla != SALIR && tecla != NADA) {
+					realizarMovimiento(juego, tecla);
+					comprobarCaida(juego);
+				}
+				dibujar(juego);
+			}
+		}
+		else {
+			cout << "No se ha podido abrir el fichero " << endl;
+		}
+		movimientos.close();
+	}
+
+}
 void realizarMovimiento(tJuego& juego, tTecla& mov) {
 	//Vector de direcciones, que coincide con las del enumerado
 	//					 ARRIBA, ABAJO, DCHA, IZDA, SALIR, NADA} tTecla;
@@ -124,7 +144,6 @@ void dibujar(const tJuego& juego) {
 	cout << "Numero de movimientos: " << juego.contMov << endl;
 	cout << "Dinamitas usadas: " << juego.contTNT << endl;
 }
-
 tTecla leerTecla(tJuego& juego) {
 	tTecla tecla = ARRIBA;
 	int dir;
@@ -153,7 +172,6 @@ tTecla leerTecla(tJuego& juego) {
 	}
 	else if (dir == 68 || dir == 100) {
 		tecla = TNT;
-		//juego.contTNT++;
 	}
 	return tecla;
 }
@@ -219,8 +237,9 @@ void comprobarCaida(tJuego& juego) {
 					juego.mina.planoMina[i + w][j] = DINAMITA;
 					juego.mina.planoMina[i + w - 1][j] = LIBRE;
 					w++;
-					dibujar(juego);
+					dibujar(juego); //Para ver el rastro de la dinamita
 				}
+				//dibujar(juego);
 			}
 		}
 	}
@@ -249,11 +268,12 @@ bool ponerTNT(tJuego& juego) {
 	}
 	//Aqui ya reventamos la Dinamita y el juego.contTNT vuelve a ser 0
 	for (int dir = 0; dir < 8; dir++) {
-		if (dentroPlano(juego.mina, filaTNT + incF[dir], columnaTNT + incC[dir])) {
-			if( juego.mina.planoMina[filaTNT + incF[dir]][columnaTNT + incC[dir]] == MINERO) {
+		while (dentroPlano(juego.mina, filaTNT + incF[dir], columnaTNT + incC[dir]) ) {
+			if (juego.mina.planoMina[filaTNT + incF[dir]][columnaTNT + incC[dir]] == MINERO) {
 				juego.estadoMinero = FRACASO;
 			}
 			juego.mina.planoMina[filaTNT + incF[dir]][columnaTNT + incC[dir]] = LIBRE;
+			dir++;
 		}
 	}
 	//Quito la dinamita del pano

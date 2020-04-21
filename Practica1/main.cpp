@@ -18,7 +18,7 @@ int main() {
 		}
 	}
 	bool final = mostrarMenu(juego);
-	//Si quiere jugar, cargp juego, sino salgo (ABANDONO)
+	//Si quiere jugar, cargo juego, sino salgo (ABANDONO) y non entro en el while
 	if (!final) {
 		cargar_juego(juego, juego.nivel);
 	}
@@ -26,30 +26,8 @@ int main() {
 		juego.estadoMinero = ABANDONO;
 	}
 	while (juego.estadoMinero == EXPLORANDO && !final) {
-		//system("cls");
-		if (juego.opcionMov == 1) { //Introduce por TECLADO
-			dibujar(juego);
-			jugarTeclado(juego);
-		}
-		else if (juego.opcionMov == 2) { //Introduce por FICHERO
-			ifstream movimientos;
-			string aux = "";
-			cout << "Introduce el nombre del fichero para los movimientos: " << endl;
-			cin >> aux;
-			movimientos.open(aux);
-			if (movimientos.is_open()) {//Se ha podido abrir
-				while (juego.estadoMinero == EXPLORANDO) {
-					//system("cls");
-					jugarFichero(juego, movimientos);
-					dibujar(juego);
-				}
-			}
-			else {
-				cout << "No se ha podido abrir el fichero " << endl;
-			}
-			movimientos.close();
-		}
-
+		dibujar(juego);
+		jugar(juego);
 		if (juego.estadoMinero != EXPLORANDO) { //Ya acabo de jugar
 			if (juego.estadoMinero == EXITO) {
 				if (juego.nivel < NUM_NIVELES) { //Si todavia quedan niveles...

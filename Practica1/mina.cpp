@@ -64,6 +64,10 @@ char getChar(tElemento ele) { //tElemento = tCasilla
 	case LIBRE:
 		aux = ' ';
 		break;
+
+	case DINAMITA:
+		aux = 'T';
+		break;
 	}
 	return aux;
 }
