@@ -38,6 +38,7 @@
     <ProjectGuid>{4BD6F816-0E5F-4EE6-9EF7-95B9100F9FED}</ProjectGuid>
     <RootNamespace>pr3Juez</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>juez_03</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
