@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29926.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Juez_10", "Juez_10.vcxproj", "{E1CDBBFE-91F7-43AF-BA56-53E33A67EAFA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E1CDBBFE-91F7-43AF-BA56-53E33A67EAFA}.Debug|x64.ActiveCfg = Debug|x64
+		{E1CDBBFE-91F7-43AF-BA56-53E33A67EAFA}.Debug|x64.Build.0 = Debug|x64
+		{E1CDBBFE-91F7-43AF-BA56-53E33A67EAFA}.Debug|x86.ActiveCfg = Debug|Win32
+		{E1CDBBFE-91F7-43AF-BA56-53E33A67EAFA}.Debug|x86.Build.0 = Debug|Win32
+		{E1CDBBFE-91F7-43AF-BA56-53E33A67EAFA}.Release|x64.ActiveCfg = Release|x64
+		{E1CDBBFE-91F7-43AF-BA56-53E33A67EAFA}.Release|x64.Build.0 = Release|x64
+		{E1CDBBFE-91F7-43AF-BA56-53E33A67EAFA}.Release|x86.ActiveCfg = Release|Win32
+		{E1CDBBFE-91F7-43AF-BA56-53E33A67EAFA}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {470BBFB3-98EB-49EE-8250-D30BDAC94C97}
+	EndGlobalSection
+EndGlobal
