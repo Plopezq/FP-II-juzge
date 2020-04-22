@@ -16,7 +16,7 @@ const pair <int, int > dirs4[NUM_DIRECCIONES] = { { 0 ,-1} ,{0 ,1} ,{-1 ,0} ,{1 
 typedef struct {
     int matriz[50][50];
     int numFilas = 0;
-    int numColumnas = 0;
+    int numColumnas = 0; 
 }tMatriz;
 
 typedef struct {
