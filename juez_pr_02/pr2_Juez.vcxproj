@@ -23,6 +23,7 @@
     <None Include="1.out" />
     <None Include="2.in" />
     <None Include="2.out" />
+    <None Include="prob-DG_Practica02_Realizar movimiento.pdf" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="juego.cpp" />
@@ -35,10 +36,10 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{4BD6F816-0E5F-4EE6-9EF7-95B9100F9FED}</ProjectGuid>
-    <RootNamespace>pr3Juez</RootNamespace>
+    <ProjectGuid>{852CE359-0956-403E-A0C1-B00F327B5B61}</ProjectGuid>
+    <RootNamespace>pr2Juez</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>juez_03</ProjectName>
+    <ProjectName>juez_pr_02</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
