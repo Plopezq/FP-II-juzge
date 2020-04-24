@@ -184,13 +184,11 @@ void dibuja3x3(tElemento casilla, tPlanoCaracteres& caracteres, tPlanoColores& c
 		}
 	}
 }
-ostream& operator<<(ostream& out, tElemento const& e)
-{
+ostream& operator<<(ostream& out, tElemento const& e){
 	out << getChar(e);
 	return out;
 }
-void colorFondo(int color)
-{
+void colorFondo(int color){
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);     
 	SetConsoleTextAttribute(handle, 15 | (color << 4));
 }

@@ -28,6 +28,7 @@ int main() {
 	while (juego.estadoMinero == EXPLORANDO && !final) {
 		dibujar(juego);
 		jugar(juego);
+		//dibujar(juego);
 		if (juego.estadoMinero != EXPLORANDO) { //Ya acabo de jugar
 			if (juego.estadoMinero == EXITO) {
 				if (juego.nivel < NUM_NIVELES) { //Si todavia quedan niveles...
@@ -62,34 +63,37 @@ int main() {
 }
 bool mostrarMenu(tJuego& juego) {
 	bool salir = false;
-	system("cls");
-	int opt;
-	cout << "1. Jugar partida a escala 1:1. " << endl;
-	cout << "2. Jugar partida a escala 1:3. " << endl;
-	cout << "3. Salir " << endl;
-	cout << "Introduce una opcion:  " << endl;
-	cin >> opt;
-	if (opt == 3) { salir = true; }
-
-	if (!salir){ //SI NO SALE, muestro el siguiente menu
-		juego.escalaJuego = opt;
+	int opt = 9;
+	int opt2 = 9;
+	while (opt != 1 && opt != 2 && opt != 3) { //Para evitar valores no deseados
 		system("cls");
-		int opt2 = 0;
-		cout << "1. Introducir movimientos por teclado. " << endl;
-		cout << "2. Introducir movimientos por fichero. " << endl;
-		cout << "0. Salir " << endl;
-		cout << endl;
+		cout << "1. Jugar partida a escala 1:1. " << endl;
+		cout << "2. Jugar partida a escala 1:3. " << endl;
+		cout << "3. Salir " << endl;
 		cout << "Introduce una opcion:  " << endl;
-		cin >> opt2;
+		cin >> opt;
+	}
+	while (opt2 != 1 && opt2 != 2 && opt2 != 0 && !salir) { //Para evitar valores no deseados
+		if (opt == 3) { salir = true; }
+		if (!salir) { //SI NO SALE, muestro el siguiente menu
+			juego.escalaJuego = opt;
+			system("cls");
+			cout << "1. Introducir movimientos por teclado. " << endl;
+			cout << "2. Introducir movimientos por fichero. " << endl;
+			cout << "0. Salir " << endl;
+			cout << endl;
+			cout << "Introduce una opcion:  " << endl;
+			cin >> opt2;
 
-		if (opt2 == 1) {
-			juego.opcionMov = 1;
-		}
-		else if (opt2 == 2) {
-			juego.opcionMov = 2;
-		}
-		else if (opt2 == 0) {
-			salir = true;
+			if (opt2 == 1) {
+				juego.opcionMov = 1;
+			}
+			else if (opt2 == 2) {
+				juego.opcionMov = 2;
+			}
+			else if (opt2 == 0) {
+				salir = true;
+			}
 		}
 	}
 	return salir;
@@ -114,11 +118,3 @@ bool mostrarMenuNivel(tJuego& juego) {
 	}
 	return salir;
 }
-
-
-
-
-
-
-
-

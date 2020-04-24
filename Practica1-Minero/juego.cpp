@@ -5,7 +5,6 @@
 #include <string>
 #include "juego.h"
 using namespace std;
-
 //FUNCIONES
 bool cargar_juego(tJuego& juego, int nivel) {
 	bool cargado = false; //Inicializo el juego
@@ -24,49 +23,48 @@ bool cargar_juego(tJuego& juego, int nivel) {
 	}
 	return cargado;
 }
-
 void jugar(tJuego& juego) {
-
 	int opt = juego.opcionMov;
-	if (opt == 1) { // Introduce por TECLADO
-		tTecla tecla;
-		tecla = leerTecla(juego);
-		if (tecla == TNT) {
-			ponerTNT(juego); //TODO, jugar con le boolean que devuelve
-		}
-		if (tecla != SALIR) {
-			realizarMovimiento(juego, tecla);
-			comprobarCaida(juego);
-		}
-
-	}
-	else if (opt == 2) {// Introduce por FICHERO
-		ifstream movimientos;
-		string aux = "";
-		cout << "Introduce el nombre del fichero para los movimientos: " << endl;
-		cin >> aux;
-		movimientos.open(aux);
-		if (movimientos.is_open()) {//Se ha podido abrir
-			while (juego.estadoMinero == EXPLORANDO) {
-				//system("cls");
-				tTecla tecla = NADA;
-				leerMovimiento(juego, tecla, movimientos); //Modifica el valor de tecla
-				if (tecla == TNT) {
-					ponerTNT(juego); //TODO, jugar con le boolean que devuelve
-				}
-				if (tecla != SALIR && tecla != NADA) {
-					realizarMovimiento(juego, tecla);
-					comprobarCaida(juego);
-				}
-				dibujar(juego);
+	
+		if (opt == 1) { // Introduce por TECLADO
+			tTecla tecla;
+			tecla = leerTecla(juego);
+			if (tecla == TNT) {
+				ponerTNT(juego); //TODO, jugar con le boolean que devuelve
+			}
+			if (tecla != SALIR) {
+				realizarMovimiento(juego, tecla);
+				comprobarCaida(juego);
 			}
 		}
-		else {
-			cout << "No se ha podido abrir el fichero " << endl;
+		else if (opt == 2) {// Introduce por FICHERO
+			ifstream movimientos;
+			while (!movimientos.is_open() ){
+				string aux = "";
+				cout << "Introduce el nombre del fichero para los movimientos: " << endl;
+				cin >> aux;
+				movimientos.open(aux);
+				if (!movimientos.is_open()) {
+					cout << "Error al abrir el archivo" << endl;
+				}
+			}
+			if (movimientos.is_open()) {//Se ha podido abrir
+				while (juego.estadoMinero == EXPLORANDO) {
+					//system("cls");
+					tTecla tecla = NADA;
+					leerMovimiento(juego, tecla, movimientos); //Modifica el valor de tecla
+					if (tecla == TNT) {
+						ponerTNT(juego); //TODO, jugar con le boolean que devuelve
+					}
+					if (tecla != SALIR && tecla != NADA) {
+						realizarMovimiento(juego, tecla);
+						comprobarCaida(juego);
+					}
+					dibujar(juego);
+				}
+			}
+			movimientos.close();
 		}
-		movimientos.close();
-	}
-
 }
 void realizarMovimiento(tJuego& juego, tTecla& mov) {
 	//Vector de direcciones, que coincide con las del enumerado
