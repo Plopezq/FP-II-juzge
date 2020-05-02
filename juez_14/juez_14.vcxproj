@@ -22,6 +22,9 @@
     <None Include="1.in" />
     <None Include="1.out" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{9A32D695-A308-44A0-8C61-FCE06A409AB1}</ProjectGuid>
