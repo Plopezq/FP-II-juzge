@@ -10,7 +10,7 @@
 #include <fstream>
 #include <string>
 using namespace std;
-const int MAX_FOTOS = 100;
+const int MAX_FOTOS = 50;
 //ESTRUCTURAS PROPIAS
 typedef struct {
     string titulo;
@@ -31,24 +31,53 @@ typedef struct {
 // función que resuelve el problema
 // comentario sobre el coste, O(f(N)), donde N es ...
 //Estas 2 funciones sustituyen a la de resolver
-void ordenarTitulo(tArrayPunt arrayPunt) {
-    for (int i = 0; i < arrayPunt.contador - 1; i++) {
-        // Desde el primer elemento hasta el penúltimo
+void ordenarTitulo(tArrayPunt& arrayPunt) {
+
+    bool inter = true;
+    int i = 0;
+    while ((i < arrayPunt.contador - 1) && inter) {
+        // Desde el primer elemento hasta el penúltimo si hay intercambios...
+        inter = false;
         for (int j = arrayPunt.contador - 1; j > i; j--) {
             // Desde el último hasta el siguiente a i
             if (arrayPunt.arrayPunt[j]->titulo < arrayPunt.arrayPunt[j - 1]->titulo) {
-                tFoto *tmp;
+                tFoto* tmp;
                 tmp = arrayPunt.arrayPunt[j];
                 arrayPunt.arrayPunt[j] = arrayPunt.arrayPunt[j - 1];
                 arrayPunt.arrayPunt[j - 1] = tmp;
+                inter = true;
             }
+        }
+        if (inter) {
+            i++;
+        }
+    }
+}
+
+void ordenarTema(tArrayPunt& arrayPunt) {
+
+    ordenarTitulo(arrayPunt);
+
+    bool inter = true;
+    int i = 0;
+    while ((i < arrayPunt.contador - 1) && inter) {
+        // Desde el primer elemento hasta el penúltimo si hay intercambios...
+        inter = false;
+        for (int j = arrayPunt.contador - 1; j > i; j--) {
+            // Desde el último hasta el siguiente a i
+            if (arrayPunt.arrayPunt[j]->tema < arrayPunt.arrayPunt[j - 1]->tema ) {
+                tFoto* tmp;
+                tmp = arrayPunt.arrayPunt[j];
+                arrayPunt.arrayPunt[j] = arrayPunt.arrayPunt[j - 1];
+                arrayPunt.arrayPunt[j - 1] = tmp;
+                inter = true;
+            }
+        }
+        if (inter) {
+            i++;
         }
     }
 
-
-}
-
-void ordenarTema(tArrayPunt arrayPunteros) {
 
 }
 
@@ -90,9 +119,20 @@ bool resuelveCaso() {
         return false;
 
     //Solucion sol = resolver(datos);
-
+    ordenarTitulo(array1);
+    ordenarTema(array2);
     // escribir solucion
-    
+    for (int z = 0; z < array1.contador; z++) {
+        cout << array1.arrayPunt[z]->titulo << endl;
+    }
+
+    cout << endl;
+    for (int z = 0; z < array1.contador; z++) {
+        cout << array2.arrayPunt[z]->tema << " - " << array2.arrayPunt[z]->titulo << endl;
+
+    }
+    cout << endl;
+
     return true;
 }
 
