@@ -31,7 +31,20 @@ typedef struct {
 // función que resuelve el problema
 // comentario sobre el coste, O(f(N)), donde N es ...
 //Estas 2 funciones sustituyen a la de resolver
-void ordenarTitulo(tArrayPunt arrayPunteros) {
+void ordenarTitulo(tArrayPunt arrayPunt) {
+    for (int i = 0; i < arrayPunt.contador - 1; i++) {
+        // Desde el primer elemento hasta el penúltimo
+        for (int j = arrayPunt.contador - 1; j > i; j--) {
+            // Desde el último hasta el siguiente a i
+            if (arrayPunt.arrayPunt[j]->titulo < arrayPunt.arrayPunt[j - 1]->titulo) {
+                tFoto *tmp;
+                tmp = arrayPunt.arrayPunt[j];
+                arrayPunt.arrayPunt[j] = arrayPunt.arrayPunt[j - 1];
+                arrayPunt.arrayPunt[j - 1] = tmp;
+            }
+        }
+    }
+
 
 }
 
@@ -55,6 +68,8 @@ bool resuelveCaso() {
 
     // leer los datos de la entrada
     cin >> lista.numFotos;
+    array1.contador = lista.numFotos;
+    array2.contador = lista.numFotos;
     //Leo todos los titulos
     cin.get(aux);
     for (int i = 0; i < lista.numFotos; i++) {
