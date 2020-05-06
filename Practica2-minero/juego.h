@@ -20,6 +20,9 @@ typedef struct {
 	int contTNT = 0;
 	int nivel = 1;
 }tJuego;
+
+
+
 //PROTOTIPOS
 void colorFondo(int color);
 bool cargar_juego( tJuego& juego, int nivel);

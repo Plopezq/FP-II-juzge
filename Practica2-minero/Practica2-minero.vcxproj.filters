@@ -47,12 +47,18 @@
     <ClCompile Include="mina.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="puntuaciones.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="juego.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="mina.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="puntuaciones.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,16 +2,20 @@
 #include<conio.h>
 #include<stdio.h>
 
-#include "juego.h"
+#include "puntuaciones.h"
 using namespace std;
 
 bool mostrarMenu(tJuego& juego);
 bool mostrarMenuNivel(tJuego& juego);
-const int NUM_NIVELES = 4;
+
 
 int main() {
 	//Creo el juego y inicializo el array
 	tJuego juego;
+	tPuntuaciones marcador;
+	inicializar_marcador(marcador);
+	cargar_marcador(marcador);
+
 	for (int i = 0; i < 50; i++) {
 		for (int j = 0; j < 50; j++) {
 			juego.mina.planoMina[i][j] = VACIO;

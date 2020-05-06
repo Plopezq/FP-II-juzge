@@ -150,10 +150,12 @@
     <ClCompile Include="juego.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mina.cpp" />
+    <ClCompile Include="puntuaciones.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="juego.h" />
     <ClInclude Include="mina.h" />
+    <ClInclude Include="puntuaciones.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
