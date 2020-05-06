@@ -19,12 +19,15 @@ typedef struct {
     int matriz[MAX][MAX];
 }tFoto;
 
-
 typedef struct {
     int contador = 0;
     tFoto* arrayPunt[MAX_FOTOS];
 }tArrayPunt;
 
+typedef struct {
+    int contador = 0;
+    tFoto* lista;
+}tArrayDinFotos;
 
 // función que resuelve el problema
 // comentario sobre el coste, O(f(N)), donde N es ...
@@ -79,8 +82,8 @@ bool resuelveCaso() {
     char aux;
 
    // tListaFotos lista;
-
-    tFoto* lista = new tFoto[MAX_FOTOS];
+    tArrayDinFotos arrayDin;
+    arrayDin.lista = new tFoto[MAX_FOTOS];
 
     tArrayPunt array1; //Titulo
     tArrayPunt array2; //Tema
@@ -93,31 +96,34 @@ bool resuelveCaso() {
 
     //PONGO LOS ARRAYS DE PUNTEROS, APUNTANDO A LAS FOTOS
     for (int i = 0; i < MAX_FOTOS; i++) {
-        array1.arrayPunt[i] = &lista[i];
-        array2.arrayPunt[i] = &lista[i];
+        array1.arrayPunt[i] = &arrayDin.lista[i];
+        array2.arrayPunt[i] = &arrayDin.lista[i];
     }
 
     // leer los datos de la entrada
-    cin >> array1.contador;
-    array2.contador = array1.contador;
+    cin >> arrayDin.contador;
+    array1.contador = arrayDin.contador;
+    array2.contador = arrayDin.contador;
     //Leo todos los titulos
     cin.get(aux);
-    for (int i = 0; i < array1.contador; i++) {
-        getline(cin, lista[i].titulo);
+    for (int i = 0; i < arrayDin.contador; i++) {
+        getline(cin, arrayDin.lista[i].titulo);
+        //Inicializo la matriz
         for (int s = 0; s < MAX; s++) {
             for (int w = 0; w < MAX; w++) {
-                lista[i].matriz[s][w] = 3;
+                arrayDin.lista[i].matriz[s][w] = 3;
             }
         }
-    }//
+    }
     //Leo todos los temas
-    for (int i = 0; i < array1.contador; i++) {
+    for (int i = 0; i < arrayDin.contador; i++) {
         // cin.get(aux);
-        getline(cin, lista[i].tema);
+        getline(cin, arrayDin.lista[i].tema);
     }
 
-    if (array1.contador == 0) {
-        delete[] lista;
+    if (arrayDin.contador == 0) {
+        delete[] arrayDin.lista;
+        arrayDin.lista = NULL;
         return false;
     }
 
@@ -136,7 +142,8 @@ bool resuelveCaso() {
     }
     cout << endl;
 
-    delete[] lista;
+    delete[] arrayDin.lista;
+    arrayDin.lista = NULL;
     return true;
 }
 
