@@ -17,7 +17,7 @@ typedef struct {
     int numFilas = 0;
     int numColumnas = 0;
     char matriz[50][50];
-}tMatriz;
+}tMatriz; //Para la sopa y para la solucion 
 
 typedef struct {
     string palabras[50];
@@ -122,7 +122,7 @@ void resuelveCaso() {
 
     //Leemos la sopa
 
-        cin >> sopa;
+      cin >> sopa;
 
     //Inicializamos el vector palabras
     for (int z = 0; z < 50; z++) {

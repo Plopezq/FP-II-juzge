@@ -10,22 +10,19 @@
 #include <fstream>
 #include <string>
 using namespace std;
-const int MAX_FOTOS = 50;
+const int MAX_FOTOS = 200;
+const int MAX = 200; //Ahora ya si puedo poner 200 ya que está todo en memoria dinámica y no se llena
 //ESTRUCTURAS PROPIAS
 typedef struct {
     string titulo;
     string tema;
-    int matriz[50][50];
+    int matriz[MAX][MAX];
 }tFoto;
-/*
-typedef struct {
-    int numFotos = 0; //Contador
-    tFoto array_fotos[MAX_FOTOS]; //Si pongo 200, peta la pila
-}tListaFotos;*/
+
 
 typedef struct {
     int contador = 0;
-    tFoto* arrayPunt[MAX_FOTOS]; //Si pongo 200, peta la pila
+    tFoto* arrayPunt[MAX_FOTOS];
 }tArrayPunt;
 
 
@@ -42,10 +39,7 @@ void ordenarTitulo(tArrayPunt& arrayPunt) {
         for (int j = arrayPunt.contador - 1; j > i; j--) {
             // Desde el último hasta el siguiente a i
             if (arrayPunt.arrayPunt[j]->titulo < arrayPunt.arrayPunt[j - 1]->titulo) {
-                tFoto* tmp;
-                tmp = arrayPunt.arrayPunt[j];
-                arrayPunt.arrayPunt[j] = arrayPunt.arrayPunt[j - 1];
-                arrayPunt.arrayPunt[j - 1] = tmp;
+                swap(arrayPunt.arrayPunt[j], arrayPunt.arrayPunt[j - 1]);
                 inter = true;
             }
         }
@@ -67,10 +61,7 @@ void ordenarTema(tArrayPunt& arrayPunt) {
         for (int j = arrayPunt.contador - 1; j > i; j--) {
             // Desde el último hasta el siguiente a i
             if (arrayPunt.arrayPunt[j]->tema < arrayPunt.arrayPunt[j - 1]->tema) {
-                tFoto* tmp;
-                tmp = arrayPunt.arrayPunt[j];
-                arrayPunt.arrayPunt[j] = arrayPunt.arrayPunt[j - 1];
-                arrayPunt.arrayPunt[j - 1] = tmp;
+                swap(arrayPunt.arrayPunt[j], arrayPunt.arrayPunt[j - 1]);
                 inter = true;
             }
         }
@@ -94,6 +85,12 @@ bool resuelveCaso() {
     tArrayPunt array1; //Titulo
     tArrayPunt array2; //Tema
 
+
+    for (int i = 0; i < MAX_FOTOS; i++) {
+        array1.arrayPunt[i] = nullptr;
+        array2.arrayPunt[i] = nullptr;
+    }
+
     //PONGO LOS ARRAYS DE PUNTEROS, APUNTANDO A LAS FOTOS
     for (int i = 0; i < MAX_FOTOS; i++) {
         array1.arrayPunt[i] = &lista[i];
@@ -107,8 +104,8 @@ bool resuelveCaso() {
     cin.get(aux);
     for (int i = 0; i < array1.contador; i++) {
         getline(cin, lista[i].titulo);
-        for (int s = 0; s < 50; s++) {
-            for (int w = 0; w < 50; w++) {
+        for (int s = 0; s < MAX; s++) {
+            for (int w = 0; w < MAX; w++) {
                 lista[i].matriz[s][w] = 3;
             }
         }
@@ -123,7 +120,6 @@ bool resuelveCaso() {
         delete[] lista;
         return false;
     }
-
 
     //Solucion sol = resolver(datos);
     ordenarTitulo(array1);

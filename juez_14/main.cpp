@@ -10,18 +10,18 @@
 #include <fstream>
 #include <string>
 using namespace std;
-const int MAX_FOTOS = 50;
+const int MAX_FOTOS = 200;
+const int MAX = 2; //Disminuyo el tamaño de las matrices, ya que no se van a usar. Y esque sino, se llena la pila y da error el juez.
 //ESTRUCTURAS PROPIAS
 typedef struct {
     string titulo;
     string tema;
-    int matriz[50][50];
+    int matriz[MAX][MAX];
 }tFoto;
 typedef struct {
     int numFotos = 0; //Contador
     tFoto array_fotos[MAX_FOTOS]; //Si pongo 200, peta la pila
 }tListaFotos;
-
 typedef struct {
     int contador = 0;
     tFoto* arrayPunt[MAX_FOTOS]; //Si pongo 200, peta la pila
@@ -41,10 +41,7 @@ void ordenarTitulo(tArrayPunt & arrayPunt) {
         for (int j = arrayPunt.contador - 1; j > i; j--) {
             // Desde el último hasta el siguiente a i
             if (arrayPunt.arrayPunt[j]->titulo < arrayPunt.arrayPunt[j - 1]->titulo) {
-                tFoto* tmp;
-                tmp = arrayPunt.arrayPunt[j];
-                arrayPunt.arrayPunt[j] = arrayPunt.arrayPunt[j - 1];
-                arrayPunt.arrayPunt[j - 1] = tmp;
+                swap(arrayPunt.arrayPunt[j], arrayPunt.arrayPunt[j - 1]);
                 inter = true;
             }
         }
@@ -66,11 +63,10 @@ void ordenarTema(tArrayPunt& arrayPunt) {
         for (int j = arrayPunt.contador - 1; j > i; j--) {
             // Desde el último hasta el siguiente a i
             if (arrayPunt.arrayPunt[j]->tema < arrayPunt.arrayPunt[j - 1]->tema ) {
-                tFoto* tmp;
-                tmp = arrayPunt.arrayPunt[j];
-                arrayPunt.arrayPunt[j] = arrayPunt.arrayPunt[j - 1];
-                arrayPunt.arrayPunt[j - 1] = tmp;
+              
+                swap(arrayPunt.arrayPunt[j], arrayPunt.arrayPunt[j - 1]);
                 inter = true;
+
             }
         }
         if (inter) {
@@ -87,33 +83,42 @@ bool resuelveCaso() {
     char aux;
 
     tListaFotos lista;
-    tArrayPunt array1; //Titulo
-    tArrayPunt array2; //Tema
+    tArrayPunt array1; // Titulo
+    tArrayPunt array2; // Tema
+
+      //Inicializo a null los punteros
+    for (int i = 0; i < MAX_FOTOS; i++) {
+        array1.arrayPunt[i] = nullptr;
+        array2.arrayPunt[i] = nullptr;
+    }
 
     //PONGO LOS ARRAYS DE PUNTEROS, APUNTANDO A LAS FOTOS
-    for (int i = 0; i < MAX_FOTOS; i++) {
-        array1.arrayPunt[i] = &lista.array_fotos[i];
-        array2.arrayPunt[i] = &lista.array_fotos[i];
-    }
+
 
     // leer los datos de la entrada
     cin >> lista.numFotos;
-    array1.contador = lista.numFotos;
-    array2.contador = lista.numFotos;
+
     //Leo todos los titulos
     cin.get(aux);
     for (int i = 0; i < lista.numFotos; i++) {
         getline(cin, lista.array_fotos[i].titulo);
-        for (int s = 0; s < 50; s++) {
-            for (int w = 0; w < 50; w++) {
+        for (int s = 0; s < MAX; s++) {
+            for (int w = 0; w < MAX; w++) {
                 lista.array_fotos[i].matriz[s][w] = 3;
             }
         }
-    }//
+        array1.contador = lista.numFotos;
+        array2.contador = lista.numFotos;
+    }
     //Leo todos los temas
     for (int i = 0; i < lista.numFotos; i++) {
        // cin.get(aux);
         getline(cin, lista.array_fotos[i].tema);
+    }
+
+    for (int i = 0; i < MAX_FOTOS; i++) {
+        array1.arrayPunt[i] = &lista.array_fotos[i];
+        array2.arrayPunt[i] = &lista.array_fotos[i];
     }
 
     if (lista.numFotos == 0 )

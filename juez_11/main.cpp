@@ -36,13 +36,10 @@ tResultado resolver(tMatriz caso) {
             //Compruebo que a donde se quiere mover está dentro del array
             if ( ( (i + dirs4[d].first >= 0) && (i + dirs4[d].first < caso.numFilas) )
                 && ( (i + dirs4[d].second >= 0) && (i + dirs4[d].second < caso.numColumnas)) ) {
-
                 suma += caso.matriz[i + dirs4[d].first][i + dirs4[d].second];
-
             }
 
         }
-
         if (suma > resul.suma) {
             resul.fila = i;
             resul.suma = suma;
