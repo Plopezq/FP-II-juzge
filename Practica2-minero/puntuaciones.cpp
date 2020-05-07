@@ -7,7 +7,6 @@ bool cargar_marcador(tPuntuaciones& marcador)
 	ifstream archivo;
 	archivo.open(aux);
 	if (archivo.is_open()) {
-		
 		int i = 0;
 		string aux = "";
 		while (!acabado) {
@@ -33,8 +32,6 @@ bool cargar_marcador(tPuntuaciones& marcador)
 		}
 		archivo.close();
 	}
-
-
 	return acabado;
 }
 
@@ -89,9 +86,55 @@ void destruir(tPuntuaciones& marcador)
 
 bool buscar(const string& nombre, const tPuntuaciones& marcador, int& pos)
 {
+
 	return false;
 }
 
 void insertar(tPuntuaciones& marcador, string const& nombre, int pos)
 {
+
+}
+
+void ordenarNombre(tPuntuaciones& marcador) //Ordena
+{
+	bool inter = true;
+	int i = 0;
+	while ((i < marcador.num_jugadores - 1) && inter) {
+		// Desde el primer elemento hasta el penúltimo si hay intercambios...
+		inter = false;
+		for (int j = marcador.num_jugadores - 1; j > i; j--) {
+			// Desde el último hasta el siguiente a i
+			if (marcador.array_clasificacion[j].nombre < marcador.array_clasificacion[j - 1].nombre) {
+				swap(marcador.array_clasificacion[j], marcador.array_clasificacion[j - 1]);
+				inter = true;
+			}
+		}
+		if (inter) {
+			i++;
+		}
+	}
+}
+
+void ordenarNivel(tPuntuaciones& marcador, int pos)
+{
+	bool inter = true;
+	int i = 0;
+	while ((i < marcador.num_jugadores - 1) && inter) {
+		// Desde el primer elemento hasta el penúltimo si hay intercambios...
+		inter = false;
+		for (int j = marcador.num_jugadores - 1; j > i; j--) {
+			// Desde el último hasta el siguiente a i
+			if (marcador.array_clasificacion[pos].vMinasRecorridas[j].IdMina < 
+				marcador.array_clasificacion[pos].vMinasRecorridas[j - 1].IdMina) {
+
+				swap(marcador.array_clasificacion[pos].vMinasRecorridas[j].IdMina, 
+					marcador.array_clasificacion[pos].vMinasRecorridas[j - 1].IdMina);
+
+				inter = true;
+			}
+		}
+		if (inter) {
+			i++;
+		}
+	}
 }
