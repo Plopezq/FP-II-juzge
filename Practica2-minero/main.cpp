@@ -15,6 +15,12 @@ int main() {
 	tPuntuaciones marcador;
 	inicializar_marcador(marcador);
 	cargar_marcador(marcador);
+	ordenarNombre(marcador);
+	//int pos = 0;
+	//string nombre = "Persona4";
+	//buscar(nombre, marcador, pos);
+	ordenarNivel(marcador, 0);
+	mostrar_minas_usuario(marcador, 0);
 
 	for (int i = 0; i < 50; i++) {
 		for (int j = 0; j < 50; j++) {
