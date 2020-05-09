@@ -15,12 +15,20 @@ int main() {
 	tPuntuaciones marcador;
 	inicializar_marcador(marcador);
 	cargar_marcador(marcador);
-	ordenarNombre(marcador);
+	ordenarNombre(marcador); //Ordena jugadores por nombre
 	//int pos = 0;
 	//string nombre = "Persona4";
 	//buscar(nombre, marcador, pos);
-	ordenarNivel(marcador, 0);
-	mostrar_minas_usuario(marcador, 0);
+	for (int i = 0; i < marcador.num_jugadores; i++) { //Ordena los niveles de todos los jugadores
+		ordenarNivel(marcador, i);
+	}
+	string aux = "pablo";
+
+	insertar(marcador, aux, 3);
+
+	//mostrar_minas_usuario(marcador, 2);
+	//mostrar_alfabetico(marcador);
+	mostrar_datos_usuario(marcador);
 
 	for (int i = 0; i < 50; i++) {
 		for (int j = 0; j < 50; j++) {

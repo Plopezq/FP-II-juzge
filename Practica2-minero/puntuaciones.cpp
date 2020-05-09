@@ -1,4 +1,6 @@
 ﻿#include "puntuaciones.h"
+#include <string>
+#include <iomanip>
 
 bool cargar_marcador(tPuntuaciones& marcador)
 {
@@ -40,33 +42,83 @@ bool guardar_marcador(tPuntuaciones& marcador)
 	return false;
 }
 
-void mostrar_minas_usuario(const tPuntuaciones& marcador, int cont)
+void mostrar_minas_usuario(const tPuntuaciones& marcador, int pos)
 {
 
-	//Cont se refiere a la posicion donde esta el jugador del que queremos mostrar sus minas
-	
+	int puntTotal = 0;
 
-	cout << "Mira las minas que has recorrido ordenadas por nivel " << endl;
-	cout << " Persona1 Movimientos Gemas Dinamitas Puntos Puntos en total " << endl;
-	for (int i = 0; i < marcador.array_clasificacion[cont].minasRecorridas; i++) {
-		cout << "Mina " << marcador.array_clasificacion[cont].vMinasRecorridas[i].IdMina
-			<< " " << marcador.array_clasificacion[cont].vMinasRecorridas[i].numMovimientos
-			<< " " << marcador.array_clasificacion[cont].vMinasRecorridas[i].numGemas
-			<< " " << marcador.array_clasificacion[cont].vMinasRecorridas[i].numDinamitas
-			<< " " << marcador.array_clasificacion[cont].vMinasRecorridas[i].puntosMina << endl;
-			
-		//TODO poner lospuntos totales, almacenando esta informacion en un string y haciendo el cout despues del for
+	for (int i = 0; i < marcador.array_clasificacion[pos].minasRecorridas; i++) { //Hallo pntos totales
+		puntTotal += marcador.array_clasificacion[pos].vMinasRecorridas[i].puntosMina;
 	}
-	
+	//pos se refiere a la posicion donde esta el jugador del que queremos mostrar sus minas
+	cout << "\t\t\t"<< "Mira las minas que has recorrido ordenadas por nivel " << endl << endl;
+
+	cout << "\t\t" << marcador.array_clasificacion[pos].nombre << setw(15) << "Movimientos" << setw(15) << "Gemas"
+		<< setw(15) << "Dinamitas" << setw(15) << "Puntos " << setw(30) << "Puntos en total" << endl;
+
+	string aux = "";
+	for (int i = 0; i < marcador.array_clasificacion[pos].minasRecorridas; i++) {
+
+		cout << "\t\t" << "Mina  "<< marcador.array_clasificacion[pos].vMinasRecorridas[i].IdMina
+			<< setw(15) << marcador.array_clasificacion[pos].vMinasRecorridas[i].numMovimientos
+			<< setw(15) << marcador.array_clasificacion[pos].vMinasRecorridas[i].numGemas
+			<< setw(15) << marcador.array_clasificacion[pos].vMinasRecorridas[i].numDinamitas
+			<< setw(15) << marcador.array_clasificacion[pos].vMinasRecorridas[i].puntosMina;
+		if (i == 0) {
+			 cout << setw(30) << puntTotal << endl;
+		}
+		else {
+			cout << endl;
+		}
+			
+			
+	}
 
 }
 
 void mostrar_alfabetico(const tPuntuaciones& marcador)
 {
+	cout << "\t\t\t" << "Mira las puntuaciones de otros jugadores: " << endl << endl;
+	cout << "\t\t\t\t" << "--------------LISTA DE JUGADORES -------" << endl << endl;
+
+	for (int i = 0; i < marcador.num_jugadores; i++) {
+		cout << setw(60) << marcador.array_clasificacion[i].nombre << "  " << marcador.array_clasificacion[i].punt_total << endl;
+	}
+
 }
 
 void mostrar_datos_usuario(const tPuntuaciones& marcador)
 {
+	cout << "\t\t\t" << "--------------  JUGADORES ORDENADOS POR NOMBRE ----------" << endl << endl;
+	for (int s = 0; s < marcador.num_jugadores; s++) {
+
+		int puntTotal = 0;
+		for (int i = 0; i < marcador.array_clasificacion[s].minasRecorridas; i++) { //Hallo pntos totales
+			puntTotal += marcador.array_clasificacion[s].vMinasRecorridas[i].puntosMina;
+		}
+		//pos se refiere a la posicion donde esta el jugador del que queremos mostrar sus minas
+
+		cout << "\t" << marcador.array_clasificacion[s].nombre << setw(15) << "Movimientos" << setw(15) << "Gemas"
+			<< setw(15) << "Dinamitas" << setw(15) << "Puntos " << setw(30) << "Puntos en total" << endl;
+
+		string aux = "";
+		for (int i = 0; i < marcador.array_clasificacion[s].minasRecorridas; i++) {
+
+			cout << "\tMina  " << setw(15)<< marcador.array_clasificacion[s].vMinasRecorridas[i].IdMina
+				<< setw(15) << marcador.array_clasificacion[s].vMinasRecorridas[i].numMovimientos
+				<< setw(15) << marcador.array_clasificacion[s].vMinasRecorridas[i].numGemas
+				<< setw(15) << marcador.array_clasificacion[s].vMinasRecorridas[i].numDinamitas
+				<< setw(15) << marcador.array_clasificacion[s].vMinasRecorridas[i].puntosMina;
+			if (i == 0) {
+				cout << setw(30) << puntTotal << endl;
+			}
+			else {
+				cout << endl;
+			}
+
+
+		}
+	}
 }
 
 void inicializar_marcador(tPuntuaciones& marcador)
@@ -92,8 +144,8 @@ void aumentar_capacidad(tPuntuaciones& marcador)
 	marcador.array_clasificacion = aux;
 	marcador.capacidad *= 2;
 	
-	delete[] aux; // ¿?
-	aux = nullptr;
+	//delete[] aux; // ¿?
+	//aux = nullptr;
 }
 
 void destruir(tPuntuaciones& marcador)
