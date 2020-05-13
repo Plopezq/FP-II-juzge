@@ -37,9 +37,30 @@ bool cargar_marcador(tPuntuaciones& marcador)
 	return acabado;
 }
 
-bool guardar_marcador(tPuntuaciones& marcador)
+bool guardar_marcador(tPuntuaciones& marcador, tJuego juego)
 {
-	return false;
+	calcularPuntuaciones(marcador, juego.mina);
+
+	bool guardado = false;
+
+	ofstream archivo;
+	archivo.open("puntuaciones.txt"); //Apertura
+
+	for (int i = 0; i < marcador.num_jugadores; i++) {
+		//int puntuacionTotal = 0;
+
+		archivo << marcador.array_clasificacion[i].nombre << endl
+			<< marcador.array_clasificacion[i].punt_total << endl
+			<< marcador.array_clasificacion[i].minasRecorridas << endl;
+		for (int m = 0; m < marcador.array_clasificacion[i].minasRecorridas; m++) {
+			archivo << marcador.array_clasificacion[i].vMinasRecorridas[m].IdMina << " "
+				<< marcador.array_clasificacion[i].vMinasRecorridas[m].numMovimientos << " "
+				<< marcador.array_clasificacion[i].vMinasRecorridas[m].numGemas << " "
+				<< marcador.array_clasificacion[i].vMinasRecorridas[m].numDinamitas << " "
+				<< marcador.array_clasificacion[i].vMinasRecorridas[m].puntosMina;
+		}
+	}
+	return guardado;
 }
 
 void mostrar_minas_usuario(const tPuntuaciones& marcador, int pos)
@@ -240,6 +261,25 @@ void ordenarNivel(tPuntuaciones& marcador, int pos)
 		}
 		if (inter) {
 			i++;
+		}
+	}
+}
+
+void calcularPuntuaciones(tPuntuaciones& marcador, tMina mina)
+{
+	const int A = 10;
+	const int B = 2;
+	int puntuacion = 0;
+
+	for (int i = 0; i < marcador.num_jugadores; i++) { //Recorremos los jugadores
+		for (int m = 0; m < marcador.array_clasificacion[i].minasRecorridas; m++) {//Recorremos todas las  minas de cada jugador
+			//Le damos a cada mina su puntuacion
+			marcador.array_clasificacion[i].vMinasRecorridas[m].puntosMina = mina.nColumnas * mina.nFilas 
+				+ A * marcador.array_clasificacion[i].vMinasRecorridas[m].numGemas 
+				- marcador.array_clasificacion[i].vMinasRecorridas[m].numMovimientos
+				- B * marcador.array_clasificacion[i].vMinasRecorridas[m].numDinamitas;
+			//Añadimos la puntuacion de la mina a la total
+			marcador.array_clasificacion[i].punt_total += marcador.array_clasificacion[i].vMinasRecorridas[m].puntosMina;
 		}
 	}
 }

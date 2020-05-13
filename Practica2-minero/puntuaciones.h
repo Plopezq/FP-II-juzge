@@ -50,7 +50,7 @@ void insertar(tPuntuaciones& marcador, string const& nombre, int pos);
 void ordenarNombre(tPuntuaciones& marcador); //Ordena
 void ordenarNivel(tPuntuaciones& marcador, int pos); //Ordena las minas de ese jugador
 
-
+void calcularPuntuaciones(tPuntuaciones& marcador, tMina mina);
 
 
 
