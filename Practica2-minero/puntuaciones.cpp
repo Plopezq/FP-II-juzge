@@ -177,7 +177,6 @@ void destruir(tPuntuaciones& marcador)
 
 bool buscar(const string& nombre, const tPuntuaciones& marcador, int& pos)
 {
-	//TODO: Queda devolver la posicion donde deberia estar
 	pos = -1;
 	int ini = 0, fin = marcador.num_jugadores - 1, mitad;
 	bool encontrado = false;
@@ -197,7 +196,6 @@ bool buscar(const string& nombre, const tPuntuaciones& marcador, int& pos)
 	if (encontrado) {
 		pos = mitad;
 	}
-
 
 	return encontrado;
 }

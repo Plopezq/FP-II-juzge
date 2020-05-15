@@ -25,7 +25,7 @@ typedef struct {
 
 //PROTOTIPOS
 bool cargar_marcador(tPuntuaciones& marcador);	// Introduce en el array dinámico los datos disponibles en el fichero Puntuaciones.txt
-bool guardar_marcador(tPuntuaciones& marcador); // Vuelca el contenido del array dinámico en el fichero Puntuaciones.txt.
+bool guardar_marcador(tPuntuaciones& marcador, tJuego juego); // Vuelca el contenido del array dinámico en el fichero Puntuaciones.txt.
 void mostrar_minas_usuario(const tPuntuaciones& marcador, int cont); // Lista las minas recorridas por una persona, ordenadas por nivel (Figura 1).
 void mostrar_alfabetico(const tPuntuaciones& marcador); // Lista los jugadores y sus puntuaciones totales, ordenados por orden alfabético (Figura 2).
 void mostrar_datos_usuario(const tPuntuaciones& marcador); 

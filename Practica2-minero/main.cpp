@@ -16,25 +16,15 @@ int main() {
 	inicializar_marcador(marcador);
 	cargar_marcador(marcador);
 	ordenarNombre(marcador); //Ordena jugadores por nombre
-	//int pos = 0;
-	//string nombre = "Persona4";
-	//buscar(nombre, marcador, pos);
 	for (int i = 0; i < marcador.num_jugadores; i++) { //Ordena los niveles de todos los jugadores
 		ordenarNivel(marcador, i);
 	}
-	string aux = "pablo";
-
-	insertar(marcador, aux, 3);
-
-	//mostrar_minas_usuario(marcador, 2);
-	//mostrar_alfabetico(marcador);
-	mostrar_datos_usuario(marcador);
-
 	for (int i = 0; i < 50; i++) {
 		for (int j = 0; j < 50; j++) {
 			juego.mina.planoMina[i][j] = VACIO;
 		}
 	}
+
 	bool final = mostrarMenu(juego);
 	//Si quiere jugar, cargo juego, sino salgo (ABANDONO) y non entro en el while
 	if (!final) {
@@ -135,4 +125,38 @@ bool mostrarMenuNivel(tJuego& juego) {
 		salir = true;
 	}
 	return salir;
+}
+
+bool menuv2(tJuego& juego, tPuntuaciones& marcador){
+	bool salir = false;
+
+	string nombreJug = "";
+
+	cout << "SEGUNDA PARTE DE LA PRATICA DEL MINERO " << endl;
+	cout << "\t\t Introduce tu nombre de jugador/a:  ";
+	cin >> nombreJug;
+
+	int posicion = -1;
+
+	if (buscar(nombreJug, marcador, posicion)) {
+		//Existe el jugador
+		cout << "\t Ya estas registrado/a. " << endl;
+		mostrar_minas_usuario(marcador, posicion);
+	}
+	else {
+		//No existe el jugador
+		cout << "\t Eres nuevo: " << nombreJug << endl;
+		mostrar_datos_usuario(marcador);
+		insertar(marcador, nombreJug, marcador.num_jugadores + 1);
+
+	}
+
+	cout << nombreJug << "¿Que mina quieres explorar?" << endl;
+	cout << "Introduce un número entre 1 y 5 para explorar una mina y 0 para salir" << endl;
+	int nivel = -1;
+	cin >> nivel;
+	juego.nivel = nivel;
+
+
+return salir;
 }
