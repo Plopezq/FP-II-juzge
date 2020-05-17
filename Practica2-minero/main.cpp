@@ -6,8 +6,8 @@
 using namespace std;
 
 bool mostrarMenu(tJuego& juego);
-bool mostrarMenuNivel(tJuego& juego);
-
+bool mostrarMenuNivel(tJuego& juego, tPuntuaciones marcador);
+bool menuv2(tJuego& juego, tPuntuaciones& marcador);
 
 int main() {
 	//Creo el juego y inicializo el array
@@ -15,7 +15,7 @@ int main() {
 	tPuntuaciones marcador;
 	inicializar_marcador(marcador);
 	cargar_marcador(marcador);
-	ordenarNombre(marcador); //Ordena jugadores por nombre
+	//ordenarNombre(marcador); //Ordena jugadores por nombre, se or
 	for (int i = 0; i < marcador.num_jugadores; i++) { //Ordena los niveles de todos los jugadores
 		ordenarNivel(marcador, i);
 	}
@@ -24,8 +24,8 @@ int main() {
 			juego.mina.planoMina[i][j] = VACIO;
 		}
 	}
-
-	bool final = mostrarMenu(juego);
+	bool final = menuv2(juego, marcador);
+	if (!final) final = mostrarMenu(juego);
 	//Si quiere jugar, cargo juego, sino salgo (ABANDONO) y non entro en el while
 	if (!final) {
 		cargar_juego(juego, juego.nivel);
@@ -38,17 +38,17 @@ int main() {
 		jugar(juego);
 		//dibujar(juego);
 		if (juego.estadoMinero != EXPLORANDO) { //Ya acabo de jugar
-			if (juego.estadoMinero == EXITO) {
-				if (juego.nivel < NUM_NIVELES) { //Si todavia quedan niveles...
-					final = mostrarMenuNivel(juego);
-					if (!final) { //Si quiere pasar al nivel siguiente
-						final = mostrarMenu(juego);
-						if (!final) { //Quiere seguir jugando
-							juego.estadoMinero = EXPLORANDO;
-						}
-						else { //No quiere jugar más, pulsa salir
-							juego.estadoMinero = ABANDONO;
-						}
+			if (juego.estadoMinero == EXITO) { //Ha superado el nivel
+				guardar_marcador(marcador, juego);
+				mostrar_datos_usuario(marcador);
+				final = mostrarMenuNivel(juego, marcador);
+				if (!final) { //Si quiere seguir jugando
+					final = mostrarMenu(juego);
+					if (!final) { //Quiere seguir jugando
+						juego.estadoMinero = EXPLORANDO;
+					}
+					else { //No quiere jugar más, pulsa salir
+						juego.estadoMinero = ABANDONO;
 					}
 				}
 			}
@@ -106,19 +106,15 @@ bool mostrarMenu(tJuego& juego) {
 	}
 	return salir;
 }
-bool mostrarMenuNivel(tJuego& juego) {
-	system("cls");
-	cout << "NIVEL COMPLETADO!!" << endl;
-	cout << endl;
+bool mostrarMenuNivel(tJuego& juego, tPuntuaciones marcador) {
 	bool salir = false;
 	int opt = 0;
-	cout << "1. Jugar siguiente nivel" << endl;
-	cout << "0. Salir " << endl;
-	cout << endl;
-	cout << "Introduce una opcion:  " << endl;
+
+	cout << juego.jugador << ", ¿Que mina quieres explorar? " << endl;
+	cout << "Introduce un número entre 1 y 5 para explorar una mina y 0 para salir " << endl;
 	cin >> opt;
-	if (opt == 1 && opt <= NUM_NIVELES) {
-		juego.nivel++;
+	if (opt > 1 && opt <= NUM_NIVELES) {
+		juego.nivel = opt;
 		salir = false;
 	}
 	else if (opt == 0) {		
@@ -136,17 +132,21 @@ bool menuv2(tJuego& juego, tPuntuaciones& marcador){
 	cout << "\t\t Introduce tu nombre de jugador/a:  ";
 	cin >> nombreJug;
 
+	juego.jugador = nombreJug;
+
 	int posicion = -1;
 
 	if (buscar(nombreJug, marcador, posicion)) {
 		//Existe el jugador
 		cout << "\t Ya estas registrado/a. " << endl;
+		cout << "\t\t\t" << "Mira las minas que has recorrido ordenadas por nivel " << endl << endl; //Pasar esto al main
 		mostrar_minas_usuario(marcador, posicion);
 	}
 	else {
 		//No existe el jugador
 		cout << "\t Eres nuevo: " << nombreJug << endl;
-		mostrar_datos_usuario(marcador);
+		cout << "\t\t\t" << "Mira las puntuaciones de otros jugadores: " << endl << endl; //Pasar al main
+		mostrar_alfabetico(marcador);
 		insertar(marcador, nombreJug, marcador.num_jugadores + 1);
 
 	}
@@ -155,8 +155,12 @@ bool menuv2(tJuego& juego, tPuntuaciones& marcador){
 	cout << "Introduce un número entre 1 y 5 para explorar una mina y 0 para salir" << endl;
 	int nivel = -1;
 	cin >> nivel;
-	juego.nivel = nivel;
-
+	if (nivel == 0) {//Quiere salir
+		salir = true;
+	}
+	else {// Quiere jugar
+		juego.nivel = nivel;
+	}
 
 return salir;
 }

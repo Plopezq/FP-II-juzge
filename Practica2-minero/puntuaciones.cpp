@@ -26,7 +26,6 @@ bool cargar_marcador(tPuntuaciones& marcador)
 					archivo >> marcador.array_clasificacion[i].vMinasRecorridas[s].numGemas;
 					archivo >> marcador.array_clasificacion[i].vMinasRecorridas[s].numDinamitas;
 					archivo >> marcador.array_clasificacion[i].vMinasRecorridas[s].puntosMina;
-					
 				}
 				marcador.num_jugadores++; //Se ha añadido un jugador
 				i++;
@@ -39,8 +38,9 @@ bool cargar_marcador(tPuntuaciones& marcador)
 
 bool guardar_marcador(tPuntuaciones& marcador, tJuego juego)
 {
-	calcularPuntuaciones(marcador, juego.mina);
+	calcularPuntuaciones(marcador, juego);
 
+	//Escribir en fichero
 	bool guardado = false;
 
 	ofstream archivo;
@@ -48,7 +48,6 @@ bool guardar_marcador(tPuntuaciones& marcador, tJuego juego)
 
 	for (int i = 0; i < marcador.num_jugadores; i++) {
 		//int puntuacionTotal = 0;
-
 		archivo << marcador.array_clasificacion[i].nombre << endl
 			<< marcador.array_clasificacion[i].punt_total << endl
 			<< marcador.array_clasificacion[i].minasRecorridas << endl;
@@ -57,9 +56,12 @@ bool guardar_marcador(tPuntuaciones& marcador, tJuego juego)
 				<< marcador.array_clasificacion[i].vMinasRecorridas[m].numMovimientos << " "
 				<< marcador.array_clasificacion[i].vMinasRecorridas[m].numGemas << " "
 				<< marcador.array_clasificacion[i].vMinasRecorridas[m].numDinamitas << " "
-				<< marcador.array_clasificacion[i].vMinasRecorridas[m].puntosMina;
+				<< marcador.array_clasificacion[i].vMinasRecorridas[m].puntosMina << endl;
 		}
+		
+		//Comprobar que guardar bien
 	}
+	archivo << endl << "000";
 	return guardado;
 }
 
@@ -72,40 +74,35 @@ void mostrar_minas_usuario(const tPuntuaciones& marcador, int pos)
 		puntTotal += marcador.array_clasificacion[pos].vMinasRecorridas[i].puntosMina;
 	}
 	//pos se refiere a la posicion donde esta el jugador del que queremos mostrar sus minas
-	cout << "\t\t\t"<< "Mira las minas que has recorrido ordenadas por nivel " << endl << endl;
+	
 
-	cout << "\t\t" << marcador.array_clasificacion[pos].nombre << setw(15) << "Movimientos" << setw(15) << "Gemas"
-		<< setw(15) << "Dinamitas" << setw(15) << "Puntos " << setw(30) << "Puntos en total" << endl;
+	cout << "\t\t" << marcador.array_clasificacion[pos].nombre << setw(13) << "Movimientos" << setw(8) << "Gemas"
+		<< setw(11) << "Dinamitas" << setw(7) << "Puntos " << setw(21) << "Puntos en total" << endl;
 
 	string aux = "";
 	for (int i = 0; i < marcador.array_clasificacion[pos].minasRecorridas; i++) {
 
-		cout << "\t\t" << "Mina  "<< marcador.array_clasificacion[pos].vMinasRecorridas[i].IdMina
-			<< setw(15) << marcador.array_clasificacion[pos].vMinasRecorridas[i].numMovimientos
-			<< setw(15) << marcador.array_clasificacion[pos].vMinasRecorridas[i].numGemas
-			<< setw(15) << marcador.array_clasificacion[pos].vMinasRecorridas[i].numDinamitas
-			<< setw(15) << marcador.array_clasificacion[pos].vMinasRecorridas[i].puntosMina;
+		cout << "\t\t" << "Mina   " << marcador.array_clasificacion[pos].vMinasRecorridas[i].IdMina
+			<< setw(13) << marcador.array_clasificacion[pos].vMinasRecorridas[i].numMovimientos
+			<< setw(11) << marcador.array_clasificacion[pos].vMinasRecorridas[i].numGemas
+			<< setw(8) << marcador.array_clasificacion[pos].vMinasRecorridas[i].numDinamitas
+			<< setw(10) << marcador.array_clasificacion[pos].vMinasRecorridas[i].puntosMina;
 		if (i == 0) {
-			 cout << setw(30) << puntTotal << endl;
+			cout << setw(20) << puntTotal << endl;
 		}
 		else {
 			cout << endl;
-		}
-			
-			
+		}	
 	}
-
 }
 
 void mostrar_alfabetico(const tPuntuaciones& marcador)
 {
-	cout << "\t\t\t" << "Mira las puntuaciones de otros jugadores: " << endl << endl;
-	cout << "\t\t\t\t" << "--------------LISTA DE JUGADORES -------" << endl << endl;
+	cout << "\t\t\t\t" << "--------------LISTA DE JUGADORES ---------" << endl << endl;
 
 	for (int i = 0; i < marcador.num_jugadores; i++) {
 		cout << setw(60) << marcador.array_clasificacion[i].nombre << "  " << marcador.array_clasificacion[i].punt_total << endl;
 	}
-
 }
 
 void mostrar_datos_usuario(const tPuntuaciones& marcador)
@@ -113,32 +110,8 @@ void mostrar_datos_usuario(const tPuntuaciones& marcador)
 	cout << "\t\t\t" << "--------------  JUGADORES ORDENADOS POR NOMBRE ----------" << endl << endl;
 	for (int s = 0; s < marcador.num_jugadores; s++) {
 
-		int puntTotal = 0;
-		for (int i = 0; i < marcador.array_clasificacion[s].minasRecorridas; i++) { //Hallo pntos totales
-			puntTotal += marcador.array_clasificacion[s].vMinasRecorridas[i].puntosMina;
-		}
-		//pos se refiere a la posicion donde esta el jugador del que queremos mostrar sus minas
-
-		cout << "\t" << marcador.array_clasificacion[s].nombre << setw(15) << "Movimientos" << setw(15) << "Gemas"
-			<< setw(15) << "Dinamitas" << setw(15) << "Puntos " << setw(30) << "Puntos en total" << endl;
-
-		string aux = "";
-		for (int i = 0; i < marcador.array_clasificacion[s].minasRecorridas; i++) {
-
-			cout << "\tMina  " << setw(15)<< marcador.array_clasificacion[s].vMinasRecorridas[i].IdMina
-				<< setw(15) << marcador.array_clasificacion[s].vMinasRecorridas[i].numMovimientos
-				<< setw(15) << marcador.array_clasificacion[s].vMinasRecorridas[i].numGemas
-				<< setw(15) << marcador.array_clasificacion[s].vMinasRecorridas[i].numDinamitas
-				<< setw(15) << marcador.array_clasificacion[s].vMinasRecorridas[i].puntosMina;
-			if (i == 0) {
-				cout << setw(30) << puntTotal << endl;
-			}
-			else {
-				cout << endl;
-			}
-
-
-		}
+		//Me sobra todo esto, mejor llamar a la otra función de arriba
+		mostrar_minas_usuario(marcador, s);
 	}
 }
 
@@ -147,8 +120,7 @@ void inicializar_marcador(tPuntuaciones& marcador)
 	marcador.capacidad = TAM_INICIAL;
 	marcador.num_jugadores = 0;
 	marcador.array_clasificacion = new tPuntuacionJugador[TAM_INICIAL];
-
-	ordenarNombre(marcador);
+	//ordenarNombre(marcador);
 }
 
 void aumentar_capacidad(tPuntuaciones& marcador)
@@ -164,7 +136,6 @@ void aumentar_capacidad(tPuntuaciones& marcador)
 	delete[] marcador.array_clasificacion; //OJO! usar [] para vectores din�micos
 	marcador.array_clasificacion = aux;
 	marcador.capacidad *= 2;
-	
 	//delete[] aux; // ¿?
 	//aux = nullptr;
 }
@@ -173,11 +144,12 @@ void destruir(tPuntuaciones& marcador)
 {
 	delete[] marcador.array_clasificacion;
 	marcador.array_clasificacion = nullptr;
+	//marcador.num_jugadores = 0; //Da un poco igual, pero bueno
 }
 
 bool buscar(const string& nombre, const tPuntuaciones& marcador, int& pos)
 {
-	pos = -1;
+	
 	int ini = 0, fin = marcador.num_jugadores - 1, mitad;
 	bool encontrado = false;
 
@@ -193,9 +165,7 @@ bool buscar(const string& nombre, const tPuntuaciones& marcador, int& pos)
 			ini = mitad + 1;
 		}
 	}
-	if (encontrado) {
-		pos = mitad;
-	}
+	pos = mitad; //Donde debería estar insertado
 
 	return encontrado;
 }
@@ -205,6 +175,8 @@ void insertar(tPuntuaciones& marcador, string const& nombre, int pos)
 	//Damos por hecho que pos es numJugadores 
 	// Doy por hecho que el array ya está ordenado, despues de insertar, volvemos a ordenar
 	//Debug
+
+	//TODO - insertar en el pos, que NO ES numJugadores 
 	if (pos > marcador.capacidad) {
 		aumentar_capacidad(marcador);
 		marcador.array_clasificacion[pos - 1].nombre = nombre;
@@ -239,7 +211,6 @@ void ordenarNombre(tPuntuaciones& marcador) //Ordena
 
 void ordenarNivel(tPuntuaciones& marcador, int pos)
 {
-
 	//Pos se refiere a la posicion donde se encuentra el jugador del que quiero ordenar sus niveles
 	bool inter = true;
 	int i = 0;
@@ -250,10 +221,8 @@ void ordenarNivel(tPuntuaciones& marcador, int pos)
 			// Desde el último hasta el siguiente a i
 			if (marcador.array_clasificacion[pos].vMinasRecorridas[j].IdMina < 
 				marcador.array_clasificacion[pos].vMinasRecorridas[j - 1].IdMina) {
-
 				swap(marcador.array_clasificacion[pos].vMinasRecorridas[j].IdMina, 
 					marcador.array_clasificacion[pos].vMinasRecorridas[j - 1].IdMina);
-
 				inter = true;
 			}
 		}
@@ -263,21 +232,48 @@ void ordenarNivel(tPuntuaciones& marcador, int pos)
 	}
 }
 
-void calcularPuntuaciones(tPuntuaciones& marcador, tMina mina)
+void calcularPuntuaciones(tPuntuaciones& marcador, tJuego juego)
 {
-	const int A = 10;
-	const int B = 2;
+	int A = 10;
+	int B = 2;
 	int puntuacion = 0;
+	int puntTotal = 0;
+	//Busco la posicion del jugador que acaba de terminar la mina
+	int pos = 0;
+	int minas_recorridas = marcador.array_clasificacion[pos].minasRecorridas;
+	buscar(juego.jugador, marcador, pos);
+	marcador.array_clasificacion[pos].vMinasRecorridas[minas_recorridas].IdMina = juego.nivel;
+	marcador.array_clasificacion[pos].vMinasRecorridas[minas_recorridas].numMovimientos = juego.contMov;
+	juego.contMov = 0; //Lo reseteo
+	marcador.array_clasificacion[pos].vMinasRecorridas[minas_recorridas].numGemas = juego.contGemas;
+	juego.contGemas = 0; //Lo reseteo
+	marcador.array_clasificacion[pos].vMinasRecorridas[minas_recorridas].numDinamitas = juego.contTNT;
+	juego.contTNT = 0; //Lo reseteo
 
-	for (int i = 0; i < marcador.num_jugadores; i++) { //Recorremos los jugadores
-		for (int m = 0; m < marcador.array_clasificacion[i].minasRecorridas; m++) {//Recorremos todas las  minas de cada jugador
-			//Le damos a cada mina su puntuacion
-			marcador.array_clasificacion[i].vMinasRecorridas[m].puntosMina = mina.nColumnas * mina.nFilas 
-				+ A * marcador.array_clasificacion[i].vMinasRecorridas[m].numGemas 
-				- marcador.array_clasificacion[i].vMinasRecorridas[m].numMovimientos
-				- B * marcador.array_clasificacion[i].vMinasRecorridas[m].numDinamitas;
-			//Añadimos la puntuacion de la mina a la total
-			marcador.array_clasificacion[i].punt_total += marcador.array_clasificacion[i].vMinasRecorridas[m].puntosMina;
-		}
-	}
+	//Le damos a cada mina su puntuacion
+	marcador.array_clasificacion[pos].vMinasRecorridas[juego.nivel].puntosMina = juego.mina.nColumnas * juego.mina.nFilas 
+		+ A * marcador.array_clasificacion[pos].vMinasRecorridas[juego.nivel].numGemas 
+		- marcador.array_clasificacion[pos].vMinasRecorridas[juego.nivel].numMovimientos
+		- B * marcador.array_clasificacion[pos].vMinasRecorridas[juego.nivel].numDinamitas;
+	//Añadimos la puntuacion de la mina a la total
+	puntTotal += marcador.array_clasificacion[pos].vMinasRecorridas[minas_recorridas].puntosMina;
+		
+		marcador.array_clasificacion[pos].punt_total = puntTotal;
+	
+	ordenarNivel(marcador, pos);
+
 }
+typedef struct {
+	int IdMina = 0;
+	int numMovimientos = 0;
+	int numGemas = 0;
+	int numDinamitas = 0;
+	int puntosMina = 0;
+} tDatosMina;
+
+typedef struct {
+	string nombre;
+	int punt_total = 0;
+	int minasRecorridas = 0;
+	tDatosMina vMinasRecorridas[NUM_NIVELES];
+} tPuntuacionJugador;

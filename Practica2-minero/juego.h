@@ -19,6 +19,7 @@ typedef struct {
 	int opcionMov = 0; //Opcion elegida para introducir movimientos: por teclado (1) o por fichero (2)
 	int contTNT = 0;
 	int nivel = 1;
+	string jugador = "";
 }tJuego;
 
 
