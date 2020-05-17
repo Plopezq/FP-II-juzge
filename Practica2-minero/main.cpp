@@ -147,7 +147,7 @@ bool menuv2(tJuego& juego, tPuntuaciones& marcador){
 		cout << "\t Eres nuevo: " << nombreJug << endl;
 		cout << "\t\t\t" << "Mira las puntuaciones de otros jugadores: " << endl << endl; //Pasar al main
 		mostrar_alfabetico(marcador);
-		insertar(marcador, nombreJug, marcador.num_jugadores + 1);
+		insertar(marcador, nombreJug, marcador.num_jugadores );
 
 	}
 
