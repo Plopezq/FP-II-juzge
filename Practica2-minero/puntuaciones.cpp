@@ -43,7 +43,7 @@ bool cargar_marcador(tPuntuaciones& marcador)
 bool guardar_marcador(tPuntuaciones& marcador, tJuego &juego)
 {
 	calcularPuntuaciones(marcador, juego);
-
+	
 	
 	//Escribir en fichero
 	bool guardado = false;
@@ -213,25 +213,26 @@ void ordenarNombre(tPuntuaciones& marcador) //Ordena
 	}
 }
 
-void ordenarNivel(tPuntuaciones& marcador, int pos)
+void ordenarNiveles(tPuntuaciones& marcador)
 {
-	//Pos se refiere a la posicion donde se encuentra el jugador del que quiero ordenar sus niveles
-	bool inter = true;
-	int i = 0;
-	while ((i < marcador.num_jugadores - 1) && inter) {
-		// Desde el primer elemento hasta el penúltimo si hay intercambios...
-		inter = false;
-		for (int j = marcador.num_jugadores - 1; j > i; j--) {
-			// Desde el último hasta el siguiente a i
-			if (marcador.array_clasificacion[pos].vMinasRecorridas[j].IdMina < 
-				marcador.array_clasificacion[pos].vMinasRecorridas[j - 1].IdMina) {
-				swap(marcador.array_clasificacion[pos].vMinasRecorridas[j].IdMina, 
-					marcador.array_clasificacion[pos].vMinasRecorridas[j - 1].IdMina);
-				inter = true;
+	for (int z = 0; z < marcador.num_jugadores; z++) { //Ordena los niveles de todos los jugadores
+		//Pos se refiere a la posicion donde se encuentra el jugador del que quiero ordenar sus niveles
+		bool inter = true;
+		int i = 0;
+		while ((i < marcador.array_clasificacion[z].minasRecorridas - 1) && inter) {
+			// Desde el primer elemento hasta el penúltimo si hay intercambios...
+			inter = false;
+			for (int j = marcador.array_clasificacion[z].minasRecorridas - 1; j > i; j--) {
+				// Desde el último hasta el siguiente a i
+				if (marcador.array_clasificacion[z].vMinasRecorridas[j].IdMina <
+					marcador.array_clasificacion[z].vMinasRecorridas[j - 1].IdMina) {
+					swap(marcador.array_clasificacion[z].vMinasRecorridas[j], marcador.array_clasificacion[z].vMinasRecorridas[j - 1]);
+					inter = true;
+				}
 			}
-		}
-		if (inter) {
-			i++;
+			if (inter) {
+				i++;
+			}
 		}
 	}
 }
@@ -245,25 +246,35 @@ void calcularPuntuaciones(tPuntuaciones& marcador, tJuego& juego)
 	//Busco la posicion del jugador que acaba de terminar la mina
 	int pos = 0;
 	buscar(juego.jugador, marcador, pos);
-	int minas_recorridas = marcador.array_clasificacion[pos].minasRecorridas;
-	marcador.array_clasificacion[pos].minasRecorridas++;
-	marcador.array_clasificacion[pos].vMinasRecorridas[minas_recorridas].IdMina = juego.nivel;
-	marcador.array_clasificacion[pos].vMinasRecorridas[minas_recorridas].numMovimientos = juego.contMov;
+	int posMina = -1;
+	bool existe = false;
+	for (int z = 0; z < marcador.array_clasificacion[pos].minasRecorridas; z++) {
+		if (juego.nivel == marcador.array_clasificacion[pos].vMinasRecorridas[z].IdMina) { // Solo se incrementa, si la mina es distinta. Si es la misma, se sobrescribe
+			posMina = z;
+			existe = true;
+		}
+	}
+	if (!existe) {
+		marcador.array_clasificacion[pos].minasRecorridas++; //Es una mina nueva
+		posMina = marcador.array_clasificacion[pos].minasRecorridas - 1;
+	}
+	marcador.array_clasificacion[pos].vMinasRecorridas[posMina].IdMina = juego.nivel;
+	marcador.array_clasificacion[pos].vMinasRecorridas[posMina].numMovimientos = juego.contMov;
 	juego.contMov = 0; //Lo reseteo
-	marcador.array_clasificacion[pos].vMinasRecorridas[minas_recorridas].numGemas = juego.contGemas;
+	marcador.array_clasificacion[pos].vMinasRecorridas[posMina].numGemas = juego.contGemas;
 	juego.contGemas = 0; //Lo reseteo
-	marcador.array_clasificacion[pos].vMinasRecorridas[minas_recorridas].numDinamitas = juego.contTNT;
+	marcador.array_clasificacion[pos].vMinasRecorridas[posMina].numDinamitas = juego.contTNT;
 	juego.contTNT = 0; //Lo reseteo
 
 	//Le damos a cada mina su puntuacion
-	marcador.array_clasificacion[pos].vMinasRecorridas[minas_recorridas].puntosMina = juego.mina.nColumnas * juego.mina.nFilas
-		+ A * marcador.array_clasificacion[pos].vMinasRecorridas[minas_recorridas].numGemas
-		- marcador.array_clasificacion[pos].vMinasRecorridas[minas_recorridas].numMovimientos
-		- B * marcador.array_clasificacion[pos].vMinasRecorridas[minas_recorridas].numDinamitas;
+	marcador.array_clasificacion[pos].vMinasRecorridas[posMina].puntosMina = juego.mina.nColumnas * juego.mina.nFilas
+		+ A * marcador.array_clasificacion[pos].vMinasRecorridas[posMina].numGemas
+		- marcador.array_clasificacion[pos].vMinasRecorridas[posMina].numMovimientos
+		- B * marcador.array_clasificacion[pos].vMinasRecorridas[posMina].numDinamitas;
 	//Añadimos la puntuacion de la mina a la total
-	puntTotal += marcador.array_clasificacion[pos].vMinasRecorridas[minas_recorridas].puntosMina;
+	puntTotal += marcador.array_clasificacion[pos].vMinasRecorridas[posMina].puntosMina;
 		
 	marcador.array_clasificacion[pos].punt_total = puntTotal;
 	
-	//ordenarNivel(marcador, pos);
+	ordenarNiveles(marcador); //Para que luego no escriba las minas vacías
 }

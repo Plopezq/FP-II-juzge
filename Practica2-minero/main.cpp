@@ -16,9 +16,7 @@ int main() {
 	inicializar_marcador(marcador);
 	cargar_marcador(marcador);
 	//ordenarNombre(marcador); //Ordena jugadores por nombre, se or
-	for (int i = 0; i < marcador.num_jugadores; i++) { //Ordena los niveles de todos los jugadores
-		ordenarNivel(marcador, i);
-	}
+	ordenarNiveles(marcador);
 	for (int i = 0; i < 50; i++) {
 		for (int j = 0; j < 50; j++) {
 			juego.mina.planoMina[i][j] = VACIO;

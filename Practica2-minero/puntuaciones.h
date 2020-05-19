@@ -48,7 +48,7 @@ void insertar(tPuntuaciones& marcador, string const& nombre, int pos);
 	 Al realizar la inserción de un nuevo jugador, si no hay suficiente espacio en el array,
 	 se amplia. */
 void ordenarNombre(tPuntuaciones& marcador); //Ordena
-void ordenarNivel(tPuntuaciones& marcador, int pos); //Ordena las minas de ese jugador
+void ordenarNiveles(tPuntuaciones& marcador); //Ordena todas las minas
 
 void calcularPuntuaciones(tPuntuaciones& marcador, tJuego& juego);
 
