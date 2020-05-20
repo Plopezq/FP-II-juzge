@@ -148,7 +148,6 @@ bool menuv2(tJuego& juego, tPuntuaciones& marcador){
 		insertar(marcador, nombreJug, marcador.num_jugadores );
 
 	}
-
 	cout << nombreJug << "¿Que mina quieres explorar?" << endl;
 	cout << "Introduce un número entre 1 y 5 para explorar una mina y 0 para salir" << endl;
 	int nivel = -1;
