@@ -1,3 +1,10 @@
+/*
+*
+* Pablo Lopez Martin
+*
+* Sergio Sanchez Chamizo
+*
+*/
 #include "mina.h"
 #include <iomanip>
 #include <Windows.h>

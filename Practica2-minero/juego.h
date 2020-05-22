@@ -1,3 +1,10 @@
+/*
+*
+* Pablo Lopez Martin
+*
+* Sergio Sanchez Chamizo
+*
+*/
 #include "mina.h"
 const int incF[8] = { 1, 1, 0, -1, -1, -1, 0, 1 };
 const int incC[8] = { 0, 1, 1, 1, 0, -1, -1, -1 };

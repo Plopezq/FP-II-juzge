@@ -1,4 +1,11 @@
-﻿#include<Windows.h>
+﻿/*
+*
+* Pablo Lopez Martin
+*
+* Sergio Sanchez Chamizo
+*
+*/
+#include<Windows.h>
 #include<stdio.h>
 #include<iostream>
 #include <conio.h>

@@ -1,8 +1,15 @@
-
+/*
+*
+* Pablo Lopez Martin
+*
+* Sergio Sanchez Chamizo
+*
+*/
 #include<conio.h>
 #include<stdio.h>
 
 #include "puntuaciones.h"
+#include <iomanip>
 using namespace std;
 
 bool mostrarMenu(tJuego& juego);
@@ -15,13 +22,12 @@ int main() {
 	tPuntuaciones marcador;
 	inicializar_marcador(marcador);
 	cargar_marcador(marcador);
-	//ordenarNombre(marcador); //Ordena jugadores por nombre, se or
-	ordenarNiveles(marcador);
 	for (int i = 0; i < 50; i++) {
 		for (int j = 0; j < 50; j++) {
 			juego.mina.planoMina[i][j] = VACIO;
 		}
 	}
+
 	bool final = menuv2(juego, marcador);
 	if (!final) final = mostrarMenu(juego);
 	//Si quiere jugar, cargo juego, sino salgo (ABANDONO) y non entro en el while
@@ -57,13 +63,16 @@ int main() {
 	}
 	if (juego.estadoMinero == ABANDONO) {
 		cout << "HAS ABANDONADO, HASTA LA PROXIMA" << endl;
+		destruir(marcador);
 	}
 	if (juego.estadoMinero == FRACASO) {
 		cout << "HAS MUERTO, GRACIAS POR JUGAR, HASTA LA PROXIMA" << endl;
+		destruir(marcador);
 	}
 	if (juego.nivel == NUM_NIVELES) {
 		cout << endl;
 		cout << "JUEGO COMPLETADO CON EXITO !!! " << endl;
+		destruir(marcador);
 	}
 	return 0;
 }
@@ -90,7 +99,6 @@ bool mostrarMenu(tJuego& juego) {
 			cout << endl;
 			cout << "Introduce una opcion:  " << endl;
 			cin >> opt2;
-
 			if (opt2 == 1) {
 				juego.opcionMov = 1;
 			}
@@ -111,7 +119,7 @@ bool mostrarMenuNivel(tJuego& juego, tPuntuaciones marcador) {
 	cout << juego.jugador << ", ¿Que mina quieres explorar? " << endl;
 	cout << "Introduce un número entre 1 y 5 para explorar una mina y 0 para salir " << endl;
 	cin >> opt;
-	if (opt > 1 && opt <= NUM_NIVELES) {
+	if (opt >= 1 && opt <= NUM_NIVELES) {
 		juego.nivel = opt;
 		salir = false;
 	}
@@ -136,8 +144,8 @@ bool menuv2(tJuego& juego, tPuntuaciones& marcador){
 
 	if (buscar(nombreJug, marcador, posicion)) {
 		//Existe el jugador
-		cout << "\t Ya estas registrado/a. " << endl;
-		cout << "\t\t\t" << "Mira las minas que has recorrido ordenadas por nivel " << endl << endl; //Pasar esto al main
+		cout << "\t\t Ya estas registrado/a. " << endl;
+		cout << "\t\t" << "Mira las minas que has recorrido ordenadas por nivel " << endl << endl; //Pasar esto al main
 		mostrar_minas_usuario(marcador, posicion);
 	}
 	else {
@@ -145,10 +153,9 @@ bool menuv2(tJuego& juego, tPuntuaciones& marcador){
 		cout << "\t Eres nuevo: " << nombreJug << endl;
 		cout << "\t\t\t" << "Mira las puntuaciones de otros jugadores: " << endl << endl; //Pasar al main
 		mostrar_alfabetico(marcador);
-		insertar(marcador, nombreJug, marcador.num_jugadores );
-
+		insertar(marcador, nombreJug, posicion);
 	}
-	cout << nombreJug << "¿Que mina quieres explorar?" << endl;
+	cout << nombreJug << "  ¿Que mina quieres explorar?" << endl;
 	cout << "Introduce un número entre 1 y 5 para explorar una mina y 0 para salir" << endl;
 	int nivel = -1;
 	cin >> nivel;

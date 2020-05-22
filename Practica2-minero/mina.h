@@ -1,3 +1,10 @@
+/*
+*
+* Pablo Lopez Martin
+*
+* Sergio Sanchez Chamizo
+*
+*/
 //LIBRERÍAS
 #include<iostream>
 #include <fstream>
