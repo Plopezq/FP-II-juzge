@@ -2,7 +2,7 @@
 // Autor/a: Pablo López y Sergio Sanchez
 // email: pablop14@ucm.es
 // Compilador y S.O. utilizado: Visual Studio 2019
-// Nombre del problema: Ejercicio 14 del juez, coleccion de fotos con vectores
+// Nombre del problema: Ejercicio 17
 // Comentario general sobre la solución
 // explicando cómo se resuelve el problema: 
 
