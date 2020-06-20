@@ -26,5 +26,8 @@
     <None Include="1.out">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="datos.out">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

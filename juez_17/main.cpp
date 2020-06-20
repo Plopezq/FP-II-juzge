@@ -84,8 +84,6 @@ void resolver(tLista & almacen, tObjeto& objeto, string operacion) {
             almacen.arrayDinam[posicion].unidades -= objeto.unidades;
         }
     }
-
-
 }
 
 // resuelve un caso de prueba, leyendo de la entrada la

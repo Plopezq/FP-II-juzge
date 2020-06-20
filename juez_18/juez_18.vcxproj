@@ -144,6 +144,7 @@
   <ItemGroup>
     <None Include="1.in" />
     <None Include="1.out" />
+    <None Include="datos.out" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

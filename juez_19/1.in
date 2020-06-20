@@ -1,8 +1,142 @@
-4382
-4563
-1
-554436723453
-429496
-1234
-12
-45
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+typedef struct {
+    int codigo;
+    string nombre;
+}tEspecialidad;
+
+typedef struct {
+    tEspecialidad* arrayDin;
+    int tam;
+    int capacidad;
+}tListaEspecialidades;
+
+typedef struct {
+    int codigo, num;
+    string fecha;
+}tConsulta;
+
+typedef struct {
+    tConsulta* consulta[200];
+    int numConsultas;
+}tListaConsultas;
+
+void destruir(tListaEspecialidades& lista) {
+    delete[] lista.arrayDin;
+    lista.arrayDin = nullptr;
+    lista.tam = 0;
+}
+void libera(tListaConsultas& lista) {
+    for (int i = 0; i < lista.numConsultas; i++) {
+        delete(lista.consulta[i]);
+        lista.consulta[i] = nullptr;
+    }
+    lista.numConsultas = 0;
+}
+void ampliar(tListaEspecialidades& lista) {
+
+    tEspecialidad* aux = nullptr;
+
+    aux = new tEspecialidad[2 * lista.capacidad];
+    for (int i = 0; i < lista.tam; i++) {
+        aux[i] = lista.arrayDin[i];
+    }
+    delete[] lista.arrayDin;
+    lista.arrayDin = aux;
+    lista.capacidad *= 2;
+    aux = nullptr;
+}
+
+bool cargarEspecialidades(tListaEspecialidades& lista) {
+    int codigo;
+    cin >> codigo;
+    while (codigo != -1) {
+        lista.arrayDin[lista.tam].codigo = codigo;
+        getline(cin, lista.arrayDin[lista.tam].nombre);
+        lista.tam++;
+        if (lista.tam == lista.capacidad) {
+            ampliar(lista);
+        }
+        cin >> codigo;
+    }
+    return true;
+}
+
+bool cargarConsultas(tListaConsultas& lista) {
+    int codigo;
+    cin >> codigo;
+    while (codigo != -1) {
+        lista.consulta[lista.numConsultas] = new tConsulta;
+        lista.consulta[lista.numConsultas]->codigo = codigo;
+        cin >> lista.consulta[lista.numConsultas]->fecha;
+        cin >> lista.consulta[lista.numConsultas]->num;
+        lista.numConsultas++;
+        cin >> codigo;
+    }
+    return true;
+}
+
+void ordenarConsultas(tListaConsultas& lista) {
+
+    for (int i = 0; i < lista.numConsultas; i++) {
+        for (int j = i + 1; j < lista.numConsultas; j++) {
+            if (lista.consulta[i]->fecha > lista.consulta[j]->fecha) {
+                swap(lista.consulta[i], lista.consulta[j]);
+            }
+        }
+    }
+}
+// resuelve un caso de prueba, leyendo de la entrada la
+// configuraciÃ³n, y escribiendo la respuesta
+bool resuelveCaso() {
+    tListaEspecialidades esp;
+    tListaConsultas con;
+    esp.capacidad = 2;
+    esp.tam = 0;
+    con.numConsultas = 0;
+    bool encontrado = false;
+    esp.arrayDin = new tEspecialidad[esp.capacidad];
+    if (cargarConsultas(con) && cargarEspecialidades(esp)) {
+        ordenarConsultas(con);
+        for (int i = 0; i < con.numConsultas; i++) {
+            for (int j = 0; j < esp.tam; j++) {
+                if (con.consulta[i]->codigo == esp.arrayDin[j].codigo) {
+                    cout << con.consulta[i]->fecha << esp.arrayDin[j].nombre << " " << con.consulta[i]->num << endl;
+                    encontrado = true;
+                }
+            }
+            if (!encontrado) {
+                cout << con.consulta[i]->fecha << " Especialidad inexistente" << endl;
+            }
+            encontrado = false;
+        }
+    }
+    libera(con);
+    destruir(esp);
+
+    return false;
+}
+
+int main() {
+    // ajustes para que cin extraiga directamente de un fichero
+#ifndef DOMJUDGE
+    std::ifstream in("1.in");
+    auto cinbuf = std::cin.rdbuf(in.rdbuf());
+    std::ofstream out("1.out");
+    auto coutbuf = std::cout.rdbuf(out.rdbuf());
+#endif
+
+    while (resuelveCaso());
+
+    // para dejar todo como estaba al principio
+#ifndef DOMJUDGE
+    std::cin.rdbuf(cinbuf);
+    std::cout.rdbuf(coutbuf);
+    system("PAUSE");
+#endif
+    return 0;
+}

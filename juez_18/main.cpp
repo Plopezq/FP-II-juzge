@@ -21,7 +21,7 @@ typedef struct {
 }tEspecialidad;
 typedef struct {
     tEspecialidad* arrayDinamico;
-    int tamaño, capacidad;
+    int tamanyo, capacidad;
 }tListaEspecialidades;
 
 //Array de punteros
@@ -38,7 +38,16 @@ typedef struct {
 
 // función que resuelve el problema
 // comentario sobre el coste, O(f(N)), donde N es ...
-void resolver(tListaConsultas& listaConsultas) {
+void ordenar(tListaConsultas& listaConsultas) {
+    for (int i = 0; i < listaConsultas.tam; i++) {
+        // Desde el primer elemento hasta el penúltimo
+        for (int j = i + 1; j < listaConsultas.tam; j++) {
+            // Desde i+1 hasta el final
+            if (listaConsultas.consulta[j]->fecha < listaConsultas.consulta[i]->fecha) {
+                swap(listaConsultas.consulta[j]->fecha, listaConsultas.consulta[i]->fecha);
+            }
+        }
+    }
 
 }
 
@@ -48,7 +57,7 @@ void ampliar(tListaEspecialidades& lista) {
     tEspecialidad* aux = nullptr;
 
     aux = new tEspecialidad[2 * lista.capacidad];
-    for (int i = 0; i < lista.tamaño; i++)
+    for (int i = 0; i < lista.tamanyo; i++)
     {
         aux[i] = lista.arrayDinamico[i];
     }
@@ -63,7 +72,7 @@ bool cargarConsultas(tListaConsultas& listaConsultas) {
     // leer los datos de la entrada
     int codigoAux;
     cin >> codigoAux;
-    while (codigoAux != -1 ) {
+    while (codigoAux != -1) {
         listaConsultas.consulta[listaConsultas.tam] = new tConsulta;
         listaConsultas.consulta[listaConsultas.tam]->codigo = codigoAux;
         cin >> listaConsultas.consulta[listaConsultas.tam]->fecha;
@@ -71,40 +80,72 @@ bool cargarConsultas(tListaConsultas& listaConsultas) {
         listaConsultas.tam++;
         cin >> codigoAux;
     }
+    return true;
 }
 
-bool cargarEspecialidades(tListaEspecialidades & listaEspec) {
+bool cargarEspecialidades(tListaEspecialidades& listaEspec) {
     int codigoAux;
     cin >> codigoAux;
     while (codigoAux != -1) {
-        if (listaEspec.tamaño == listaEspec.capacidad)
+        listaEspec.arrayDinamico[listaEspec.tamanyo].codigo = codigoAux;
+        getline(cin, listaEspec.arrayDinamico[listaEspec.tamanyo].especialidad);
+        listaEspec.tamanyo++;
+        if (listaEspec.tamanyo == listaEspec.capacidad)
             ampliar(listaEspec);
-        listaEspec.arrayDinamico[listaEspec.tamaño].codigo = codigoAux;
-        getline(cin, listaEspec.arrayDinamico[listaEspec.tamaño].especialidad);
-        listaEspec.tamaño++;
         cin >> codigoAux;
-
     }
+    return true;
 }
+
 // resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
+    tListaEspecialidades listaEspecialidades;
     tListaConsultas listaConsultas;
     listaConsultas.tam = 0;
-    tListaEspecialidades listaEspecialidades;
 
+    listaEspecialidades.arrayDinamico = new tEspecialidad[ESPECIALIDADES_INICIALES];
     listaEspecialidades.capacidad = ESPECIALIDADES_INICIALES;
-    listaEspecialidades.tamaño = 0;
+    listaEspecialidades.tamanyo = 0;
 
 
- 
+    bool encontrado = false;
 
-    //Ordenamos las consultas
-    resolver(listaConsultas);
+    if (cargarConsultas(listaConsultas) && cargarEspecialidades(listaEspecialidades)) {
+        ordenar(listaConsultas);
+        for (int i = 0; i < listaConsultas.tam; i++) {
+            for (int j = 0; j < listaEspecialidades.tamanyo; j++) {
+                if (listaConsultas.consulta[i]->codigo == listaEspecialidades.arrayDinamico[j].codigo) {
+                    cout << listaConsultas.consulta[i]->fecha << listaEspecialidades.arrayDinamico[j].especialidad << " " << listaConsultas.consulta[i]->numConsultas << endl;
+                    encontrado = true;
+                }
+            }
+            if (!encontrado) {
+                cout << listaConsultas.consulta[i]->fecha << " Especialidad inexistente" << endl;
+            }
+            encontrado = false;
+        }
+    }
+
+
+
+    for (int i = 0; i < listaConsultas.tam; i++) {
+        delete(listaConsultas.consulta[i]);
+        listaConsultas.consulta[i] = nullptr;
+    }
+    listaConsultas.tam = 0;
+
+
+
+    delete[] listaEspecialidades.arrayDinamico;
+    listaEspecialidades.arrayDinamico = nullptr;
+    listaEspecialidades.tamanyo = 0;
+    listaEspecialidades.capacidad = 0;
+
 
     // escribir sol --> ESCRIBIMOS LA SOLUCION
 
-    return true;
+    return false;
 }
 
 int main() {
@@ -114,7 +155,7 @@ int main() {
     auto cinbuf = std::cin.rdbuf(in.rdbuf());
 #endif
 
-    resuelveCaso();
+    while (resuelveCaso());
 
     // para dejar todo como estaba al principio
 #ifndef DOMJUDGE
