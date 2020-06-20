@@ -14,14 +14,14 @@ const int incF[8] = { 1,1,0,-1,-1,-1,0,1 };
 const int incC[8] = { 0,1,1,1,0,-1,-1,-1 };
 
 typedef struct {
-    int numFilas = 0;
-    int numColumnas = 0;
+    int numFilas;
+    int numColumnas;
     char matriz[50][50];
 }tMatriz; //Para la sopa y para la solucion 
 
 typedef struct {
     string palabras[50];
-    int numPalabras = 0;
+    int numPalabras;
 }tPalabras;
 
 bool dentro_matriz(tMatriz t, int x, int y) {

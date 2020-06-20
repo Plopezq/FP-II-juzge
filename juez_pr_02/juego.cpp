@@ -9,7 +9,7 @@ using namespace std;
 //Vector de direcciones, que coincide con las del enumerado
 // ARRIBA, ABAJO, DCHA, IZDA, SALIR, NADA} tTecla;
 int tdirs4[4][2] = { {-1,0},{1,0},{0,1},{0,-1} };
-int ejemploArryaBidimensional[2][3] = { {1,2,3},{7,8,9} };
+//int ejemploArryaBidimensional[2][3] = { {1,2,3},{7,8,9} };
 //FUNCIONES
 void cargar_juego(tJuego& juego, std::istream& input) {
 	//bool cargado = false;
