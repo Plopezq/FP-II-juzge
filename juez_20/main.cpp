@@ -20,7 +20,7 @@ unsigned long long int  invertir(unsigned long long int  n, unsigned long long i
     if (n < 10 )
         return n;
     else {
-        if ( (contador == 1 || 2 || 3 || 4 )&& n % 10 == 0) {
+        if ( (contador == 1 || contador == 2 || contador == 3 || contador == 4 || contador == 5 || contador == 6 || contador == 7 || contador == 8 || contador == 9 )&& n % 10 == 0) {
 
         }
         else {
@@ -42,7 +42,6 @@ bool resuelveCaso() {
         return false;
     unsigned long long int contador = 0;
     unsigned long long int sol = invertir(numero, contador);
-
     // escribir sol
     cout << sol << endl;
     return true;
