@@ -11,7 +11,7 @@
 #include<string>
 
 using namespace std;
-const int N = 20;
+const int N = 200;
 const int ESPECIALIDADES_INICIALES = 2;
 
 //Array dinamico de especialidades
@@ -43,8 +43,8 @@ void ordenar(tListaConsultas& listaConsultas) {
         // Desde el primer elemento hasta el penúltimo
         for (int j = i + 1; j < listaConsultas.tam; j++) {
             // Desde i+1 hasta el final
-            if (listaConsultas.consulta[j]->fecha < listaConsultas.consulta[i]->fecha) {
-                swap(listaConsultas.consulta[j]->fecha, listaConsultas.consulta[i]->fecha);
+            if (listaConsultas.consulta[i]->fecha > listaConsultas.consulta[j]->fecha) {
+                swap(listaConsultas.consulta[i], listaConsultas.consulta[j]);
             }
         }
     }
